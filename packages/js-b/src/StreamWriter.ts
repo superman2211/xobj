@@ -3,6 +3,14 @@ export class StreamWriter {
 	private _position: number;
 	private _length: number;
 
+	public get length(): number {
+		return this._length;
+	}
+
+	public get position(): number {
+		return this._position;
+	}
+
 	constructor() {
 		this._data = new DataView(new ArrayBuffer(1024));
 		this._position = 0;
