@@ -1,8 +1,6 @@
 {
-  "name": "jeng",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "name": "js-binary",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
 	  "build": "yarn wsrun -t -e -m build",
