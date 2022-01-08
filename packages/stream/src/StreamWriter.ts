@@ -1,4 +1,6 @@
-export class StreamWriter {
+import { IStream } from './IStream';
+
+export class StreamWriter implements IStream {
 	private _data: DataView;
 	private _position: number;
 	private _length: number;
@@ -21,8 +23,12 @@ export class StreamWriter {
 		this._position = value;
 	}
 
-	constructor() {
-		this._data = new DataView(new ArrayBuffer(1024));
+	public get buffer(): ArrayBuffer {
+		return this._data.buffer.slice(0, this._length);
+	}
+
+	constructor(bufferSize: number = 1024) {
+		this._data = new DataView(new ArrayBuffer(bufferSize));
 		this._position = 0;
 		this._length = 0;
 	}
@@ -74,11 +80,11 @@ export class StreamWriter {
 		do {
 			let byte: number = value & 0x7f;
 			value >>>= 7;
-			if (value !== 0) {
+			if (value) {
 				byte |= 0x80;
 			}
 			this.writeUint8(byte);
-		} while (value !== 0);
+		} while (value);
 	}
 
 	writeInt8(value: number) {
@@ -99,10 +105,30 @@ export class StreamWriter {
 		this.movePosition(4);
 	}
 
+	writeFloat32(value: number) {
+		this.allocate(4);
+		this._data.setFloat32(this._position, value);
+		this.movePosition(4);
+	}
+
+	writeFloat64(value: number) {
+		this.allocate(8);
+		this._data.setFloat64(this._position, value);
+		this.movePosition(8);
+	}
+
 	writeString(value: string) {
 		this.writeUintVar(value.length);
 		for (let i = 0; i < value.length; i++) {
 			this.writeUintVar(value.charCodeAt(i));
 		}
+	}
+
+	writeBuffer(value: ArrayBuffer) {
+		this.writeUintVar(value.byteLength);
+		this.allocate(value.byteLength);
+		const array = new Uint8Array(this._data.buffer);
+		array.set(new Uint8Array(value), this._position);
+		this.movePosition(value.byteLength);
 	}
 }

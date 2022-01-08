@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 
+import { StreamReader } from '../src';
 import { StreamWriter } from '../src/StreamWriter';
 
 describe('length', () => {
@@ -13,6 +14,11 @@ describe('length', () => {
 		writer.writeInt8(1);
 		writer.writeUint8(2);
 		expect(writer.length).toBe(2);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.length).toBe(2);
+		expect(reader.readInt8()).toBe(1);
+		expect(reader.readUint8()).toBe(2);
 	});
 
 	it('should get correct length after allocate', () => {
@@ -30,30 +36,60 @@ describe('writeUintVar', () => {
 		const writer = new StreamWriter();
 		writer.writeUintVar(127);
 		expect(writer.length).toBe(1);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.length).toBe(1);
+		expect(reader.readUintVar()).toBe(127);
 	});
 
 	it('should write unsigned integer in 2 byte', () => {
 		const writer = new StreamWriter();
 		writer.writeUintVar(128);
 		expect(writer.length).toBe(2);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.length).toBe(2);
+		expect(reader.readUintVar()).toBe(128);
 	});
 
 	it('should write unsigned integer in 3 byte', () => {
 		const writer = new StreamWriter();
-		writer.writeUintVar(0xffff);
+		writer.writeUintVar(0xfabf);
 		expect(writer.length).toBe(3);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.length).toBe(3);
+		expect(reader.readUintVar()).toBe(0xfabf);
 	});
 
 	it('should write unsigned integer in 4 byte', () => {
 		const writer = new StreamWriter();
-		writer.writeUintVar(0xffffff);
+		writer.writeUintVar(0xfabcdf);
 		expect(writer.length).toBe(4);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.length).toBe(4);
+		expect(reader.readUintVar()).toBe(0xfabcdf);
+	});
+
+	it('should write unsigned integer in 4 byte', () => {
+		const writer = new StreamWriter();
+		writer.writeUintVar(0xffff_fff);
+		expect(writer.length).toBe(4);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.length).toBe(4);
+		expect(reader.readUintVar()).toBe(0xffff_fff);
 	});
 
 	it('should write unsigned integer in 5 byte', () => {
 		const writer = new StreamWriter();
-		writer.writeUintVar(0xffffffff);
+		writer.writeUintVar(0xffff_ffff);
 		expect(writer.length).toBe(5);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.length).toBe(5);
+		expect(reader.readUintVar()).toBe(0xffff_ffff);
 	});
 });
 
@@ -74,5 +110,19 @@ describe('writeString', () => {
 		const writer = new StreamWriter();
 		writer.writeString('単純な文字列');
 		expect(writer.length).toBe(18);
+	});
+});
+
+describe('writeBuffer', () => {
+	it('should write buffer', () => {
+		const buffer = new ArrayBuffer(3);
+		const array = new Uint8Array(buffer);
+		array[0] = 1;
+		array[1] = 2;
+		array[2] = 3;
+
+		const writer = new StreamWriter();
+		writer.writeBuffer(buffer);
+		expect(writer.length).toBe(4);
 	});
 });
