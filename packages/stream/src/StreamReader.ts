@@ -8,6 +8,10 @@ export class StreamReader implements IStream {
 		return this._data.buffer.byteLength;
 	}
 
+	get bytesAvailable(): number {
+		return this.length - this._position;
+	}
+
 	get position(): number {
 		return this._position;
 	}

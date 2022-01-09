@@ -9,6 +9,10 @@ export class StreamWriter implements IStream {
 		return this._length;
 	}
 
+	get bytesAvailable(): number {
+		return this._length - this._position;
+	}
+
 	get position(): number {
 		return this._position;
 	}
@@ -25,6 +29,10 @@ export class StreamWriter implements IStream {
 
 	get buffer(): ArrayBuffer {
 		return this._data.buffer.slice(0, this._length);
+	}
+
+	get bufferSize(): number {
+		return this._data.buffer.byteLength;
 	}
 
 	constructor(bufferSize: number = 1024) {
