@@ -3,7 +3,7 @@
 import { StreamReader } from '../src';
 import { StreamWriter } from '../src/StreamWriter';
 
-describe('length', () => {
+describe('basic types', () => {
 	it('should get length of empty stream', () => {
 		const writer = new StreamWriter();
 		expect(writer.length).toBe(0);
@@ -11,14 +11,26 @@ describe('length', () => {
 
 	it('should get correct length', () => {
 		const writer = new StreamWriter();
-		writer.writeInt8(1);
-		writer.writeUint8(2);
-		expect(writer.length).toBe(2);
+		writer.writeInt8(123);
+		writer.writeInt16(-1000);
+		writer.writeInt32(78901);
+		writer.writeUint8(245);
+		writer.writeUint16(2048);
+		writer.writeUint32(0xabcdef);
+		writer.writeFloat32(123.456);
+		writer.writeFloat64(1234.56789);
+		expect(writer.length).toBe(26);
 
 		const reader = new StreamReader(writer.buffer);
-		expect(reader.length).toBe(2);
-		expect(reader.readInt8()).toBe(1);
-		expect(reader.readUint8()).toBe(2);
+		expect(reader.length).toBe(26);
+		expect(reader.readInt8()).toBe(123);
+		expect(reader.readInt16()).toBe(-1000);
+		expect(reader.readInt32()).toBe(78901);
+		expect(reader.readUint8()).toBe(245);
+		expect(reader.readUint16()).toBe(2048);
+		expect(reader.readUint32()).toBe(0xabcdef);
+		expect(reader.readFloat32()).toBeCloseTo(123.456, 3);
+		expect(reader.readFloat64()).toBeCloseTo(1234.56789, 5);
 	});
 
 	it('should get correct length after allocate', () => {
@@ -31,7 +43,7 @@ describe('length', () => {
 	});
 });
 
-describe('writeUintVar', () => {
+describe('variable unsigned integer', () => {
 	it('should write unsigned integer in 1 byte', () => {
 		const writer = new StreamWriter();
 		writer.writeUintVar(127);
@@ -74,12 +86,12 @@ describe('writeUintVar', () => {
 
 	it('should write unsigned integer in 4 byte', () => {
 		const writer = new StreamWriter();
-		writer.writeUintVar(0xffff_fff);
+		writer.writeUintVar(0xfff_ffff);
 		expect(writer.length).toBe(4);
 
 		const reader = new StreamReader(writer.buffer);
 		expect(reader.length).toBe(4);
-		expect(reader.readUintVar()).toBe(0xffff_fff);
+		expect(reader.readUintVar()).toBe(0xfff_ffff);
 	});
 
 	it('should write unsigned integer in 5 byte', () => {
@@ -93,36 +105,62 @@ describe('writeUintVar', () => {
 	});
 });
 
-describe('writeString', () => {
+describe('strings', () => {
 	it('should write string in english', () => {
 		const writer = new StreamWriter();
 		writer.writeString('simple string');
 		expect(writer.length).toBe(14);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.readString()).toBe('simple string');
 	});
 
 	it('should write string in russian', () => {
 		const writer = new StreamWriter();
 		writer.writeString('простая строка');
 		expect(writer.length).toBe(28);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.readString()).toBe('простая строка');
 	});
 
 	it('should write string in japanese', () => {
 		const writer = new StreamWriter();
 		writer.writeString('単純な文字列');
 		expect(writer.length).toBe(18);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.readString()).toBe('単純な文字列');
 	});
 });
 
-describe('writeBuffer', () => {
+describe('buffers', () => {
+	it('should write empty buffer', () => {
+		const buffer = new ArrayBuffer(0);
+
+		const writer = new StreamWriter();
+		writer.writeBuffer(buffer);
+		expect(writer.length).toBe(1);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.readBuffer().byteLength).toBe(0);
+	});
+
 	it('should write buffer', () => {
 		const buffer = new ArrayBuffer(3);
 		const array = new Uint8Array(buffer);
-		array[0] = 1;
-		array[1] = 2;
-		array[2] = 3;
+		array[0] = 35;
+		array[1] = 15;
+		array[2] = 250;
 
 		const writer = new StreamWriter();
 		writer.writeBuffer(buffer);
 		expect(writer.length).toBe(4);
+
+		const reader = new StreamReader(writer.buffer);
+		const bytes = new Uint8Array(reader.readBuffer());
+		expect(bytes[0]).toBe(35);
+		expect(bytes[1]).toBe(15);
+		expect(bytes[2]).toBe(250);
 	});
 });

@@ -4,15 +4,15 @@ export class StreamReader implements IStream {
 	private _data: DataView;
 	private _position: number;
 
-	public get length(): number {
+	get length(): number {
 		return this._data.buffer.byteLength;
 	}
 
-	public get position(): number {
+	get position(): number {
 		return this._position;
 	}
 
-	public set position(value: number) {
+	set position(value: number) {
 		if (value < 0) {
 			value = 0;
 		} else if (value > this.length) {
@@ -22,7 +22,7 @@ export class StreamReader implements IStream {
 		this._position = value;
 	}
 
-	public get buffer(): ArrayBuffer {
+	get buffer(): ArrayBuffer {
 		return this._data.buffer;
 	}
 
@@ -35,25 +35,25 @@ export class StreamReader implements IStream {
 		this._position += value;
 	}
 
-	public readUint8(): number {
+	readUint8(): number {
 		const value = this._data.getUint8(this._position);
 		this.movePosition(1);
 		return value;
 	}
 
-	public readUint16(): number {
+	readUint16(): number {
 		const value = this._data.getUint16(this._position);
 		this.movePosition(2);
 		return value;
 	}
 
-	public readUint32(): number {
+	readUint32(): number {
 		const value = this._data.getUint32(this._position);
 		this.movePosition(4);
 		return value;
 	}
 
-	public readUintVar(): number {
+	readUintVar(): number {
 		let value = 0;
 		let bits = 0;
 		let byte = 0;
@@ -67,21 +67,55 @@ export class StreamReader implements IStream {
 		return value >>> 0;
 	}
 
-	public readInt8(): number {
+	readInt8(): number {
 		const value = this._data.getInt8(this._position);
 		this.movePosition(1);
 		return value;
 	}
 
-	public readInt16(): number {
+	readInt16(): number {
 		const value = this._data.getInt16(this._position);
 		this.movePosition(2);
 		return value;
 	}
 
-	public readInt32(): number {
+	readInt32(): number {
 		const value = this._data.getInt32(this._position);
 		this.movePosition(4);
+		return value;
+	}
+
+	readFloat32(): number {
+		const value = this._data.getFloat32(this._position);
+		this.movePosition(4);
+		return value;
+	}
+
+	readFloat64(): number {
+		const value = this._data.getFloat64(this._position);
+		this.movePosition(8);
+		return value;
+	}
+
+	readString(): string {
+		let count = this.readUintVar();
+		if (!count) {
+			return '';
+		}
+
+		let value = '';
+		if (count) {
+			while (count--) {
+				value += String.fromCharCode(this.readUintVar());
+			}
+		}
+		return value;
+	}
+
+	readBuffer(): ArrayBuffer {
+		const count = this.readUintVar();
+		const value = this._data.buffer.slice(this._position, this._position + count);
+		this.movePosition(value.byteLength);
 		return value;
 	}
 }

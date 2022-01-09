@@ -5,15 +5,15 @@ export class StreamWriter implements IStream {
 	private _position: number;
 	private _length: number;
 
-	public get length(): number {
+	get length(): number {
 		return this._length;
 	}
 
-	public get position(): number {
+	get position(): number {
 		return this._position;
 	}
 
-	public set position(value: number) {
+	set position(value: number) {
 		if (value < 0) {
 			value = 0;
 		} else if (value > this._length) {
@@ -23,7 +23,7 @@ export class StreamWriter implements IStream {
 		this._position = value;
 	}
 
-	public get buffer(): ArrayBuffer {
+	get buffer(): ArrayBuffer {
 		return this._data.buffer.slice(0, this._length);
 	}
 
