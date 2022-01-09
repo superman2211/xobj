@@ -137,6 +137,15 @@ describe('variable unsigned integer', () => {
 });
 
 describe('strings', () => {
+	it('should write empty string', () => {
+		const writer = new StreamWriter();
+		writer.writeString('');
+		expect(writer.length).toBe(1);
+
+		const reader = new StreamReader(writer.buffer);
+		expect(reader.readString()).toBe('');
+	});
+
 	it('should write string in english', () => {
 		const writer = new StreamWriter();
 		writer.writeString('simple string');

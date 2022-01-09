@@ -64,7 +64,7 @@ export class StreamReader implements IStream {
 
 		do {
 			byte = this.readUint8();
-			value |= ((byte & 0x7f) << bits);
+			value |= (byte & 0x7f) << bits;
 			bits += 7;
 		} while (byte & 0x80);
 
@@ -118,7 +118,10 @@ export class StreamReader implements IStream {
 
 	readBuffer(): ArrayBuffer {
 		const count = this.readUintVar();
-		const value = this._data.buffer.slice(this._position, this._position + count);
+		const value = this._data.buffer.slice(
+			this._position,
+			this._position + count
+		);
 		this.movePosition(value.byteLength);
 		return value;
 	}

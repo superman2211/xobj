@@ -5,7 +5,9 @@
   "scripts": {
 	  "build": "yarn wsrun -t -e -m build",
 	  "lint": "yarn wsrun -e -m lint",
-	  "checkup": "yarn build && yarn lint"
+	  "test": "yarn wsrun -e -m test",
+	  "clean": "yarn wsrun -e -m clean",
+	  "checkup": "yarn clean && yarn build && yarn lint && yarn test"
   },
   "workspaces": [
     "packages/*"

@@ -1,5 +1,5 @@
 {
-	"name": "@jsbyte/stream",
+	"name": "@jsbyte/core",
 	"version": "0.1.0",
 	"main": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",
@@ -10,6 +10,9 @@
 		"lint": "yarn eslint --fix ./src/**/* && yarn prettier --write .",
 		"test": "jest",
 		"clean": "rimraf dist"
+	},
+	"dependencies": {
+		"@jsbyte/stream": "0.1.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.16.7",
