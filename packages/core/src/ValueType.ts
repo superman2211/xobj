@@ -4,6 +4,7 @@ export const enum ValueType {
 	NULL,
 	UNDEFINED,
 	NAN,
+	ZERO,
 	POSITIVE_INFINITY,
 	NEGATIVE_INFINITY,
 	FLOAT32,

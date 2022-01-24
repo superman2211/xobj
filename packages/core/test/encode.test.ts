@@ -44,7 +44,7 @@ describe('array', () => {
 		const json = JSON.stringify(array);
 		console.log(json.length);
 		const buffer = encode(array);
-		expect(buffer.byteLength).toBe(60);
+		expect(buffer.byteLength).toBe(54);
 	});
 });
 
