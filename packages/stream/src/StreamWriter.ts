@@ -85,14 +85,36 @@ export class StreamWriter implements IStream {
 	}
 
 	writeUintVar(value: number) {
+		let next = false;
 		do {
 			let byte: number = value & 0x7f;
-			value >>>= 7;
-			if (value) {
+			value /= 128;
+			next = value >= 1;
+			if (next) {
 				byte |= 0x80;
 			}
 			this.writeUint8(byte);
-		} while (value);
+		} while (next);
+	}
+
+	writeIntVar(value: number) {
+		let sign = 0;
+		if (value < 0) {
+			value = -value;
+			sign = 1;
+		}
+		let byte: number = ((value & 0x3f) << 1) | sign;
+		value /= 64;
+		const next = value >= 1;
+		if (next) {
+			byte |= 0x80;
+		}
+
+		this.writeUint8(byte);
+
+		if (next) {
+			this.writeUintVar(value);
+		}
 	}
 
 	writeInt8(value: number) {

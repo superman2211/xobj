@@ -59,16 +59,28 @@ export class StreamReader implements IStream {
 
 	readUintVar(): number {
 		let value = 0;
-		let bits = 0;
+		let offset = 1;
 		let byte = 0;
 
 		do {
 			byte = this.readUint8();
-			value |= (byte & 0x7f) << bits;
-			bits += 7;
+			value += (byte & 0x7f) * offset;
+			offset *= 128;
 		} while (byte & 0x80);
 
-		return value >>> 0;
+		return value;
+	}
+
+	readIntVar(): number {
+		const byte = this.readUint8();
+		const sign = byte & 1 ? -1 : 1;
+		let value = (byte >>> 1) & 0x3f;
+
+		if (byte & 0x80) {
+			value += this.readUintVar() * 64;
+		}
+
+		return value * sign;
 	}
 
 	readInt8(): number {
@@ -120,7 +132,7 @@ export class StreamReader implements IStream {
 		const count = this.readUintVar();
 		const value = this._data.buffer.slice(
 			this._position,
-			this._position + count
+			this._position + count,
 		);
 		this.movePosition(value.byteLength);
 		return value;
