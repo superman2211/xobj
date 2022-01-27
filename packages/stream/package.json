@@ -9,7 +9,8 @@
 		"build": "yarn tsc",
 		"lint": "yarn eslint --fix ./src/**/* && yarn prettier --write .",
 		"test": "jest",
-		"clean": "rimraf dist"
+		"coverage": "jest --coverage",
+		"clean": "rimraf dist && rimraf coverage"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.16.7",
