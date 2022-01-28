@@ -1,4 +1,5 @@
 export const enum ValueType {
+	UNKNOWN,
 	FALSE,
 	TRUE,
 	NULL,

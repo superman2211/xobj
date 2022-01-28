@@ -1,14 +1,14 @@
-import { Encoder } from '../Encoder';
+import { EncoderMethod, EncodeState } from '../encode';
 import { ValueType } from '../ValueType';
 
-export function encodeString(encoder: Encoder, value: any): boolean {
-	if (typeof value !== 'string') {
-		return false;
+export function detectString(state: EncodeState, value: any): ValueType {
+	if (typeof value === 'string') {
+		return ValueType.STRING;
 	}
 
-	const { writer } = encoder;
-	writer.writeInt8(ValueType.STRING);
-	writer.writeString(value);
+	return ValueType.UNKNOWN;
+}
 
-	return true;
+export function initStringEncoders(encoders: Map<ValueType, EncoderMethod>) {
+	encoders.set(ValueType.STRING, (state: EncodeState, value: string) => state.writer.writeString(value));
 }

@@ -1,16 +1,19 @@
-import { Encoder } from '../Encoder';
+import { EncodeState, EncoderMethod } from '../encode';
 import { ValueType } from '../ValueType';
 
-export function encodeEmpty(encoder: Encoder, value: any): boolean {
+export function detectEmpty(state: EncodeState, value: any): ValueType {
 	if (typeof value === 'undefined') {
-		encoder.writer.writeUint8(ValueType.UNDEFINED);
-		return true;
+		return ValueType.UNDEFINED;
 	}
 
 	if (value === null) {
-		encoder.writer.writeUint8(ValueType.NULL);
-		return true;
+		return ValueType.NULL;
 	}
 
-	return false;
+	return ValueType.UNKNOWN;
+}
+
+export function initEmptyEncoders(encoders: Map<ValueType, EncoderMethod>) {
+	encoders.set(ValueType.UNDEFINED, () => {});
+	encoders.set(ValueType.NULL, () => {});
 }

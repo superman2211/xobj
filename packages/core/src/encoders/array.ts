@@ -1,20 +1,33 @@
-import { Encoder } from '../Encoder';
+import { EncoderMethod, EncodeState } from '../encode';
 import { ValueType } from '../ValueType';
 
-export function encodeArray(encoder: Encoder, value: any): boolean {
-	if (!Array.isArray(value)) {
-		return false;
+export function detectArray(state: EncodeState, value: any): ValueType {
+	if (Array.isArray(value)) {
+		return ValueType.ARRAY;
 	}
 
-	const { writer } = encoder;
+	return ValueType.UNKNOWN;
+}
 
-	writer.writeUint8(ValueType.ARRAY);
-	writer.writeUint8(ValueType.ANY);
+export function encodeArray(state: EncodeState, value: Array<any>) {
+	const { writer, encoders } = state;
+
+	const type = ValueType.ANY;
+
+	writer.writeUint8(type);
 	writer.writeUintVar(value.length);
 
-	for (const item of value) {
-		encoder.writeValue(item);
+	const encoder = encoders.get(type);
+
+	if (!encoder) {
+		throw `Encoder method not found for object type: ${type} in array encoding`;
 	}
 
-	return true;
+	for (const item of value) {
+		encoder(state, item);
+	}
+}
+
+export function initArrayEncoders(encoders: Map<ValueType, EncoderMethod>) {
+	encoders.set(ValueType.ARRAY, encodeArray);
 }

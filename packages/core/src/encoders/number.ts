@@ -1,7 +1,12 @@
-import { Encoder } from '../Encoder';
+import { EncoderMethod } from '..';
+import { EncodeState } from '../encode';
 import { ValueType } from '../ValueType';
 
-export function detectNumber(value: number): ValueType {
+export function detectNumber(state: EncodeState, value: number): ValueType {
+	if (typeof value !== 'number') {
+		return ValueType.UNKNOWN;
+	}
+
 	if (isNaN(value)) {
 		return ValueType.NAN;
 	}
@@ -53,53 +58,21 @@ export function detectNumber(value: number): ValueType {
 	return ValueType.FLOAT64;
 }
 
-export function encodeNumber(encoder: Encoder, value: any): boolean {
-	if (typeof value !== 'number') {
-		return false;
-	}
-	const { writer } = encoder;
+export function initNumberEncoders(encoders: Map<ValueType, EncoderMethod>) {
+	encoders.set(ValueType.NAN, () => { });
+	encoders.set(ValueType.POSITIVE_INFINITY, () => { });
+	encoders.set(ValueType.NEGATIVE_INFINITY, () => { });
 
-	const type = detectNumber(value);
-	writer.writeUint8(type);
+	encoders.set(ValueType.UINT8, (state: EncodeState, value: number) => state.writer.writeUint8(value));
+	encoders.set(ValueType.UINT16, (state: EncodeState, value: number) => state.writer.writeUint16(value));
+	encoders.set(ValueType.UINT32, (state: EncodeState, value: number) => state.writer.writeUint32(value));
+	encoders.set(ValueType.UINT_VAR, (state: EncodeState, value: number) => state.writer.writeUintVar(value));
 
-	switch (type) {
-		case ValueType.NAN:
-		case ValueType.POSITIVE_INFINITY:
-		case ValueType.NEGATIVE_INFINITY:
-			break;
-		case ValueType.UINT8:
-			writer.writeUint8(value);
-			break;
-		case ValueType.UINT16:
-			writer.writeUint16(value);
-			break;
-		case ValueType.UINT32:
-			writer.writeUint32(value);
-			break;
-		case ValueType.UINT_VAR:
-			writer.writeUintVar(value);
-			break;
-		case ValueType.INT8:
-			writer.writeInt8(value);
-			break;
-		case ValueType.INT16:
-			writer.writeInt16(value);
-			break;
-		case ValueType.INT32:
-			writer.writeInt32(value);
-			break;
-		case ValueType.INT_VAR:
-			writer.writeUintVar(value);
-			break;
-		case ValueType.FLOAT32:
-			writer.writeFloat32(value);
-			break;
-		case ValueType.FLOAT64:
-			writer.writeFloat64(value);
-			break;
-		default:
-			writer.writeFloat64(value);
-	}
+	encoders.set(ValueType.INT8, (state: EncodeState, value: number) => state.writer.writeInt8(value));
+	encoders.set(ValueType.INT16, (state: EncodeState, value: number) => state.writer.writeInt16(value));
+	encoders.set(ValueType.INT32, (state: EncodeState, value: number) => state.writer.writeInt32(value));
+	encoders.set(ValueType.INT_VAR, (state: EncodeState, value: number) => state.writer.writeIntVar(value));
 
-	return true;
+	encoders.set(ValueType.FLOAT32, (state: EncodeState, value: number) => state.writer.writeFloat32(value));
+	encoders.set(ValueType.FLOAT64, (state: EncodeState, value: number) => state.writer.writeFloat64(value));
 }
