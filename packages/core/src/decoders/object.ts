@@ -1,11 +1,12 @@
-import { StreamReader } from '@jsbyte/stream';
 import { ValueType } from '../ValueType';
-import { DecodeOptions, DecoderMethod } from '../decode';
+import { DecodeState, DecoderMethod } from '../decode';
 
-export function decodeObject(reader: StreamReader, options: DecodeOptions): any {
+export function decodeObject(state: DecodeState): any {
+	const { reader, decoders } = state;
+
 	let count = reader.readUintVar();
 
-	const decoder = options.decoders.get(ValueType.ANY);
+	const decoder = decoders.get(ValueType.ANY);
 
 	if (!decoder) {
 		throw `Decoder method not found for object type: ${ValueType.ANY} in array decoding`;
@@ -15,7 +16,7 @@ export function decodeObject(reader: StreamReader, options: DecodeOptions): any 
 
 	while (count-- >= 0) {
 		const key = reader.readString();
-		const value = decoder(reader, options);
+		const value = decoder(state);
 		objectValue[key] = value;
 	}
 

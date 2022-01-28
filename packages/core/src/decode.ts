@@ -8,11 +8,16 @@ import { initArrayDecoders } from './decoders/array';
 import { initBooleanDecoders } from './decoders/boolean';
 import { initObjectDecoders } from './decoders/object';
 
-export type DecoderMethod = (reader: StreamReader, options: DecodeOptions) => any;
-
 export interface DecodeOptions {
-	decoders: Map<number, DecoderMethod>;
+	decoders?: Map<ValueType, DecoderMethod>;
 }
+
+export interface DecodeState {
+	reader: StreamReader;
+	decoders: Map<ValueType, DecoderMethod>;
+}
+
+export type DecoderMethod = (state: DecodeState) => any;
 
 export const DEFAULT_DECODERS = new Map<ValueType, DecoderMethod>();
 
@@ -28,24 +33,26 @@ function initAnyDecoders(decoders: Map<ValueType, DecoderMethod>) {
 	decoders.set(ValueType.ANY, decodeAny);
 }
 
-export function decodeAny(reader: StreamReader, options: DecodeOptions): any {
-	const type = reader.readUint8() as ValueType;
-	const decoder = options.decoders.get(type);
+export function decodeAny(state: DecodeState): any {
+	const type = state.reader.readUint8() as ValueType;
+	const decoder = state.decoders.get(type);
 
 	if (!decoder) {
 		throw `Decoder method not found for object type: ${type}`;
 	}
 
-	return decoder(reader, options);
+	return decoder(state);
 }
 
 export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
-	const decodeOptions: DecodeOptions = {
-		decoders: DEFAULT_DECODERS,
-		...options,
+	const reader = new StreamReader(buffer);
+	const decoders = options?.decoders ?? DEFAULT_DECODERS;
+
+	const state: DecodeState = {
+		reader,
+		decoders,
 	};
 
-	const reader = new StreamReader(buffer);
-	const value = decodeAny(reader, decodeOptions);
+	const value = decodeAny(state);
 	return value;
 }
