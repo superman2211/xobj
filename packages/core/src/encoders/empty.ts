@@ -1,5 +1,5 @@
 import { EncodeState, EncoderMethod } from '../encode';
-import { ValueType } from '../ValueType';
+import { ValueType } from '../types';
 
 export function detectEmpty(state: EncodeState, value: any): ValueType {
 	if (typeof value === 'undefined') {

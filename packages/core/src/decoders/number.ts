@@ -1,4 +1,4 @@
-import { ValueType } from '../ValueType';
+import { ValueType } from '../types';
 import { DecoderMethod, DecodeState } from '../decode';
 
 export function initNumberDecoders(decoders: Map<ValueType, DecoderMethod>) {

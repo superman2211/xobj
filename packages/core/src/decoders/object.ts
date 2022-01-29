@@ -1,4 +1,4 @@
-import { ValueType } from '../ValueType';
+import { ValueType } from '../types';
 import { DecodeState, DecoderMethod } from '../decode';
 
 export function decodeObject(state: DecodeState): any {
@@ -14,7 +14,7 @@ export function decodeObject(state: DecodeState): any {
 
 	const objectValue: any = {};
 
-	while (count-- >= 0) {
+	while (count-- > 0) {
 		const key = reader.readString();
 		const value = decoder(state);
 		objectValue[key] = value;

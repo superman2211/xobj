@@ -1,6 +1,6 @@
 import { EncoderMethod } from '..';
 import { EncodeState } from '../encode';
-import { ValueType } from '../ValueType';
+import { ValueType } from '../types';
 
 export function detectNumber(state: EncodeState, value: number): ValueType {
 	if (typeof value !== 'number') {
@@ -52,6 +52,11 @@ export function detectNumber(state: EncodeState, value: number): ValueType {
 
 		if (value <= Number.MAX_SAFE_INTEGER) {
 			return ValueType.UINT_VAR;
+		}
+	} else {
+		const parts = value.toString(10).split('.');
+		if (parts.length === 2 && parts[1].length < 7) {
+			return ValueType.FLOAT32;
 		}
 	}
 

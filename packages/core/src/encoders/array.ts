@@ -1,5 +1,5 @@
 import { EncoderMethod, EncodeState } from '../encode';
-import { ValueType } from '../ValueType';
+import { ValueType } from '../types';
 
 export function detectArray(state: EncodeState, value: any): ValueType {
 	if (Array.isArray(value)) {

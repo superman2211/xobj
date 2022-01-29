@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { StreamReader } from '@jsbyte/stream';
-import { ValueType } from './ValueType';
+import { ValueType } from './types';
 import { initEmptyDecoders } from './decoders/empty';
 import { initNumberDecoders } from './decoders/number';
 import { initStringDecoders } from './decoders/string';

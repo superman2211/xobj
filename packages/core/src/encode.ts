@@ -6,7 +6,7 @@ import { detectEmpty, initEmptyEncoders } from './encoders/empty';
 import { detectNumber, initNumberEncoders } from './encoders/number';
 import { detectObject, initObjectEncoders } from './encoders/object';
 import { detectString, initStringEncoders } from './encoders/string';
-import { ValueType } from './ValueType';
+import { ValueType } from './types';
 
 export interface EncodeOptions {
 	encoders?: Map<ValueType, EncoderMethod>;
@@ -55,7 +55,7 @@ export function encodeAny(state: EncodeState, value: any) {
 	const type = detectType(state, value);
 
 	if (type === ValueType.UNKNOWN) {
-		throw `Unable to detect object: ${value}`;
+		throw `Unable to detect object type: ${value}`;
 	}
 
 	state.writer.writeUint8(type);

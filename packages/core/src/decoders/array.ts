@@ -1,4 +1,4 @@
-import { ValueType } from '../ValueType';
+import { ValueType } from '../types';
 import { DecodeState, DecoderMethod } from '../decode';
 
 export function decodeArray(state: DecodeState): Array<any> {
@@ -15,7 +15,7 @@ export function decodeArray(state: DecodeState): Array<any> {
 
 	const arrayValue = [];
 
-	while (count-- >= 0) {
+	while (count-- > 0) {
 		const value = decoder(state);
 		arrayValue.push(value);
 	}

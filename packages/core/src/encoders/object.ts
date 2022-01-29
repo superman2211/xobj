@@ -1,12 +1,12 @@
 import { EncoderMethod, EncodeState } from '../encode';
-import { ValueType } from '../ValueType';
+import { ValueType } from '../types';
 
 export function detectObject(state: EncodeState, value: any): ValueType {
-	if (typeof value !== 'object') {
+	if (typeof value === 'object') {
 		return ValueType.OBJECT;
 	}
 
-	return ValueType.ARRAY;
+	return ValueType.UNKNOWN;
 }
 
 export function encodeObject(state: EncodeState, value: any) {
@@ -15,7 +15,6 @@ export function encodeObject(state: EncodeState, value: any) {
 	const keys = Object.keys(value);
 	const type = ValueType.ANY;
 
-	writer.writeUint8(type);
 	writer.writeUintVar(keys.length);
 
 	const encoder = encoders.get(type);
@@ -31,5 +30,5 @@ export function encodeObject(state: EncodeState, value: any) {
 }
 
 export function initObjectEncoders(encoders: Map<ValueType, EncoderMethod>) {
-	encoders.set(ValueType.ARRAY, encodeObject);
+	encoders.set(ValueType.OBJECT, encodeObject);
 }

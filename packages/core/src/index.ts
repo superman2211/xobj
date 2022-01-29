@@ -1,3 +1,3 @@
-export * from './ValueType';
+export * from './types';
 export * from './encode';
 export * from './decode';
