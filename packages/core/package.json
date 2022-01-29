@@ -1,5 +1,5 @@
 {
-	"name": "@jsbyte/core",
+	"name": "@xobj/core",
 	"version": "0.1.0",
 	"main": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",
@@ -13,7 +13,7 @@
 		"clean": "rimraf dist && rimraf coverage"
 	},
 	"dependencies": {
-		"@jsbyte/stream": "0.1.0"
+		"@xobj/buffer": "0.1.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.16.7",

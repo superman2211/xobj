@@ -1,6 +1,6 @@
-import { IStream } from './IStream';
+import { IBuffer } from './types';
 
-export class StreamWriter implements IStream {
+export class BufferWriter implements IBuffer {
 	private _data: DataView;
 	private _position: number;
 	private _length: number;

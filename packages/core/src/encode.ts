@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { StreamWriter } from '@jsbyte/stream';
+import { BufferWriter } from '@xobj/buffer';
 import { detectArray, initArrayEncoders } from './encoders/array';
 import { detectBoolean, initBooleanEncoders } from './encoders/boolean';
 import { detectEmpty, initEmptyEncoders } from './encoders/empty';
@@ -14,7 +14,7 @@ export interface EncodeOptions {
 }
 
 export interface EncodeState {
-	writer: StreamWriter;
+	writer: BufferWriter;
 	encoders: Map<ValueType, EncoderMethod>;
 	detectors: DetectorMethod[];
 }
@@ -74,7 +74,7 @@ export function initAnyEncoders(encoders: Map<ValueType, EncoderMethod>) {
 }
 
 export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
-	const writer = new StreamWriter();
+	const writer = new BufferWriter();
 	const encoders = options?.encoders ?? DEFAULT_ENCODERS;
 	const detectors = options?.detectors ?? DEFAULT_DETECTORS;
 

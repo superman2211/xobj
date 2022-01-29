@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { StreamReader } from '@jsbyte/stream';
+import { BufferReader } from '@xobj/buffer';
 import { ValueType } from './types';
 import { initEmptyDecoders } from './decoders/empty';
 import { initNumberDecoders } from './decoders/number';
@@ -13,7 +13,7 @@ export interface DecodeOptions {
 }
 
 export interface DecodeState {
-	reader: StreamReader;
+	reader: BufferReader;
 	decoders: Map<ValueType, DecoderMethod>;
 }
 
@@ -45,7 +45,7 @@ export function decodeAny(state: DecodeState): any {
 }
 
 export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
-	const reader = new StreamReader(buffer);
+	const reader = new BufferReader(buffer);
 	const decoders = options?.decoders ?? DEFAULT_DECODERS;
 
 	const state: DecodeState = {

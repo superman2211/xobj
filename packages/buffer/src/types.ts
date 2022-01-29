@@ -1,4 +1,4 @@
-export interface IStream {
+export interface IBuffer {
 	get length(): number;
 	get bytesAvailable(): number;
 	get position(): number;
