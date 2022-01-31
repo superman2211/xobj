@@ -7,6 +7,7 @@ import { initStringDecoders } from './decoders/string';
 import { initArrayDecoders } from './decoders/array';
 import { initBooleanDecoders } from './decoders/boolean';
 import { initObjectDecoders } from './decoders/object';
+import { initAnyDecoders } from './decoders/any';
 
 export interface DecodeOptions {
 	decoders?: Map<ValueType, DecoderMethod>;
@@ -29,21 +30,6 @@ initStringDecoders(DEFAULT_DECODERS);
 initArrayDecoders(DEFAULT_DECODERS);
 initObjectDecoders(DEFAULT_DECODERS);
 
-function initAnyDecoders(decoders: Map<ValueType, DecoderMethod>) {
-	decoders.set(ValueType.ANY, decodeAny);
-}
-
-export function decodeAny(state: DecodeState): any {
-	const type = state.reader.readUint8() as ValueType;
-	const decoder = state.decoders.get(type);
-
-	if (!decoder) {
-		throw `Decoder method not found for object type: ${type}`;
-	}
-
-	return decoder(state);
-}
-
 export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
 	const reader = new BufferReader(buffer);
 	const decoders = options?.decoders ?? DEFAULT_DECODERS;
@@ -53,6 +39,12 @@ export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
 		decoders,
 	};
 
-	const value = decodeAny(state);
+	const decoder = decoders.get(ValueType.ANY);
+
+	if (!decoder) {
+		throw `Decoder method not found for object type: ${ValueType.ANY}`;
+	}
+
+	const value = decoder(state);
 	return value;
 }

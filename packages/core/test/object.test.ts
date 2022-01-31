@@ -20,5 +20,8 @@ describe('object', () => {
 
 		const target = decode(buffer);
 		expect(target).toEqual(source);
+
+		const jsonData = new TextEncoder().encode(JSON.stringify(source));
+		expect(jsonData.byteLength).toBeGreaterThan(buffer.byteLength);
 	});
 });

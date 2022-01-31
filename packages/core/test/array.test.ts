@@ -18,5 +18,8 @@ describe('array', () => {
 		expect(target[4]).toBe(source[4]);
 		expect(target[5]).toBe(source[5]);
 		expect(target[6]).toBe(source[6]);
+
+		const jsonData = new TextEncoder().encode(JSON.stringify(source));
+		expect(jsonData.byteLength).toBeGreaterThan(buffer.byteLength);
 	});
 });

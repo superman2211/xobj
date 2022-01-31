@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { BufferWriter } from '@xobj/buffer';
+import { initAnyEncoders } from './encoders/any';
 import { detectArray, initArrayEncoders } from './encoders/array';
 import { detectBoolean, initBooleanEncoders } from './encoders/boolean';
 import { detectEmpty, initEmptyEncoders } from './encoders/empty';
@@ -14,9 +15,10 @@ export interface EncodeOptions {
 }
 
 export interface EncodeState {
-	writer: BufferWriter;
-	encoders: Map<ValueType, EncoderMethod>;
-	detectors: DetectorMethod[];
+	readonly writer: BufferWriter;
+	readonly encoders: Map<ValueType, EncoderMethod>;
+	readonly detectors: DetectorMethod[];
+	readonly detect: DetectorMethod;
 }
 
 export type DetectorMethod = (state: EncodeState, value: any) => ValueType;
@@ -41,7 +43,7 @@ export const DEFAULT_DETECTORS: DetectorMethod[] = [
 	detectObject,
 ];
 
-export function detectType(state: EncodeState, value: any): ValueType {
+function detect(state: EncodeState, value: any): ValueType {
 	for (const detector of state.detectors) {
 		const type = detector(state, value);
 		if (type !== ValueType.UNKNOWN) {
@@ -49,28 +51,6 @@ export function detectType(state: EncodeState, value: any): ValueType {
 		}
 	}
 	return ValueType.UNKNOWN;
-}
-
-export function encodeAny(state: EncodeState, value: any) {
-	const type = detectType(state, value);
-
-	if (type === ValueType.UNKNOWN) {
-		throw `Unable to detect object type: ${value}`;
-	}
-
-	state.writer.writeUint8(type);
-
-	const encoder = state.encoders.get(type);
-
-	if (!encoder) {
-		throw `Encoder method not found for object: ${value} with type: ${type}`;
-	}
-
-	encoder(state, value);
-}
-
-export function initAnyEncoders(encoders: Map<ValueType, EncoderMethod>) {
-	encoders.set(ValueType.ANY, encodeAny);
 }
 
 export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
@@ -82,8 +62,15 @@ export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
 		writer,
 		detectors,
 		encoders,
+		detect,
 	};
 
-	encodeAny(state, value);
+	const encoder = encoders.get(ValueType.ANY);
+
+	if (!encoder) {
+		throw `Encoder method not found for object: ${value} with type: ${ValueType.ANY}`;
+	}
+
+	encoder(state, value);
 	return state.writer.buffer;
 }
