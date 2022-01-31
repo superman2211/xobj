@@ -4,12 +4,20 @@ import { DecodeState, DecoderMethod } from '../decode';
 export function decodeArray(state: DecodeState): Array<any> {
 	const { reader, decoders } = state;
 
+	let itemType = ValueType.ANY;
+
+	const [useItemType] = reader.readFlags(8);
+
+	if (useItemType) {
+		itemType = reader.readUint8() as ValueType;
+	}
+
 	let count = reader.readUintVar();
 
-	const decoder = decoders.get(ValueType.ANY);
+	const decoder = decoders.get(itemType);
 
 	if (!decoder) {
-		throw `Decoder method not found for object type: ${ValueType.ANY} in array decoding`;
+		throw `Decoder method not found for object type: ${itemType} in array decoding`;
 	}
 
 	const arrayValue = [];

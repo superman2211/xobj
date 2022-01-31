@@ -1,15 +1,13 @@
 export const enum ValueType {
 	UNKNOWN,
-	FALSE,
-	TRUE,
+	ANY,
 	NULL,
 	UNDEFINED,
 	NAN,
-	ZERO,
+	FALSE,
+	TRUE,
 	POSITIVE_INFINITY,
 	NEGATIVE_INFINITY,
-	FLOAT32,
-	FLOAT64,
 	UINT8,
 	UINT16,
 	UINT32,
@@ -18,10 +16,10 @@ export const enum ValueType {
 	INT16,
 	INT32,
 	INT_VAR,
+	FLOAT32,
+	FLOAT64,
 	STRING,
-	ANY,
 	ARRAY,
-	ARRAY_OPTIMIZED,
 	TYPED_ARRAY,
 	ARRAY_BUFFER,
 	DATA_VIEW,
@@ -32,4 +30,22 @@ export const enum ValueType {
 	DATE,
 	REG_EXP,
 	CUSTOM,
+}
+
+export function isNumberType(type: ValueType): boolean {
+	switch (type) {
+		case ValueType.UINT8:
+		case ValueType.UINT16:
+		case ValueType.UINT32:
+		case ValueType.UINT_VAR:
+		case ValueType.INT8:
+		case ValueType.INT16:
+		case ValueType.INT32:
+		case ValueType.INT_VAR:
+		case ValueType.FLOAT32:
+		case ValueType.FLOAT64:
+			return true;
+		default:
+			return false;
+	}
 }
