@@ -161,4 +161,14 @@ export class BufferWriter implements IBuffer {
 		array.set(new Uint8Array(value), this._position);
 		this.movePosition(value.byteLength);
 	}
+
+	writeFlags(flags: boolean[]) {
+		let value = 0;
+		for (let i = 0; i < flags.length; i++) {
+			if (flags[i]) {
+				value |= 2 ** i;
+			}
+		}
+		this.writeUintVar(value);
+	}
 }
