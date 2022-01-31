@@ -35,21 +35,17 @@ describe('array', () => {
 	});
 
 	it('should write non filled array', () => {
-		const source = [];
-		source[0] = 0;
-		source[1] = 1;
-		source[2] = 2;
+		const source = [0, 1, 2];
 		source[100] = 3;
+		source[200] = 4;
+		source[1000] = 5;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(108);
+		expect(buffer.byteLength).toBe(23);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
-		expect(target[0]).toBe(source[0]);
-		expect(target[1]).toBe(source[1]);
-		expect(target[2]).toBe(source[2]);
-		expect(target[100]).toBe(source[100]);
+		expect(target).toEqual(source);
 	});
 
 	it('should write positive integer optimized array', () => {

@@ -6,28 +6,38 @@ export function decodeArray(state: DecodeState): Array<any> {
 
 	let itemType = ValueType.ANY;
 
-	const [useItemType] = reader.readFlags(8);
+	const [useItemType, hasGap] = reader.readFlags(2);
 
 	if (useItemType) {
 		itemType = reader.readUint8() as ValueType;
 	}
 
+	const value = [];
+
 	let count = reader.readUintVar();
 
-	const decoder = decoders.get(itemType);
+	if (count) {
+		const decoder = decoders.get(itemType);
 
-	if (!decoder) {
-		throw `Decoder method not found for object type: ${itemType} in array decoding`;
+		if (!decoder) {
+			throw `Decoder method not found for object type: ${itemType} in array decoding`;
+		}
+
+		if (hasGap) {
+			while (count-- > 0) {
+				const index = reader.readUintVar();
+				const item = decoder(state);
+				value[index] = item;
+			}
+		} else {
+			while (count-- > 0) {
+				const item = decoder(state);
+				value.push(item);
+			}
+		}
 	}
 
-	const arrayValue = [];
-
-	while (count-- > 0) {
-		const value = decoder(state);
-		arrayValue.push(value);
-	}
-
-	return arrayValue;
+	return value;
 }
 
 export function initArrayDecoders(decoders: Map<ValueType, DecoderMethod>) {

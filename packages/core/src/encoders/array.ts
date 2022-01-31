@@ -9,7 +9,7 @@ export function detectArray(state: EncodeState, value: any): ValueType {
 	return ValueType.UNKNOWN;
 }
 
-export function getItemType(state: EncodeState, value: Array<any>): ValueType {
+function getItemType(state: EncodeState, value: any[]): ValueType {
 	if (!value.length) {
 		return ValueType.ANY;
 	}
@@ -74,19 +74,30 @@ export function getItemType(state: EncodeState, value: Array<any>): ValueType {
 	return firstType;
 }
 
-export function encodeArray(state: EncodeState, value: Array<any>) {
+function getActualArrayLength(value: any[]): number {
+	let count = 0;
+	for (const item of value) {
+		if (item !== undefined) {
+			count++;
+		}
+	}
+	return count;
+}
+
+export function encodeArray(state: EncodeState, value: any[]) {
 	const { writer, encoders } = state;
 
 	const itemType = getItemType(state, value);
-	const useItemType = itemType !== ValueType.ANY;
+	const actualArrayLength = getActualArrayLength(value);
 
-	writer.writeFlags([useItemType]);
+	const useItemType = itemType !== ValueType.ANY;
+	const hasGap = actualArrayLength / value.length < 0.666;
+
+	writer.writeFlags([useItemType, hasGap]);
 
 	if (useItemType) {
 		writer.writeUint8(itemType);
 	}
-
-	writer.writeUintVar(value.length);
 
 	const encoder = encoders.get(itemType);
 
@@ -94,8 +105,22 @@ export function encodeArray(state: EncodeState, value: Array<any>) {
 		throw `Encoder method not found for object type: ${itemType} in array encoding`;
 	}
 
-	for (const item of value) {
-		encoder(state, item);
+	if (hasGap) {
+		writer.writeUintVar(actualArrayLength);
+
+		for (let i = 0; i < value.length; i++) {
+			const item = value[i];
+			if (item !== undefined) {
+				writer.writeUintVar(i);
+				encoder(state, item);
+			}
+		}
+	} else {
+		writer.writeUintVar(value.length);
+
+		for (const item of value) {
+			encoder(state, item);
+		}
 	}
 }
 
