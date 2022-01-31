@@ -5,15 +5,7 @@ import { encode } from '../src/encode';
 
 describe('array', () => {
 	it('should write simple array', () => {
-		const source = [
-			235,
-			-234,
-			22.533,
-			'simple string',
-			null,
-			true,
-			false,
-		];
+		const source = [235, -234, 22.533, 'simple string', null, true, false];
 
 		const buffer = encode(source);
 		expect(buffer.byteLength).toBe(31);

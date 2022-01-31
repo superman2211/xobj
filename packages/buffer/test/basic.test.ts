@@ -1,11 +1,10 @@
 /* eslint-disable no-undef */
-
-import { StreamReader } from '../src/StreamReader';
-import { StreamWriter } from '../src/StreamWriter';
+import { BufferReader } from '../src/reader';
+import { BufferWriter } from '../src/writer';
 
 describe('basic types', () => {
 	it('should write numbers correctly', () => {
-		const writer = new StreamWriter();
+		const writer = new BufferWriter();
 		writer.writeInt8(123);
 		writer.writeInt16(-1000);
 		writer.writeInt32(78901);
@@ -17,7 +16,7 @@ describe('basic types', () => {
 		expect(writer.length).toBe(26);
 		expect(writer.position).toBe(26);
 
-		const reader = new StreamReader(writer.buffer);
+		const reader = new BufferReader(writer.buffer);
 		expect(reader.length).toBe(26);
 		expect(reader.readInt8()).toBe(123);
 		expect(reader.readInt16()).toBe(-1000);

@@ -1,16 +1,15 @@
 /* eslint-disable no-undef */
-
-import { StreamReader } from '../src/StreamReader';
-import { StreamWriter } from '../src/StreamWriter';
+import { BufferReader } from '../src/reader';
+import { BufferWriter } from '../src/writer';
 
 describe('length and position', () => {
 	it('should get length of empty stream', () => {
-		const writer = new StreamWriter();
+		const writer = new BufferWriter();
 		expect(writer.length).toBe(0);
 	});
 
 	it('should get correct length and position', () => {
-		const writer = new StreamWriter();
+		const writer = new BufferWriter();
 		writer.writeInt8(123);
 		expect(writer.position).toBe(1);
 		writer.writeUint16(2048);
@@ -22,7 +21,7 @@ describe('length and position', () => {
 		expect(writer.position).toBe(3);
 		expect(writer.length).toBe(7);
 
-		const reader = new StreamReader(writer.buffer);
+		const reader = new BufferReader(writer.buffer);
 		expect(reader.length).toBe(7);
 		expect(reader.readInt8()).toBe(123);
 		expect(reader.position).toBe(1);
@@ -36,7 +35,7 @@ describe('length and position', () => {
 	});
 
 	it('should get correct length after allocate', () => {
-		const writer = new StreamWriter();
+		const writer = new BufferWriter();
 		let i = 3000;
 		while (i--) {
 			writer.writeUint8(1);

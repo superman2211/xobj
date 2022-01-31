@@ -10,5 +10,7 @@ export function detectString(state: EncodeState, value: any): ValueType {
 }
 
 export function initStringEncoders(encoders: Map<ValueType, EncoderMethod>) {
-	encoders.set(ValueType.STRING, (state: EncodeState, value: string) => state.writer.writeString(value));
+	encoders.set(ValueType.STRING, (state: EncodeState, value: string) =>
+		state.writer.writeString(value)
+	);
 }

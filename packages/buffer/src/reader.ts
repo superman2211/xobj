@@ -132,7 +132,7 @@ export class BufferReader implements IBuffer {
 		const count = this.readUintVar();
 		const value = this._data.buffer.slice(
 			this._position,
-			this._position + count,
+			this._position + count
 		);
 		this.movePosition(value.byteLength);
 		return value;

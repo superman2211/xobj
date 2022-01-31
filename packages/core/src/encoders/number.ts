@@ -64,20 +64,40 @@ export function detectNumber(state: EncodeState, value: number): ValueType {
 }
 
 export function initNumberEncoders(encoders: Map<ValueType, EncoderMethod>) {
-	encoders.set(ValueType.NAN, () => { });
-	encoders.set(ValueType.POSITIVE_INFINITY, () => { });
-	encoders.set(ValueType.NEGATIVE_INFINITY, () => { });
+	encoders.set(ValueType.NAN, () => {});
+	encoders.set(ValueType.POSITIVE_INFINITY, () => {});
+	encoders.set(ValueType.NEGATIVE_INFINITY, () => {});
 
-	encoders.set(ValueType.UINT8, (state: EncodeState, value: number) => state.writer.writeUint8(value));
-	encoders.set(ValueType.UINT16, (state: EncodeState, value: number) => state.writer.writeUint16(value));
-	encoders.set(ValueType.UINT32, (state: EncodeState, value: number) => state.writer.writeUint32(value));
-	encoders.set(ValueType.UINT_VAR, (state: EncodeState, value: number) => state.writer.writeUintVar(value));
+	encoders.set(ValueType.UINT8, (state: EncodeState, value: number) =>
+		state.writer.writeUint8(value)
+	);
+	encoders.set(ValueType.UINT16, (state: EncodeState, value: number) =>
+		state.writer.writeUint16(value)
+	);
+	encoders.set(ValueType.UINT32, (state: EncodeState, value: number) =>
+		state.writer.writeUint32(value)
+	);
+	encoders.set(ValueType.UINT_VAR, (state: EncodeState, value: number) =>
+		state.writer.writeUintVar(value)
+	);
 
-	encoders.set(ValueType.INT8, (state: EncodeState, value: number) => state.writer.writeInt8(value));
-	encoders.set(ValueType.INT16, (state: EncodeState, value: number) => state.writer.writeInt16(value));
-	encoders.set(ValueType.INT32, (state: EncodeState, value: number) => state.writer.writeInt32(value));
-	encoders.set(ValueType.INT_VAR, (state: EncodeState, value: number) => state.writer.writeIntVar(value));
+	encoders.set(ValueType.INT8, (state: EncodeState, value: number) =>
+		state.writer.writeInt8(value)
+	);
+	encoders.set(ValueType.INT16, (state: EncodeState, value: number) =>
+		state.writer.writeInt16(value)
+	);
+	encoders.set(ValueType.INT32, (state: EncodeState, value: number) =>
+		state.writer.writeInt32(value)
+	);
+	encoders.set(ValueType.INT_VAR, (state: EncodeState, value: number) =>
+		state.writer.writeIntVar(value)
+	);
 
-	encoders.set(ValueType.FLOAT32, (state: EncodeState, value: number) => state.writer.writeFloat32(value));
-	encoders.set(ValueType.FLOAT64, (state: EncodeState, value: number) => state.writer.writeFloat64(value));
+	encoders.set(ValueType.FLOAT32, (state: EncodeState, value: number) =>
+		state.writer.writeFloat32(value)
+	);
+	encoders.set(ValueType.FLOAT64, (state: EncodeState, value: number) =>
+		state.writer.writeFloat64(value)
+	);
 }

@@ -10,6 +10,6 @@ export function detectBoolean(state: EncodeState, value: any): ValueType {
 }
 
 export function initBooleanEncoders(encoders: Map<ValueType, EncoderMethod>) {
-	encoders.set(ValueType.TRUE, () => { });
-	encoders.set(ValueType.FALSE, () => { });
+	encoders.set(ValueType.TRUE, () => {});
+	encoders.set(ValueType.FALSE, () => {});
 }
