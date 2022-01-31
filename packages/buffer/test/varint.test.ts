@@ -77,12 +77,15 @@ describe('variable unsigned integer', () => {
 
 	it('should write unsigned power of two integers', () => {
 		for (let i = 0; i < 53; i++) {
-			const source = 2 ** i - 1;
-			const writer = new BufferWriter();
-			writer.writeUintVar(source);
-			const reader = new BufferReader(writer.buffer);
-			const target = reader.readUintVar();
-			expect(target).toBe(source);
+			const min = Math.max(2 ** i - 32, 0);
+			const max = Math.min(2 ** i + 32, Number.MAX_SAFE_INTEGER);
+			for (let source = min; source <= max; source++) {
+				const writer = new BufferWriter();
+				writer.writeUintVar(source);
+				const reader = new BufferReader(writer.buffer);
+				const target = reader.readUintVar();
+				expect(target).toBe(source);
+			}
 		}
 	});
 });
@@ -212,13 +215,16 @@ describe('variable signed integer', () => {
 
 	it('should write unsigned power of two integers', () => {
 		for (let i = 1; i < 53; i++) {
-			const source = 2 ** i - 1;
-			const writer = new BufferWriter();
-			writer.writeIntVar(source);
-			writer.writeIntVar(-source);
-			const reader = new BufferReader(writer.buffer);
-			expect(reader.readIntVar()).toBe(source);
-			expect(reader.readIntVar()).toBe(-source);
+			const min = Math.max(2 ** i - 32, 0);
+			const max = Math.min(2 ** i + 32, Number.MAX_SAFE_INTEGER);
+			for (let source = min; source <= max; source++) {
+				const writer = new BufferWriter();
+				writer.writeIntVar(source);
+				writer.writeIntVar(-source);
+				const reader = new BufferReader(writer.buffer);
+				expect(reader.readIntVar()).toBe(source);
+				expect(reader.readIntVar()).toBe(source === 0 ? 0 : -source);
+			}
 		}
 	});
 });
