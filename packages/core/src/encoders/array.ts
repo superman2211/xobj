@@ -12,15 +12,12 @@ export function detectArray(state: EncodeState, value: any): ValueType {
 export function encodeArray(state: EncodeState, value: Array<any>) {
 	const { writer, encoders } = state;
 
-	const type = ValueType.ANY;
-
-	writer.writeUint8(type);
 	writer.writeUintVar(value.length);
 
-	const encoder = encoders.get(type);
+	const encoder = encoders.get(ValueType.ANY);
 
 	if (!encoder) {
-		throw `Encoder method not found for object type: ${type} in array encoding`;
+		throw `Encoder method not found for object type: ${ValueType.ANY} in array encoding`;
 	}
 
 	for (const item of value) {

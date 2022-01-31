@@ -4,6 +4,16 @@ import { decode } from '../src/decode';
 import { encode } from '../src/encode';
 
 describe('object', () => {
+	it('should write empty object', () => {
+		const source = {};
+
+		const buffer = encode(source);
+		expect(buffer.byteLength).toBe(2);
+
+		const target = decode(buffer);
+		expect(target).toEqual(source);
+	});
+
 	it('should write simple object', () => {
 		const source = {
 			name: 'John Doe',
@@ -16,7 +26,7 @@ describe('object', () => {
 		};
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(86);
+		expect(buffer.byteLength).toBe(85);
 
 		const target = decode(buffer);
 		expect(target).toEqual(source);

@@ -21,6 +21,8 @@ export const enum ValueType {
 	STRING,
 	ANY,
 	ARRAY,
+	ARRAY_OPTIMIZED,
+	TYPED_ARRAY,
 	ARRAY_BUFFER,
 	DATA_VIEW,
 	OBJECT,
