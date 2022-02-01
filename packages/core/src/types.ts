@@ -6,7 +6,6 @@ export const enum ValueType {
 	NAN,
 	FALSE,
 	TRUE,
-	BITSET,
 	POSITIVE_INFINITY,
 	NEGATIVE_INFINITY,
 	UINT8,
