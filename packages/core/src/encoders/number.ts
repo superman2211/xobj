@@ -53,11 +53,8 @@ export function detectNumber(state: EncodeState, value: number): ValueType {
 		if (value <= Number.MAX_SAFE_INTEGER) {
 			return ValueType.UINT_VAR;
 		}
-	} else {
-		const parts = value.toString(10).split('.');
-		if (parts.length === 2 && parts[1].length < 7) {
-			return ValueType.FLOAT32;
-		}
+	} else if (value.toString(10).length < 10) {
+		return ValueType.FLOAT32;
 	}
 
 	return ValueType.FLOAT64;

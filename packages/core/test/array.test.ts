@@ -8,7 +8,7 @@ describe('array', () => {
 		const source = [];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(3);
+		expect(buffer.byteLength).toBe(2);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(0);
@@ -18,7 +18,7 @@ describe('array', () => {
 		const source = [235, -234, 22.533, 'simple string', null, true, false];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(31);
+		expect(buffer.byteLength).toBe(37);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -100,7 +100,7 @@ describe('array', () => {
 		const source = [1, 2.4553234, -256, 4, 5.334, 66.224423];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(29);
+		expect(buffer.byteLength).toBe(28);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -114,6 +114,23 @@ describe('array', () => {
 
 		const buffer = encode(source);
 		expect(buffer.byteLength).toBe(28);
+
+		const target = decode(buffer);
+		expect(target.length).toBe(source.length);
+		expect(target).toEqual(source);
+	});
+
+	it('should write grouped array', () => {
+		const source = [
+			1, 2, 3, 4, 5, 6,
+			true, false, false, true, true, true, false, false, true, true, false, false, false, true, true, false, false, true,
+			'one', 'two', 'three', 'four', 'five',
+			false, false, true, true,
+			234, 567, 890,
+		];
+
+		const buffer = encode(source);
+		expect(buffer.byteLength).toBe(52);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);

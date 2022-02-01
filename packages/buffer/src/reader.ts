@@ -148,4 +148,24 @@ export class BufferReader implements IBuffer {
 
 		return flags;
 	}
+
+	readBitset(count: number): boolean[] {
+		const value: boolean[] = [];
+
+		if (count) {
+			let bitset = this.readUint8();
+			let position = 0;
+
+			while (count--) {
+				value.push(!!(bitset & (2 ** position)));
+				position++;
+				if (position === 8 && count) {
+					bitset = this.readUint8();
+					position = 0;
+				}
+			}
+		}
+
+		return value;
+	}
 }

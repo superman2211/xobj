@@ -162,13 +162,36 @@ export class BufferWriter implements IBuffer {
 		this.movePosition(value.byteLength);
 	}
 
-	writeFlags(flags: boolean[]) {
-		let value = 0;
-		for (let i = 0; i < flags.length; i++) {
-			if (flags[i]) {
-				value |= 2 ** i;
+	writeFlags(value: boolean[]) {
+		let bitset = 0;
+		for (let i = 0; i < value.length; i++) {
+			if (value[i]) {
+				bitset |= 2 ** i;
 			}
 		}
-		this.writeUintVar(value);
+		this.writeUintVar(bitset);
+	}
+
+	writeBitset(value: boolean[]) {
+		let bitset = 0;
+		let position = 0;
+
+		for (let i = 0; i < value.length; i++) {
+			if (value[i]) {
+				bitset |= 2 ** position;
+			}
+
+			position++;
+
+			if (position === 8) {
+				this.writeUint8(bitset);
+				bitset = 0;
+				position = 0;
+			}
+		}
+
+		if (position) {
+			this.writeUint8(bitset);
+		}
 	}
 }

@@ -1,5 +1,7 @@
 import { EncoderMethod, EncodeState } from '../encode';
-import { isNumberType, ValueType } from '../types';
+import {
+	isBooleanType, isFloatType, isNumberType, ValueType,
+} from '../types';
 
 export function detectArray(state: EncodeState, value: any): ValueType {
 	if (Array.isArray(value)) {
@@ -9,117 +11,67 @@ export function detectArray(state: EncodeState, value: any): ValueType {
 	return ValueType.UNKNOWN;
 }
 
-function getItemType(state: EncodeState, value: any[]): ValueType {
-	if (!value.length) {
-		return ValueType.ANY;
-	}
+interface ArrayGroup {
+	type: ValueType;
+	items: any[];
+}
 
-	const first = value[0];
-	const firstType = state.detect(state, first);
+function getArrayGroups(state: EncodeState, value: any[]): ArrayGroup[] {
+	const groups: ArrayGroup[] = [];
 
-	if (isNumberType(firstType)) {
-		let isInteger = Number.isInteger(first);
-		let isFloat = !Number.isInteger(first);
-		let isPositive = first >= 0;
-		let min: number = first;
-		let max: number = first;
-		let isSingle = firstType === ValueType.FLOAT32;
+	if (value.length) {
+		const first = value[0];
+		let group: ArrayGroup = { type: state.detect(state, first), items: [first] };
+		groups.push(group);
 
 		for (let i = 1; i < value.length; i++) {
 			const item = value[i];
-			const itemType = state.detect(state, item);
-			if (isNumberType(itemType)) {
-				if (isInteger) {
-					isInteger = Number.isInteger(item);
-
-					if (isPositive) {
-						isPositive = item >= 0;
-					}
-
-					min = Math.min(min, item);
-					max = Math.max(max, item);
+			const type = state.detect(state, item);
+			if (group.type === type) {
+				group.items.push(item);
+			} else if (isBooleanType(group.type) && isBooleanType(type)) {
+				group.items.push(item);
+			} else if (isNumberType(group.type) && isNumberType(type)) {
+				if (!isFloatType(group.type) && !isFloatType(type)) {
+					group.type = ValueType.INT_VAR;
+				} else if (group.type !== ValueType.FLOAT64 && type !== ValueType.FLOAT64) {
+					group.type = ValueType.FLOAT32;
+				} else {
+					group.type = ValueType.FLOAT64;
 				}
-
-				if (isFloat) {
-					isFloat = !Number.isInteger(item);
-					if (isSingle) {
-						isSingle = itemType === ValueType.FLOAT32;
-					}
-				}
+				group.items.push(item);
 			} else {
-				return ValueType.ANY;
+				group = { type: state.detect(state, item), items: [item] };
+				groups.push(group);
 			}
 		}
-
-		if (isInteger) {
-			if (isPositive && max <= Number.MAX_SAFE_INTEGER) {
-				return ValueType.UINT_VAR;
-			} if (!isPositive && max >= -Number.MAX_SAFE_INTEGER) {
-				return ValueType.INT_VAR;
-			}
-		}
-
-		if (isFloat) {
-			return isSingle ? ValueType.FLOAT32 : ValueType.FLOAT64;
-		}
-
-		return ValueType.ANY;
 	}
 
-	for (let i = 1; i < value.length; i++) {
-		if (state.detect(state, value[i]) !== firstType) {
-			return ValueType.ANY;
-		}
-	}
-	return firstType;
-}
-
-function getActualArrayLength(value: any[]): number {
-	let count = 0;
-	for (const item of value) {
-		if (item !== undefined) {
-			count++;
-		}
-	}
-	return count;
+	return groups;
 }
 
 export function encodeArray(state: EncodeState, value: any[]) {
 	const { writer, encoders } = state;
 
-	const itemType = getItemType(state, value);
-	const actualArrayLength = getActualArrayLength(value);
+	const groups = getArrayGroups(state, value);
 
-	const useItemType = itemType !== ValueType.ANY;
-	const hasGap = actualArrayLength / value.length < 0.666;
+	writer.writeUintVar(groups.length);
+	for (const group of groups) {
+		writer.writeUint8(group.type);
+		writer.writeUintVar(group.items.length);
 
-	writer.writeFlags([useItemType, hasGap]);
+		if (isBooleanType(group.type)) {
+			writer.writeBitset(group.items);
+		} else {
+			const encoder = encoders.get(group.type);
 
-	if (useItemType) {
-		writer.writeUint8(itemType);
-	}
+			if (!encoder) {
+				throw `Encoder method not found for object type: ${group.type} in array encoding`;
+			}
 
-	const encoder = encoders.get(itemType);
-
-	if (!encoder) {
-		throw `Encoder method not found for object type: ${itemType} in array encoding`;
-	}
-
-	if (hasGap) {
-		writer.writeUintVar(actualArrayLength);
-
-		for (let i = 0; i < value.length; i++) {
-			const item = value[i];
-			if (item !== undefined) {
-				writer.writeUintVar(i);
+			for (const item of group.items) {
 				encoder(state, item);
 			}
-		}
-	} else {
-		writer.writeUintVar(value.length);
-
-		for (const item of value) {
-			encoder(state, item);
 		}
 	}
 }

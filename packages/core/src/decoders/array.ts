@@ -1,36 +1,29 @@
 import { ValueType } from '../types';
 import { DecodeState, DecoderMethod } from '../decode';
+import { isBooleanType } from '..';
 
-export function decodeArray(state: DecodeState): Array<any> {
+export function decodeArray2(state: DecodeState): Array<any> {
 	const { reader, decoders } = state;
-
-	let itemType = ValueType.ANY;
-
-	const [useItemType, hasGap] = reader.readFlags(2);
-
-	if (useItemType) {
-		itemType = reader.readUint8() as ValueType;
-	}
 
 	const value = [];
 
-	let count = reader.readUintVar();
+	let groups = reader.readUintVar();
 
-	if (count) {
-		const decoder = decoders.get(itemType);
+	while (groups--) {
+		const type = reader.readUint8() as ValueType;
+		let count = reader.readUintVar();
 
-		if (!decoder) {
-			throw `Decoder method not found for object type: ${itemType} in array decoding`;
-		}
-
-		if (hasGap) {
-			while (count-- > 0) {
-				const index = reader.readUintVar();
-				const item = decoder(state);
-				value[index] = item;
-			}
+		if (isBooleanType(type)) {
+			const bitset = reader.readBitset(count);
+			value.push(...bitset);
 		} else {
-			while (count-- > 0) {
+			const decoder = decoders.get(type);
+
+			if (!decoder) {
+				throw `Decoder method not found for object type: ${type} in array decoding`;
+			}
+
+			while (count--) {
 				const item = decoder(state);
 				value.push(item);
 			}
@@ -41,5 +34,5 @@ export function decodeArray(state: DecodeState): Array<any> {
 }
 
 export function initArrayDecoders(decoders: Map<ValueType, DecoderMethod>) {
-	decoders.set(ValueType.ARRAY, decodeArray);
+	decoders.set(ValueType.ARRAY, decodeArray2);
 }
