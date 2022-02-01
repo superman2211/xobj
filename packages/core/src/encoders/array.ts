@@ -1,7 +1,5 @@
 import { EncoderMethod, EncodeState } from '../encode';
-import {
-	isBooleanType, isFloatType, isNumberType, ValueType,
-} from '../types';
+import { isBooleanType, isIntegerType, ValueType } from '../types';
 
 export function detectArray(state: EncodeState, value: any): ValueType {
 	if (Array.isArray(value)) {
@@ -31,14 +29,8 @@ function getArrayGroups(state: EncodeState, value: any[]): ArrayGroup[] {
 				group.items.push(item);
 			} else if (isBooleanType(group.type) && isBooleanType(type)) {
 				group.items.push(item);
-			} else if (isNumberType(group.type) && isNumberType(type)) {
-				if (!isFloatType(group.type) && !isFloatType(type)) {
-					group.type = ValueType.INT_VAR;
-				} else if (group.type !== ValueType.FLOAT64 && type !== ValueType.FLOAT64) {
-					group.type = ValueType.FLOAT32;
-				} else {
-					group.type = ValueType.FLOAT64;
-				}
+			} else if (isIntegerType(group.type) && isIntegerType(type)) {
+				group.type = ValueType.INT_VAR;
 				group.items.push(item);
 			} else {
 				group = { type: state.detect(state, item), items: [item] };

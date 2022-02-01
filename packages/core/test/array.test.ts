@@ -18,7 +18,7 @@ describe('array', () => {
 		const source = [235, -234, 22.533, 'simple string', null, true, false];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(37);
+		expect(buffer.byteLength).toBe(35);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -100,7 +100,7 @@ describe('array', () => {
 		const source = [1, 2.4553234, -256, 4, 5.334, 66.224423];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(28);
+		expect(buffer.byteLength).toBe(26);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -135,5 +135,24 @@ describe('array', () => {
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
 		expect(target).toEqual(source);
+	});
+
+	it('should write differemt number array', () => {
+		const source = [
+			1, 2, 3, 4, 5, 6,
+			234, 567, 890,
+			23.45, 45.67,
+			2 ** 50 + 1,
+			4444444.55667777,
+		];
+
+		const buffer = encode(source);
+		expect(buffer.byteLength).toBe(46);
+
+		const target = decode(buffer);
+		expect(target.length).toBe(source.length);
+		for (let i = 0; i < source.length; i++) {
+			expect(target[i]).toBeCloseTo(source[i], 5);
+		}
 	});
 });
