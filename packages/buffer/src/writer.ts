@@ -147,6 +147,21 @@ export class BufferWriter implements IBuffer {
 		this.movePosition(8);
 	}
 
+	writeFloatVar(value: number) {
+		if (Number.isInteger(value)) {
+			this.writeIntVar(value);
+			this.writeIntVar(0);
+		} else {
+			const parts = value.toExponential().split('e');
+			const numberParts = parts[0].split('.');
+			const numberPower = numberParts.length > 1 ? -numberParts[1].length : 0;
+			const power = parseInt(parts[1], 10) + numberPower;
+			const integer = parseInt(parts[0].replace('.', ''), 10);
+			this.writeIntVar(integer);
+			this.writeIntVar(power);
+		}
+	}
+
 	writeString(value: string) {
 		this.writeUintVar(value.length);
 		for (let i = 0; i < value.length; i++) {
