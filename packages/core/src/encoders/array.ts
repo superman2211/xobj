@@ -14,6 +14,22 @@ interface ArrayGroup {
 	items: any[];
 }
 
+function optimizeGroups(groups: ArrayGroup[]) {
+	for (let i = 0; i < groups.length - 1; i++) {
+		const j = i + 1;
+		const groupi = groups[i];
+		const groupj = groups[j];
+		if (groupi.type === ValueType.ANY || groupi.items.length === 1) {
+			if (groupj.items.length === 1) {
+				groupi.type = ValueType.ANY;
+				groupi.items.push(...groupj.items);
+				groups.splice(j, 1);
+				i--;
+			}
+		}
+	}
+}
+
 function getArrayGroups(state: EncodeState, value: any[]): ArrayGroup[] {
 	const groups: ArrayGroup[] = [];
 
@@ -37,6 +53,8 @@ function getArrayGroups(state: EncodeState, value: any[]): ArrayGroup[] {
 				groups.push(group);
 			}
 		}
+
+		optimizeGroups(groups);
 	}
 
 	return groups;

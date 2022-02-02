@@ -14,11 +14,21 @@ describe('array', () => {
 		expect(target.length).toBe(0);
 	});
 
+	it('should write array with different values', () => {
+		const source = [1, true, null, undefined, 23.450000762939453, 'test', { x: 1, y: 2 }, ['a', 'b', 'c']];
+
+		const buffer = encode(source);
+		expect(buffer.byteLength).toBe(44);
+
+		const target = decode(buffer);
+		expect(target).toEqual(source);
+	});
+
 	it('should write simple array', () => {
 		const source = [235, -234, 22.533, 'simple string', null, true, false];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(35);
+		expect(buffer.byteLength).toBe(34);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
