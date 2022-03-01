@@ -113,12 +113,6 @@ export class BufferReader implements IBuffer {
 		return value;
 	}
 
-	readFloatVar(): number {
-		const integer = this.readIntVar();
-		const power = this.readIntVar();
-		return integer * (10 ** power);
-	}
-
 	readString(): string {
 		let count = this.readUintVar();
 		if (!count) {
