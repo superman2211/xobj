@@ -8,13 +8,20 @@ export function decodeArray(state: DecodeState): Array<any> {
 
 	let groups = reader.readUintVar();
 
+	let i = 0;
+
 	while (groups--) {
 		const type = reader.readUint8() as ValueType;
 		let count = reader.readUintVar();
 
 		if (isBooleanType(type)) {
 			const bitset = reader.readBitset(count);
-			value.push(...bitset);
+			let j = 0;
+			while (j < count) {
+				value[i++] = bitset[j++];
+			}
+		} else if (type === ValueType.UNDEFINED) {
+			i += count;
 		} else {
 			const decoder = decoders.get(type);
 
@@ -24,7 +31,7 @@ export function decodeArray(state: DecodeState): Array<any> {
 
 			while (count--) {
 				const item = decoder(state);
-				value.push(item);
+				value[i++] = item;
 			}
 		}
 	}

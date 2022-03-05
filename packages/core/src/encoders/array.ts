@@ -1,3 +1,4 @@
+import { StructInfo } from '..';
 import { EncoderMethod, EncodeState } from '../encode';
 import { isBooleanType, isIntegerType, ValueType } from '../types';
 
@@ -12,6 +13,7 @@ export function detectArray(state: EncodeState, value: any): ValueType {
 interface ArrayGroup {
 	type: ValueType;
 	items: any[];
+	struct?: StructInfo;
 }
 
 function optimizeGroups(groups: ArrayGroup[]) {
@@ -66,6 +68,7 @@ export function encodeArray(state: EncodeState, value: any[]) {
 	const groups = getArrayGroups(state, value);
 
 	writer.writeUintVar(groups.length);
+
 	for (const group of groups) {
 		writer.writeUint8(group.type);
 		writer.writeUintVar(group.items.length);
