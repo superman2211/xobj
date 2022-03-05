@@ -3,7 +3,7 @@
 import { decode } from '../src/decode';
 import { encode } from '../src/encode';
 
-describe('array', () => {
+describe('array struct', () => {
 	it('should write simple structs array', () => {
 		const source = [
 			{ x: 1, y: 2, name: 'one' },
