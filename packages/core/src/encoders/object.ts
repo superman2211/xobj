@@ -1,5 +1,5 @@
-import { EncoderMethod, EncodeState } from '../encode';
 import { ValueType } from '../types';
+import { EncoderMethod, EncodeState } from '../encode';
 
 export function detectObject(state: EncodeState, value: any): ValueType {
 	if (typeof value === 'object') {

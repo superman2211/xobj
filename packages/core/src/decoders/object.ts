@@ -9,12 +9,12 @@ export function decodeObject(state: DecodeState): any {
 	const decoder = decoders.get(ValueType.ANY);
 
 	if (!decoder) {
-		throw `Decoder method not found for object type: ${ValueType.ANY} in array decoding`;
+		throw `Decoder method not found for object type: ${ValueType.ANY} in object decoding`;
 	}
 
 	const objectValue: any = {};
 
-	while (count-- > 0) {
+	while (count--) {
 		const key = reader.readString();
 		const value = decoder(state);
 		objectValue[key] = value;

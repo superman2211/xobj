@@ -85,3 +85,5 @@ export function isBooleanType(type: ValueType): boolean {
 			return false;
 	}
 }
+
+export type StructInfo = Map<string, ValueType>;

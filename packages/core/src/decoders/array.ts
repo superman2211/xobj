@@ -1,5 +1,6 @@
 import { ValueType, isBooleanType } from '../types';
 import { DecodeState, DecoderMethod } from '../decode';
+import { decodeStruct, decodeStructInfo } from './struct';
 
 export function decodeArray(state: DecodeState): Array<any> {
 	const { reader, decoders } = state;
@@ -19,6 +20,13 @@ export function decodeArray(state: DecodeState): Array<any> {
 			let j = 0;
 			while (j < count) {
 				value[i++] = bitset[j++];
+			}
+		} else if (type === ValueType.STRUCT) {
+			const struct = decodeStructInfo(state);
+
+			while (count--) {
+				const item = decodeStruct(state, struct);
+				value[i++] = item;
 			}
 		} else if (type === ValueType.UNDEFINED) {
 			i += count;

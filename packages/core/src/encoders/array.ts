@@ -1,6 +1,8 @@
-import { StructInfo } from '..';
 import { EncoderMethod, EncodeState } from '../encode';
-import { isBooleanType, isIntegerType, ValueType } from '../types';
+import {
+	isBooleanType, isIntegerType, StructInfo, ValueType,
+} from '../types';
+import { encodeStruct, encodeStructInfo, getItemsStruct } from './struct';
 
 export function detectArray(state: EncodeState, value: any): ValueType {
 	if (Array.isArray(value)) {
@@ -14,6 +16,17 @@ interface ArrayGroup {
 	type: ValueType;
 	items: any[];
 	struct?: StructInfo;
+}
+
+function optimizeStructs(state: EncodeState, groups: ArrayGroup[]) {
+	for (const group of groups) {
+		if (group.type === ValueType.OBJECT) {
+			group.struct = getItemsStruct(state, group.items);
+			if (group.struct) {
+				group.type = ValueType.STRUCT;
+			}
+		}
+	}
 }
 
 function optimizeGroups(groups: ArrayGroup[]) {
@@ -56,6 +69,7 @@ function getArrayGroups(state: EncodeState, value: any[]): ArrayGroup[] {
 			}
 		}
 
+		optimizeStructs(state, groups);
 		optimizeGroups(groups);
 	}
 
@@ -75,6 +89,12 @@ export function encodeArray(state: EncodeState, value: any[]) {
 
 		if (isBooleanType(group.type)) {
 			writer.writeBitset(group.items);
+		} else if (group.type === ValueType.STRUCT) {
+			const { struct } = group;
+			encodeStructInfo(state, struct!);
+			for (const item of group.items) {
+				encodeStruct(state, struct!, item);
+			}
 		} else {
 			const encoder = encoders.get(group.type);
 

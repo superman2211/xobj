@@ -26,7 +26,7 @@ describe('object', () => {
 		};
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(85);
+		expect(buffer.byteLength).toBe(73);
 
 		const target = decode(buffer);
 		expect(target).toEqual(source);
