@@ -17,12 +17,12 @@ interface ArrayGroup {
 function optimizeGroups(groups: ArrayGroup[]) {
 	for (let i = 0; i < groups.length - 1; i++) {
 		const j = i + 1;
-		const groupi = groups[i];
-		const groupj = groups[j];
-		if (groupi.type === ValueType.ANY || groupi.items.length === 1) {
-			if (groupj.items.length === 1) {
-				groupi.type = ValueType.ANY;
-				groupi.items.push(...groupj.items);
+		const group0 = groups[i];
+		const group1 = groups[j];
+		if (group0.type === ValueType.ANY || group0.items.length === 1) {
+			if (group1.items.length === 1) {
+				group0.type = ValueType.ANY;
+				group0.items.push(...group1.items);
 				groups.splice(j, 1);
 				i--;
 			}

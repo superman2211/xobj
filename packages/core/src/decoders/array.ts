@@ -1,8 +1,7 @@
-import { ValueType } from '../types';
+import { ValueType, isBooleanType } from '../types';
 import { DecodeState, DecoderMethod } from '../decode';
-import { isBooleanType } from '..';
 
-export function decodeArray2(state: DecodeState): Array<any> {
+export function decodeArray(state: DecodeState): Array<any> {
 	const { reader, decoders } = state;
 
 	const value = [];
@@ -34,5 +33,5 @@ export function decodeArray2(state: DecodeState): Array<any> {
 }
 
 export function initArrayDecoders(decoders: Map<ValueType, DecoderMethod>) {
-	decoders.set(ValueType.ARRAY, decodeArray2);
+	decoders.set(ValueType.ARRAY, decodeArray);
 }
