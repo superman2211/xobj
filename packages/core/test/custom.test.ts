@@ -8,6 +8,11 @@ import {
 	encode, EncodeState, DEFAULT_ENCODERS, DEFAULT_DETECTORS,
 } from '../src/encode';
 
+enum CustomType {
+	POINT = 0,
+	UNIT = 1,
+}
+
 class Point {
 	constructor(public x: number, public y: number) {
 	}
@@ -41,11 +46,6 @@ describe('custom', () => {
 		};
 
 		// custom
-
-		enum CustomType {
-			POINT = 0,
-			UNIT = 1,
-		}
 
 		function customDetector(state: EncodeState, value: any): ValueType {
 			if (value instanceof Point) {
