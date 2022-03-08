@@ -4,6 +4,7 @@ import { initAnyEncoders } from './encoders/any';
 import { initArrayEncoders } from './encoders/array';
 import { initBooleanEncoders } from './encoders/boolean';
 import { initEmptyEncoders } from './encoders/empty';
+import { initMapEncoders } from './encoders/map';
 import { initNumberEncoders } from './encoders/number';
 import { initObjectEncoders } from './encoders/object';
 import { initSetEncoders } from './encoders/set';
@@ -35,6 +36,7 @@ initNumberEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initStringEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initArrayEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initSetEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
+initMapEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initObjectEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 
 function detect(state: EncodeState, value: any): ValueType {

@@ -9,6 +9,7 @@ import { initBooleanDecoders } from './decoders/boolean';
 import { initObjectDecoders } from './decoders/object';
 import { initAnyDecoders } from './decoders/any';
 import { initSetDecoders } from './decoders/set';
+import { initMapDecoders } from './decoders/map';
 
 export interface DecodeOptions {
 	decoders?: Map<ValueType, DecoderMethod>;
@@ -30,6 +31,7 @@ initNumberDecoders(DEFAULT_DECODERS);
 initStringDecoders(DEFAULT_DECODERS);
 initArrayDecoders(DEFAULT_DECODERS);
 initSetDecoders(DEFAULT_DECODERS);
+initMapDecoders(DEFAULT_DECODERS);
 initObjectDecoders(DEFAULT_DECODERS);
 
 export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
