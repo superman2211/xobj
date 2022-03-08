@@ -38,6 +38,10 @@ export function detectTypedArray(state: EncodeState, value: any): ValueType {
 		return ValueType.TYPED_ARRAY;
 	}
 
+	if (value instanceof DataView) {
+		return ValueType.TYPED_ARRAY;
+	}
+
 	return ValueType.UNKNOWN;
 }
 
@@ -78,6 +82,10 @@ export function encodeTypedArray(state: EncodeState, value: any) {
 
 	if (value instanceof Float64Array) {
 		writer.writeUint8(ValueType.FLOAT64);
+	}
+
+	if (value instanceof DataView) {
+		writer.writeUint8(ValueType.ANY);
 	}
 
 	const buffer: ArrayBuffer = value.buffer.slice(value.byteOffset, value.byteLength);

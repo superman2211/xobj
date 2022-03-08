@@ -14,4 +14,17 @@ describe('typed array', () => {
 		expect(target).toEqual(source);
 		expect(target.byteLength).toBe(source.byteLength);
 	});
+
+	it('should write simple data view', () => {
+		const source = new DataView(new ArrayBuffer(6));
+		source.setInt16(0, -345);
+		source.setUint32(2, 567890);
+
+		const buffer = encode(source);
+		expect(buffer.byteLength).toBe(9);
+
+		const target: DataView = decode(buffer);
+		expect(target.getInt16(0)).toBe(-345);
+		expect(target.getUint32(2)).toBe(567890);
+	});
 });

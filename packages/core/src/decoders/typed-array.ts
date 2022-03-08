@@ -25,6 +25,8 @@ export function decodeTypedArray(state: DecodeState): any {
 			return new Float32Array(buffer);
 		case ValueType.FLOAT64:
 			return new Float64Array(buffer);
+		case ValueType.ANY:
+			return new DataView(buffer);
 		default:
 			throw `Unknown typed array type: ${type}`;
 	}
