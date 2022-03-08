@@ -4,6 +4,11 @@ export class BufferWriter implements IBuffer {
 	private _data: DataView;
 	private _position: number;
 	private _length: number;
+	private _littleEndian: boolean;
+
+	get littleEndian(): boolean {
+		return this._littleEndian;
+	}
 
 	get length(): number {
 		return this._length;
@@ -35,10 +40,11 @@ export class BufferWriter implements IBuffer {
 		return this._data.buffer.byteLength;
 	}
 
-	constructor(bufferSize: number = 1024) {
+	constructor(bufferSize: number = 1024, littleEndian: boolean = false) {
 		this._data = new DataView(new ArrayBuffer(bufferSize));
 		this._position = 0;
 		this._length = 0;
+		this._littleEndian = littleEndian;
 	}
 
 	private allocate(bytes: number) {
@@ -74,13 +80,13 @@ export class BufferWriter implements IBuffer {
 
 	writeUint16(value: number) {
 		this.allocate(2);
-		this._data.setUint16(this._position, value);
+		this._data.setUint16(this._position, value, this._littleEndian);
 		this.movePosition(2);
 	}
 
 	writeUint32(value: number) {
 		this.allocate(4);
-		this._data.setUint32(this._position, value);
+		this._data.setUint32(this._position, value, this._littleEndian);
 		this.movePosition(4);
 	}
 
@@ -125,25 +131,25 @@ export class BufferWriter implements IBuffer {
 
 	writeInt16(value: number) {
 		this.allocate(2);
-		this._data.setInt16(this._position, value);
+		this._data.setInt16(this._position, value, this._littleEndian);
 		this.movePosition(2);
 	}
 
 	writeInt32(value: number) {
 		this.allocate(4);
-		this._data.setInt32(this._position, value);
+		this._data.setInt32(this._position, value, this._littleEndian);
 		this.movePosition(4);
 	}
 
 	writeFloat32(value: number) {
 		this.allocate(4);
-		this._data.setFloat32(this._position, value);
+		this._data.setFloat32(this._position, value, this._littleEndian);
 		this.movePosition(4);
 	}
 
 	writeFloat64(value: number) {
 		this.allocate(8);
-		this._data.setFloat64(this._position, value);
+		this._data.setFloat64(this._position, value, this._littleEndian);
 		this.movePosition(8);
 	}
 

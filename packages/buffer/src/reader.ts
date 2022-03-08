@@ -3,6 +3,11 @@ import { IBuffer } from './types';
 export class BufferReader implements IBuffer {
 	private _data: DataView;
 	private _position: number;
+	private _littleEndian: boolean;
+
+	get littleEndian(): boolean {
+		return this._littleEndian;
+	}
 
 	get length(): number {
 		return this._data.buffer.byteLength;
@@ -30,9 +35,10 @@ export class BufferReader implements IBuffer {
 		return this._data.buffer;
 	}
 
-	constructor(buffer: ArrayBuffer) {
+	constructor(buffer: ArrayBuffer, littleEndian: boolean = false) {
 		this._data = new DataView(buffer);
 		this._position = 0;
+		this._littleEndian = littleEndian;
 	}
 
 	private movePosition(value: number) {
@@ -46,13 +52,13 @@ export class BufferReader implements IBuffer {
 	}
 
 	readUint16(): number {
-		const value = this._data.getUint16(this._position);
+		const value = this._data.getUint16(this._position, this._littleEndian);
 		this.movePosition(2);
 		return value;
 	}
 
 	readUint32(): number {
-		const value = this._data.getUint32(this._position);
+		const value = this._data.getUint32(this._position, this._littleEndian);
 		this.movePosition(4);
 		return value;
 	}
@@ -90,25 +96,25 @@ export class BufferReader implements IBuffer {
 	}
 
 	readInt16(): number {
-		const value = this._data.getInt16(this._position);
+		const value = this._data.getInt16(this._position, this._littleEndian);
 		this.movePosition(2);
 		return value;
 	}
 
 	readInt32(): number {
-		const value = this._data.getInt32(this._position);
+		const value = this._data.getInt32(this._position, this._littleEndian);
 		this.movePosition(4);
 		return value;
 	}
 
 	readFloat32(): number {
-		const value = this._data.getFloat32(this._position);
+		const value = this._data.getFloat32(this._position, this._littleEndian);
 		this.movePosition(4);
 		return value;
 	}
 
 	readFloat64(): number {
-		const value = this._data.getFloat64(this._position);
+		const value = this._data.getFloat64(this._position, this._littleEndian);
 		this.movePosition(8);
 		return value;
 	}

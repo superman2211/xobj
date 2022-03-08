@@ -4,4 +4,5 @@ export interface IBuffer {
 	get position(): number;
 	set position(value: number);
 	get buffer(): ArrayBuffer;
+	get littleEndian(): boolean;
 }
