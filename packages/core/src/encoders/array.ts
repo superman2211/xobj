@@ -1,4 +1,4 @@
-import { EncoderMethod, EncodeState } from '../encode';
+import { DetectorMethod, EncoderMethod, EncodeState } from '../encode';
 import {
 	isBooleanType, isIntegerType, StructInfo, ValueType,
 } from '../types';
@@ -109,6 +109,8 @@ export function encodeArray(state: EncodeState, value: any[]) {
 	}
 }
 
-export function initArrayEncoders(encoders: Map<ValueType, EncoderMethod>) {
+export function initArrayEncoders(encoders: Map<ValueType, EncoderMethod>, detectors: DetectorMethod[]) {
 	encoders.set(ValueType.ARRAY, encodeArray);
+
+	detectors.push(detectArray);
 }

@@ -1,5 +1,5 @@
 import { EncoderMethod } from '..';
-import { EncodeState } from '../encode';
+import { EncodeState, DetectorMethod } from '../encode';
 import { ValueType } from '../types';
 
 export function detectNumber(state: EncodeState, value: number): ValueType {
@@ -60,7 +60,7 @@ export function detectNumber(state: EncodeState, value: number): ValueType {
 	return ValueType.FLOAT64;
 }
 
-export function initNumberEncoders(encoders: Map<ValueType, EncoderMethod>) {
+export function initNumberEncoders(encoders: Map<ValueType, EncoderMethod>, detectors: DetectorMethod[]) {
 	encoders.set(ValueType.NAN, () => { });
 	encoders.set(ValueType.POSITIVE_INFINITY, () => { });
 	encoders.set(ValueType.NEGATIVE_INFINITY, () => { });
@@ -77,4 +77,6 @@ export function initNumberEncoders(encoders: Map<ValueType, EncoderMethod>) {
 
 	encoders.set(ValueType.FLOAT32, (state: EncodeState, value: number) => state.writer.writeFloat32(value));
 	encoders.set(ValueType.FLOAT64, (state: EncodeState, value: number) => state.writer.writeFloat64(value));
+
+	detectors.push(detectNumber);
 }

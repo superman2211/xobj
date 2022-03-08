@@ -1,4 +1,4 @@
-import { EncoderMethod, EncodeState } from '../encode';
+import { DetectorMethod, EncoderMethod, EncodeState } from '../encode';
 import { ValueType } from '../types';
 
 export function detectString(state: EncodeState, value: any): ValueType {
@@ -9,8 +9,8 @@ export function detectString(state: EncodeState, value: any): ValueType {
 	return ValueType.UNKNOWN;
 }
 
-export function initStringEncoders(encoders: Map<ValueType, EncoderMethod>) {
-	encoders.set(ValueType.STRING, (state: EncodeState, value: string) =>
-		state.writer.writeString(value)
-	);
+export function initStringEncoders(encoders: Map<ValueType, EncoderMethod>, detectors: DetectorMethod[]) {
+	encoders.set(ValueType.STRING, (state: EncodeState, value: string) => state.writer.writeString(value));
+
+	detectors.push(detectString);
 }

@@ -1,4 +1,4 @@
-import { EncodeState, EncoderMethod } from '../encode';
+import { EncodeState, EncoderMethod, DetectorMethod } from '../encode';
 import { ValueType } from '../types';
 
 export function detectEmpty(state: EncodeState, value: any): ValueType {
@@ -13,7 +13,9 @@ export function detectEmpty(state: EncodeState, value: any): ValueType {
 	return ValueType.UNKNOWN;
 }
 
-export function initEmptyEncoders(encoders: Map<ValueType, EncoderMethod>) {
+export function initEmptyEncoders(encoders: Map<ValueType, EncoderMethod>, detectors: DetectorMethod[]) {
 	encoders.set(ValueType.UNDEFINED, () => {});
 	encoders.set(ValueType.NULL, () => {});
+
+	detectors.push(detectEmpty);
 }

@@ -8,6 +8,7 @@ import { initArrayDecoders } from './decoders/array';
 import { initBooleanDecoders } from './decoders/boolean';
 import { initObjectDecoders } from './decoders/object';
 import { initAnyDecoders } from './decoders/any';
+import { initSetDecoders } from './decoders/set';
 
 export interface DecodeOptions {
 	decoders?: Map<ValueType, DecoderMethod>;
@@ -28,6 +29,7 @@ initBooleanDecoders(DEFAULT_DECODERS);
 initNumberDecoders(DEFAULT_DECODERS);
 initStringDecoders(DEFAULT_DECODERS);
 initArrayDecoders(DEFAULT_DECODERS);
+initSetDecoders(DEFAULT_DECODERS);
 initObjectDecoders(DEFAULT_DECODERS);
 
 export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {

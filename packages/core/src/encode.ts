@@ -1,12 +1,13 @@
 /* eslint-disable no-use-before-define */
 import { BufferWriter } from '@xobj/buffer';
 import { initAnyEncoders } from './encoders/any';
-import { detectArray, initArrayEncoders } from './encoders/array';
-import { detectBoolean, initBooleanEncoders } from './encoders/boolean';
-import { detectEmpty, initEmptyEncoders } from './encoders/empty';
-import { detectNumber, initNumberEncoders } from './encoders/number';
-import { detectObject, initObjectEncoders } from './encoders/object';
-import { detectString, initStringEncoders } from './encoders/string';
+import { initArrayEncoders } from './encoders/array';
+import { initBooleanEncoders } from './encoders/boolean';
+import { initEmptyEncoders } from './encoders/empty';
+import { initNumberEncoders } from './encoders/number';
+import { initObjectEncoders } from './encoders/object';
+import { initSetEncoders } from './encoders/set';
+import { initStringEncoders } from './encoders/string';
 import { ValueType } from './types';
 
 export interface EncodeOptions {
@@ -25,23 +26,16 @@ export type DetectorMethod = (state: EncodeState, value: any) => ValueType;
 export type EncoderMethod = (state: EncodeState, value: any) => void;
 
 export const DEFAULT_ENCODERS = new Map<ValueType, EncoderMethod>();
+export const DEFAULT_DETECTORS: DetectorMethod[] = [];
 
 initAnyEncoders(DEFAULT_ENCODERS);
-initEmptyEncoders(DEFAULT_ENCODERS);
-initBooleanEncoders(DEFAULT_ENCODERS);
-initNumberEncoders(DEFAULT_ENCODERS);
-initStringEncoders(DEFAULT_ENCODERS);
-initArrayEncoders(DEFAULT_ENCODERS);
-initObjectEncoders(DEFAULT_ENCODERS);
-
-export const DEFAULT_DETECTORS: DetectorMethod[] = [
-	detectEmpty,
-	detectBoolean,
-	detectNumber,
-	detectString,
-	detectArray,
-	detectObject,
-];
+initEmptyEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
+initBooleanEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
+initNumberEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
+initStringEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
+initArrayEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
+initSetEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
+initObjectEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 
 function detect(state: EncodeState, value: any): ValueType {
 	for (const detector of state.detectors) {

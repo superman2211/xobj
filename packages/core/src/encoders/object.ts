@@ -1,5 +1,5 @@
 import { ValueType } from '../types';
-import { EncoderMethod, EncodeState } from '../encode';
+import { DetectorMethod, EncoderMethod, EncodeState } from '../encode';
 
 export function detectObject(state: EncodeState, value: any): ValueType {
 	if (typeof value === 'object') {
@@ -28,6 +28,8 @@ export function encodeObject(state: EncodeState, value: any) {
 	}
 }
 
-export function initObjectEncoders(encoders: Map<ValueType, EncoderMethod>) {
+export function initObjectEncoders(encoders: Map<ValueType, EncoderMethod>, detectors: DetectorMethod[]) {
 	encoders.set(ValueType.OBJECT, encodeObject);
+
+	detectors.push(detectObject);
 }
