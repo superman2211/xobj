@@ -9,6 +9,7 @@ import { initNumberEncoders } from './encoders/number';
 import { initObjectEncoders } from './encoders/object';
 import { initSetEncoders } from './encoders/set';
 import { initStringEncoders } from './encoders/string';
+import { initArrayBufferEncoders } from './encoders/array-buffer';
 import { ValueType } from './types';
 
 export interface EncodeOptions {
@@ -37,6 +38,7 @@ initStringEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initArrayEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initSetEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initMapEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
+initArrayBufferEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initObjectEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 
 function detect(state: EncodeState, value: any): ValueType {
