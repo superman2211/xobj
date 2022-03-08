@@ -12,6 +12,7 @@ import { initStringEncoders } from './encoders/string';
 import { initArrayBufferEncoders } from './encoders/array-buffer';
 import { ValueType } from './types';
 import { initTypedArrayEncoders } from './encoders/typed-array';
+import { initDateEncoders } from './encoders/date';
 
 export interface EncodeOptions {
 	encoders?: Map<ValueType, EncoderMethod>;
@@ -41,6 +42,7 @@ initSetEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initMapEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initArrayBufferEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initTypedArrayEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
+initDateEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initObjectEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 
 function detect(state: EncodeState, value: any): ValueType {

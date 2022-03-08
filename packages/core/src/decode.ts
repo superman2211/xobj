@@ -12,6 +12,7 @@ import { initSetDecoders } from './decoders/set';
 import { initMapDecoders } from './decoders/map';
 import { initArrayBufferDecoders } from './decoders/array-buffer';
 import { initTypedArrayDecoders } from './decoders/typed-array';
+import { initDateDecoders } from './decoders/date';
 
 export interface DecodeOptions {
 	decoders?: Map<ValueType, DecoderMethod>;
@@ -36,6 +37,7 @@ initSetDecoders(DEFAULT_DECODERS);
 initMapDecoders(DEFAULT_DECODERS);
 initArrayBufferDecoders(DEFAULT_DECODERS);
 initTypedArrayDecoders(DEFAULT_DECODERS);
+initDateDecoders(DEFAULT_DECODERS);
 initObjectDecoders(DEFAULT_DECODERS);
 
 export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
