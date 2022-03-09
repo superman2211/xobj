@@ -5,11 +5,10 @@
   "scripts": {
 	  "build": "yarn wsrun -t -e -m build",
 	  "lint": "yarn wsrun -e -m lint",
-	  "prettify": "yarn wsrun -e -m prettify",
 	  "test": "yarn wsrun -e -m test",
 	  "coverage": "yarn wsrun -e -m coverage",
 	  "clean": "yarn wsrun -e -m clean",
-	  "checkup": "yarn clean && yarn build && yarn lint && yarn prettify && yarn test"
+	  "checkup": "yarn clean && yarn build && yarn lint && yarn test"
   },
   "workspaces": [
     "packages/*"
