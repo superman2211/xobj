@@ -2,7 +2,7 @@
 import { BufferReader } from '../src/reader';
 import { BufferWriter } from '../src/writer';
 
-describe('buffers', () => {
+describe('buffer', () => {
 	it('should write empty buffer', () => {
 		const buffer = new ArrayBuffer(0);
 

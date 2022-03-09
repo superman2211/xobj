@@ -2,7 +2,7 @@
 import { BufferReader } from '../src/reader';
 import { BufferWriter } from '../src/writer';
 
-describe('strings', () => {
+describe('string', () => {
 	it('should write empty string', () => {
 		const writer = new BufferWriter();
 		writer.writeString('');

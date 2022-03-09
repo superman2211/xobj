@@ -160,6 +160,31 @@ export class BufferWriter implements IBuffer {
 		}
 	}
 
+	writeBigInt(value: bigint) {
+		let sign = 1;
+
+		if (value < 0) {
+			sign = -1;
+			value = -value;
+		}
+
+		let temp = value;
+		let count = 0;
+
+		while (temp) {
+			temp >>= 8n;
+			count++;
+		}
+
+		this.writeIntVar(sign * count);
+
+		while (value) {
+			const byte = value & 255n;
+			this.writeUint8(Number(byte));
+			value >>= 8n;
+		}
+	}
+
 	writeBuffer(value: ArrayBuffer) {
 		this.writeUintVar(value.byteLength);
 		this.allocate(value.byteLength);

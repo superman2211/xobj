@@ -134,6 +134,28 @@ export class BufferReader implements IBuffer {
 		return value;
 	}
 
+	readBigInt(): bigint {
+		let count = this.readIntVar();
+		let sign = 1n;
+
+		if (count < 0) {
+			count = -count;
+			sign = -1n;
+		}
+
+		let value = 0n;
+
+		let i = 0n;
+
+		while (count--) {
+			const byte = BigInt(this.readUint8());
+			value |= byte << i;
+			i += 8n;
+		}
+
+		return value * sign;
+	}
+
 	readBuffer(): ArrayBuffer {
 		const count = this.readUintVar();
 		const value = this._data.buffer.slice(

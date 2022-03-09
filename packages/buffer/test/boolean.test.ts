@@ -2,7 +2,7 @@
 import { BufferReader } from '../src/reader';
 import { BufferWriter } from '../src/writer';
 
-describe('flags', () => {
+describe('boolean', () => {
 	it('should write flags in 1 byte', () => {
 		const flags = [false, true, false, true];
 

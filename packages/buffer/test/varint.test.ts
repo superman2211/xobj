@@ -4,7 +4,7 @@ import { BufferWriter } from '../src/writer';
 
 const maxSafeInteger = Number.MAX_SAFE_INTEGER;
 
-describe('variable unsigned integer', () => {
+describe('var uint', () => {
 	it('should write unsigned integer in 1 byte', () => {
 		const writer = new BufferWriter();
 		writer.writeUintVar(127);
@@ -90,7 +90,7 @@ describe('variable unsigned integer', () => {
 	});
 });
 
-describe('variable signed integer', () => {
+describe('var int', () => {
 	it('should write zero in 1 byte', () => {
 		const writer = new BufferWriter();
 		writer.writeIntVar(0);
