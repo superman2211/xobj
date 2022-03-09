@@ -7,7 +7,8 @@
 	"license": "MIT",
 	"scripts": {
 		"build": "yarn tsc",
-		"lint": "yarn eslint --fix ./src/**/* && yarn prettier --write .",
+		"lint": "yarn eslint --fix ./src/*.ts ./src/**/*.ts",
+		"prettify": "yarn prettier --write .",
 		"test": "jest",
 		"coverage": "jest --coverage",
 		"clean": "rimraf dist && rimraf coverage"
