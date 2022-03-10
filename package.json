@@ -3,17 +3,18 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-	  "build": "yarn wsrun -t -e -m build",
-	  "lint": "yarn wsrun -e -m lint",
-	  "test": "yarn wsrun -e -m test",
-	  "coverage": "yarn wsrun -e -m coverage",
-	  "clean": "yarn wsrun -e -m clean",
-	  "checkup": "yarn clean && yarn build && yarn lint && yarn test"
+    "build": "yarn wsrun -t -e -m build",
+    "lint": "yarn wsrun -e -m lint",
+    "test": "yarn wsrun -e -m test",
+    "coverage": "yarn wsrun -e -m coverage",
+    "clean": "yarn wsrun -e -m clean",
+    "checkup": "yarn clean && yarn build && yarn lint && yarn test"
   },
   "workspaces": [
     "packages/*"
   ],
   "devDependencies": {
-    "wsrun": "^5.2.4"
+    "wsrun": "^5.2.4",
+	"@changesets/cli": "^2.21.1"
   }
 }
