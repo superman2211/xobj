@@ -1,5 +1,7 @@
 {
 	"name": "@xobj/buffer",
+	"description": "Buffer for Browser and NodeJS. Writing and reading binary files.",
+	"author": "Sergey Antonov",
 	"version": "0.2.0",
 	"main": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",

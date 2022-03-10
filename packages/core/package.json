@@ -1,5 +1,7 @@
 {
 	"name": "@xobj/core",
+	"description": "Decoding and encoding JavaScript/TypeScript objects to binary format.",
+	"author": "Sergey Antonov",
 	"version": "0.2.0",
 	"main": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",
