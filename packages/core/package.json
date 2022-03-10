@@ -1,6 +1,6 @@
 {
 	"name": "@xobj/core",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"main": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",
 	"moduleResolution": "node",
@@ -13,7 +13,7 @@
 		"clean": "rimraf dist && rimraf coverage"
 	},
 	"dependencies": {
-		"@xobj/buffer": "0.1.0"
+		"@xobj/buffer": "0.2.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.16.7",

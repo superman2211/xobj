@@ -1,6 +1,6 @@
 {
 	"name": "@xobj/buffer",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"main": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",
 	"moduleResolution": "node",
