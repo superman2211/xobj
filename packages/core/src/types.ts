@@ -18,6 +18,7 @@ export const enum ValueType {
 	INT_VAR,
 	FLOAT32,
 	FLOAT64,
+	BIGINT,
 	STRING,
 	ARRAY,
 	OBJECT,

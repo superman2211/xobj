@@ -14,6 +14,7 @@ import { ValueType } from './types';
 import { initTypedArrayEncoders } from './encoders/typed-array';
 import { initDateEncoders } from './encoders/date';
 import { initRegExpEncoders } from './encoders/reg-exp';
+import { initBigIntEncoders } from './encoders/bigint';
 
 export interface EncodeOptions {
 	encoders?: Map<ValueType, EncoderMethod>;
@@ -37,6 +38,7 @@ initAnyEncoders(DEFAULT_ENCODERS);
 initEmptyEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initBooleanEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initNumberEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
+initBigIntEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initStringEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initArrayEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);
 initSetEncoders(DEFAULT_ENCODERS, DEFAULT_DETECTORS);

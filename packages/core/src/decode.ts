@@ -14,6 +14,7 @@ import { initArrayBufferDecoders } from './decoders/array-buffer';
 import { initTypedArrayDecoders } from './decoders/typed-array';
 import { initDateDecoders } from './decoders/date';
 import { initRegExpDecoders } from './decoders/reg-exp';
+import { initBigIntDecoders } from './decoders/bigint';
 
 export interface DecodeOptions {
 	decoders?: Map<ValueType, DecoderMethod>;
@@ -32,6 +33,7 @@ initAnyDecoders(DEFAULT_DECODERS);
 initEmptyDecoders(DEFAULT_DECODERS);
 initBooleanDecoders(DEFAULT_DECODERS);
 initNumberDecoders(DEFAULT_DECODERS);
+initBigIntDecoders(DEFAULT_DECODERS);
 initStringDecoders(DEFAULT_DECODERS);
 initArrayDecoders(DEFAULT_DECODERS);
 initSetDecoders(DEFAULT_DECODERS);
