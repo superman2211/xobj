@@ -6,7 +6,7 @@
 	"main": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",
 	"moduleResolution": "node",
-	"license": "MIT",
+	"license": "GPL",
 	"scripts": {
 		"build": "yarn tsc",
 		"lint": "yarn eslint --fix ./src/*.ts ./src/**/*.ts",
