@@ -27,7 +27,6 @@ export const enum ValueType {
 	MAP,
 	ARRAY_BUFFER,
 	TYPED_ARRAY,
-	DATA_VIEW,
 	DATE,
 	REG_EXP,
 	CUSTOM,

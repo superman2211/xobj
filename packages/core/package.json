@@ -6,7 +6,7 @@
 	"main": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",
 	"moduleResolution": "node",
-	"license": "GPL",
+	"license": "GPL-3.0-only",
 	"repository": {
     	"type": "git",
     	"url": "git+https://github.com/AntonovSergey2211/xobj"
