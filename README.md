@@ -1,4 +1,4 @@
-# xobj
+# @xobj
 
 This project makes it possible to use a compact universal binary data format for JavaScript objects.
 

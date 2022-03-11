@@ -68,6 +68,8 @@ describe('custom', () => {
 				writer.writeUint8(CustomType.UNIT);
 				writer.writeString(value.name);
 				writer.writeUint8(value.age);
+			} else {
+				throw `Unknown custom type: ${value}`;
 			}
 		}
 
@@ -86,9 +88,7 @@ describe('custom', () => {
 
 		// encode
 
-		const encoders = new Map(DEFAULT_ENCODERS);
-		encoders.set(ValueType.CUSTOM, customEncoder);
-
+		const encoders = new Map([[ValueType.CUSTOM, customEncoder], ...DEFAULT_ENCODERS]);
 		const detectors = [customDetector, ...DEFAULT_DETECTORS];
 
 		const buffer = encode(source, { encoders, detectors });
@@ -96,8 +96,7 @@ describe('custom', () => {
 
 		// decode
 
-		const decoders = new Map(DEFAULT_DECODERS);
-		decoders.set(ValueType.CUSTOM, customDecoder);
+		const decoders = new Map([[ValueType.CUSTOM, customDecoder], ...DEFAULT_DECODERS]);
 
 		const target: Game = decode(buffer, { decoders });
 		expect(target).toEqual(source);

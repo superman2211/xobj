@@ -19,7 +19,7 @@ const writer = new BufferWriter();
 writer.writeInt8(123);
 writer.writeString('Test string');
 
-// get result buffer for writing file or sending to server
+// get result buffer for writing to file or sending to server
 const buffer: ArrayBuffer = writer.buffer;
 
 // create buffer reader
@@ -75,9 +75,9 @@ BitInt consist of count and bytes array.
 ### String
 String consist of chars length and chars codes array.
 
-| length    | chars (UTF-8) |
-|-----------|---------------|
-| `uintVar` | `uintVar[]`   |
+| length    | chars codes |
+|-----------|-------------|
+| `uintVar` | `uintVar[]` |
 
 ### ArrayBuffer
 ArrayBuffer consist of buffer size and data.

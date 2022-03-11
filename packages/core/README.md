@@ -28,7 +28,7 @@ Available basic types:
 - `RegExp`
 - `Date`
 
-For all basic types applied optimization for data minification.
+For all basic types used optimization for data minification.
 
 Also you can use custom types.
 
