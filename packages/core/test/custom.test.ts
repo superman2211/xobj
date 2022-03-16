@@ -33,6 +33,64 @@ interface Game {
 
 describe('custom', () => {
 	it('should write simple custom objects', () => {
+		const source = {
+			color: 0xff00ff,
+			points: [
+				new Point(1, 2),
+				new Point(3, 4),
+				new Point(5, 6),
+			],
+		};
+
+		// encode
+
+		function customDetector(state: EncodeState, value: any): ValueType {
+			if (value instanceof Point) {
+				return ValueType.CUSTOM;
+			}
+			return ValueType.UNKNOWN;
+		}
+
+		function customEncoder(state: EncodeState, value: any) {
+			const { writer } = state;
+
+			if (value instanceof Point) {
+				writer.writeUint8(0); // custom type
+				writer.writeUint8(value.x);
+				writer.writeUint8(value.y);
+			} else {
+				throw `Unknown custom type: ${value}`;
+			}
+		}
+
+		const encoders = new Map([[ValueType.CUSTOM, customEncoder], ...DEFAULT_ENCODERS]);
+		const detectors = [customDetector, ...DEFAULT_DETECTORS];
+
+		const buffer = encode(source, { encoders, detectors });
+		expect(buffer.byteLength).toBe(33);
+
+		// decode
+
+		function customDecoder(state: DecodeState): any {
+			const { reader } = state;
+			const type = reader.readUint8() as CustomType;
+			switch (type) {
+				case 0:
+					return new Point(reader.readUint8(), reader.readUint8());
+				default:
+					throw `Unknown custom type: ${type}`;
+			}
+		}
+
+		const decoders = new Map([[ValueType.CUSTOM, customDecoder], ...DEFAULT_DECODERS]);
+
+		const target = decode(buffer, { decoders });
+
+		// checking
+		expect(target).toEqual(source);
+	});
+
+	it('should write few custom objects', () => {
 		const source: Game = {
 			name: 'path to unit',
 			time: 123456789,
