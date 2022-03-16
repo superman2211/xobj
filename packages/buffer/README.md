@@ -8,7 +8,7 @@ yarn add @xobj/buffer
 ```
 
 ## Usage
-```javascript
+```typescript
 // import reader and writer
 import { BufferWriter, BufferReader } from '@xobj/buffer';
 
@@ -56,7 +56,16 @@ Big bit indicates about next byte.
 For signed integer first bit used for sign.
 
 Examples:
-    
+
+```typescript
+const writer = new BufferWriter();
+writer.writeUintVar(123456);
+console.log(writer.buffer);
+// ArrayBuffer { [Uint8Contents]: <c0 c4 07>, byteLength: 3 }
+```
+
+Other cases:
+
 `uint [01111011] = 123`
 
 `int  [11110111 00000001] = -123`
@@ -72,11 +81,18 @@ Examples:
 `uint [11001011 11111001 11010111 11100100 11000000 11111110 11110000 00000110] = 3874627647831243`
 
 ### BigInt
-BitInt consist of count and bytes array.
+BigInt consist of count and bytes array.
 
 | count     | values    |
 |-----------|-----------|
 | `uintVar` | `uint8[]` |
+
+```typescript
+const writer = new BufferWriter();
+writer.writeBigInt(9007199326476237462784254740991n);
+console.log(writer.buffer);
+// ArrayBuffer { [Uint8Contents]: <1a ff 09 91 63 c8 ce 83 c6 00 a8 d4 af 71>, byteLength: 14 }
+```
 
 ### String
 String consist of chars length and chars codes array.
@@ -84,6 +100,20 @@ String consist of chars length and chars codes array.
 | length    | chars codes |
 |-----------|-------------|
 | `uintVar` | `uintVar[]` |
+
+```typescript
+const writer = new BufferWriter();
+writer.writeString('simple string, простая строка, 単純な文字列');
+console.log(writer.buffer);
+// ArrayBuffer {
+//   [Uint8Contents]: 
+//     <25 73 69 6d 70 6c 65 20 73 74 72 69 6e 67 2c 20 bf 08 c0 08 
+//      be 08 c1 08 c2 08 b0 08 cf 08 20 c1 08 c2 08 c0 08 be 08 ba 
+//      08 b0 08 2c 20 d8 a6 01 94 fa 01 ea 60 87 cb 01 d7 b6 01 97 
+//      a4 01>,
+//   byteLength: 62
+// }
+```
 
 ### ArrayBuffer
 ArrayBuffer consist of buffer size and data.
@@ -100,11 +130,31 @@ Maximum array length is 53 (maximum `uintVar` value).
 |-----------|
 | `uintVar` |
 
+Examples:
+
+```typescript
+const writer = new BufferWriter();
+writer.writeFlags([true, true, true, false, true, false, false, false, true, true]);
+console.log(writer.buffer);
+// ArrayBuffer { [Uint8Contents]: <97 06>, byteLength: 2 } 
+```
+
 `Bitset` is a boolean array too. But represented as bits in flow of bytes.
 
 | bitset    |
 |-----------|
 | `uint8[]` |
+
+Examples:
+```typescript
+const writer = new BufferWriter();
+writer.writeBitset([
+	true, true, true, false, true, false, true, true,
+	false, true, true, false, true, false, true, false,
+]);
+console.log(writer.buffer);
+// ArrayBuffer { [Uint8Contents]: <d7 56>, byteLength: 2 }
+```
 
 ## Development
 Install all dependencies
