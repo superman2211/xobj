@@ -29,7 +29,7 @@ const reader = new BufferReader(buffer);
 console.log(reader.readInt8());// 123
 console.log(reader.readString()); // Test string
 ```
-You can see more examples in [tests](test).
+You can see more examples in [tests](https://github.com/AntonovSergey2211/xobj/tree/master/packages/buffer/test).
 
 ## Types
 - `Number`
