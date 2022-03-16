@@ -3,20 +3,22 @@
 	"description": "Buffer for Browser and NodeJS. Writing and reading basic types to binary data.",
 	"author": "Sergey Antonov",
 	"version": "0.2.0",
-	"main": "dist/esm/index.js",
+	"main": "dist/cjs/index.js",
+	"browser": "dist/iife/xobj-buffer.min.js",
+	"module": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",
 	"moduleResolution": "node",
 	"license": "GPL-3.0-only",
 	"repository": {
-    	"type": "git",
-    	"url": "git+https://github.com/AntonovSergey2211/xobj"
+		"type": "git",
+		"url": "git+https://github.com/AntonovSergey2211/xobj"
 	},
 	"bugs": {
 		"url": "https://github.com/AntonovSergey2211/xobj/issues"
 	},
 	"homepage": "https://github.com/AntonovSergey2211/xobj#readme",
 	"scripts": {
-		"build": "yarn tsc",
+		"build": "yarn tsc && yarn rollup -c",
 		"lint": "yarn eslint --fix ./src/*.ts ./src/**/*.ts",
 		"test": "jest",
 		"coverage": "jest --coverage",
@@ -36,6 +38,9 @@
 		"eslint-plugin-import": "^2.25.3",
 		"jest": "^27.4.5",
 		"rimraf": "^3.0.2",
+		"rollup": "^2.70.1",
+		"rollup-plugin-sourcemaps": "^0.6.3",
+		"rollup-plugin-terser": "^7.0.2",
 		"typescript": "^4.5.3"
 	}
 }
