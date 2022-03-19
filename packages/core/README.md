@@ -115,7 +115,6 @@ const encoders = new Map([[ValueType.CUSTOM, customEncoder], ...DEFAULT_ENCODERS
 const detectors = [customDetector, ...DEFAULT_DETECTORS];
 
 const buffer = encode(source, { encoders, detectors });
-expect(buffer.byteLength).toBe(33);
 
 // decode
 
@@ -124,7 +123,10 @@ function customDecoder(state: DecodeState): any {
 	const type = reader.readUint8() as CustomType;
 	switch (type) {
 		case CustomType.POINT:
-			return new Point(reader.readUint8(), reader.readUint8());
+			return new Point(
+				reader.readUint8(),
+				reader.readUint8()
+			);
 		default:
 			throw `Unknown custom type: ${type}`;
 	}
@@ -142,7 +144,6 @@ console.log(target.points[0].y) // 2
 You can see more examples in [tests](https://github.com/AntonovSergey2211/xobj/tree/master/packages/core/test).
 
 ## File format (xobj)
-
 
 ## Development
 Install all dependencies
