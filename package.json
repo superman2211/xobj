@@ -13,7 +13,8 @@
     "checkup": "yarn clean && yarn build && yarn lint && yarn test"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+	"samples/*"
   ],
   "devDependencies": {
     "wsrun": "^5.2.4",

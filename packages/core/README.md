@@ -69,7 +69,7 @@ const target: User = decode(buffer);
 
 // use object
 console.log(target.name);// John Doe
-console.log(target?.children[0]?.age);// 12
+console.log(target!.children![0].age);// 12
 ```
 
 Custom types usage:
@@ -144,6 +144,7 @@ console.log(target.points[0].y) // 2
 You can see more examples in [tests](https://github.com/AntonovSergey2211/xobj/tree/master/packages/core/test).
 
 ## File format (xobj)
+TODO
 
 ## Development
 Install all dependencies
