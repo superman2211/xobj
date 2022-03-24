@@ -1,7 +1,7 @@
 {
 	"name": "rollup-sample",
 	"description": "xobj sample with rollup bundling",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"author": "Sergey Antonov",
 	"license": "GPL-3.0-only",
 	"repository": {
