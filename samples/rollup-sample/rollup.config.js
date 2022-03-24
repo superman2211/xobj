@@ -2,6 +2,7 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 import { terser } from 'rollup-plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import html from '@rollup/plugin-html';
+import size from 'rollup-plugin-bundle-size';
 
 export default [
 	{
@@ -18,6 +19,7 @@ export default [
 			sourcemaps(),
 			terser(),
 			html({ title: 'xobj rollup sample' }),
+			size(),
 		],
 	},
 ];

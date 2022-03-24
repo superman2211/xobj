@@ -1,5 +1,8 @@
-/* eslint-disable no-console */
 import { encode, decode } from '@xobj/core';
+
+function log(message: string) {
+	document.write(`<div>${message}</div>`);
+}
 
 interface User {
 	name: string,
@@ -26,5 +29,5 @@ const buffer: ArrayBuffer = encode(source);
 const target: User = decode(buffer);
 
 // use object
-console.log(target.name);// John Doe
-console.log(target!.children![0].age);// 12
+log(`target.name: ${target.name}`);// John Doe
+log(`target.children[0]: ${String(target!.children![0].age)}`);// 12

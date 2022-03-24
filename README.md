@@ -2,9 +2,12 @@
 
 This project makes it possible to use a compact universal binary data format for JavaScript objects.
 
-Project includes modules:
+Packages:
 - [buffer](packages/buffer) Buffer for **Browser** and **NodeJS**. Writing and reading basic types to binary data.
 - [core](packages/core) Decoding and encoding **JavaScript** / **TypeScript** objects to binary format.
+
+Samples:
+- [rollup-sample](samples/rollup-sample) **xobj** sample with **rollup** bundling
 
 ## Development
 Install all dependencies
