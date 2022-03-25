@@ -8,8 +8,8 @@ export default [
 	{
 		input: 'dist/esm/index.js',
 		output: {
-			file: 'dist/iife/xobj-core.min.js',
-			name: 'xobjCore',
+			file: 'dist/iife/sample.min.js',
+			name: 'xobjSample',
 			format: 'iife',
 			compact: true,
 			sourcemap: true,

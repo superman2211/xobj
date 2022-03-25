@@ -2,6 +2,8 @@ import { encode, decode } from '@xobj/core';
 
 function log(message: string) {
 	document.write(`<div>${message}</div>`);
+	// eslint-disable-next-line no-console
+	console.log(message);
 }
 
 interface User {
