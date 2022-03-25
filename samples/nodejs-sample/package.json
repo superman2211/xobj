@@ -1,7 +1,7 @@
 {
 	"name": "nodejs-sample",
 	"description": "xobj sample for nodeJS",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"main": "index.js",
 	"private": true,
 	"author": "Sergey Antonov",
@@ -17,12 +17,16 @@
 	"scripts": {
 		"build": "node index.js",
 		"start": "yarn build",
+		"lint": "yarn eslint --fix ./index.js",
 		"clean": "rimraf dist"
 	},
 	"dependencies": {
 		"@xobj/core": "0.2.0"
 	},
 	"devDependencies": {
-		"rimraf": "^3.0.2"
+		"rimraf": "^3.0.2",
+		"eslint": "^8.4.1",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-plugin-import": "^2.25.3"
 	}
 }

@@ -20,6 +20,8 @@ function createOutputDirectory() {
 function main() {
 	createOutputDirectory();
 	convertJsonToXobj('./data/user.json', './dist/user.xobj');
+	// eslint-disable-next-line no-console
+	console.log('file converted');
 }
 
 main();
