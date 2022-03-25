@@ -8,6 +8,7 @@ Packages:
 
 Samples:
 - [rollup-sample](samples/rollup-sample) **xobj** sample with **rollup** bundling
+- [nodejs-sample](samples/nodejs-sample) **xobj** sample with **nodejs**
 
 ## Development
 Install all dependencies

@@ -1,0 +1,10 @@
+{
+	"name": "Sarah",
+	"age": 33,
+	"children": [
+		{ "name": "Jane", "age": 12 },
+		{ "name": "Jack", "age": 6 },
+		{ "name": "Julia", "age": 10 },
+		{ "name": "John", "age": 1 }
+	]
+}

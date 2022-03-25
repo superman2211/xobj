@@ -1,0 +1,28 @@
+{
+	"name": "nodejs-sample",
+	"description": "xobj sample for nodeJS",
+	"version": "0.1.0",
+	"main": "index.js",
+	"private": true,
+	"author": "Sergey Antonov",
+	"license": "GPL-3.0-only",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AntonovSergey2211/xobj"
+	},
+	"bugs": {
+		"url": "https://github.com/AntonovSergey2211/xobj/issues"
+	},
+	"homepage": "https://github.com/AntonovSergey2211/xobj#readme",
+	"scripts": {
+		"build": "node index.js",
+		"start": "yarn build",
+		"clean": "rimraf dist"
+	},
+	"dependencies": {
+		"@xobj/core": "0.2.0"
+	},
+	"devDependencies": {
+		"rimraf": "^3.0.2"
+	}
+}
