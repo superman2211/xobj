@@ -13,9 +13,11 @@ describe('map', () => {
 		source.set('test 2', false);
 		source.set('test 3', true);
 		source.set({ x: 1 }, [1, 2, 3]);
+		source.set(4, 'test 4');
+		source.set(5, 'test 5');
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(72);
+		expect(buffer.byteLength).toBe(88);
 
 		const target = decode(buffer);
 		expect(target).toEqual(source);

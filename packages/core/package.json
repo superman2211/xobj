@@ -2,7 +2,7 @@
 	"name": "@xobj/core",
 	"description": "Decoding and encoding JavaScript/TypeScript objects to binary format.",
 	"author": "Sergey Antonov",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"main": "dist/cjs/index.js",
 	"browser": "dist/iife/xobj-core.min.js",
 	"module": "dist/esm/index.js",

@@ -12,6 +12,8 @@ export function detectMap(state: EncodeState, value: any): ValueType {
 
 export function encodeMap(state: EncodeState, value: Map<any, any>) {
 	const keys = [...value.keys()];
+	keys.sort();
+
 	const values = [];
 	for (const key of keys) {
 		values.push(value.get(key));
