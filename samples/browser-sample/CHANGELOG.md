@@ -1,10 +1,4 @@
-# rollup-external-sample
-
-## 0.2.1
-
-### Patch Changes
-
-- Fix samples
+# browser-sample
 
 ## 0.2.0
 

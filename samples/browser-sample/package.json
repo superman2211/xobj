@@ -1,7 +1,7 @@
 {
-	"name": "rollup-external-sample",
-	"description": "xobj sample with rollup external bundling",
-	"version": "0.2.1",
+	"name": "browser-sample",
+	"description": "xobj browser sample",
+	"version": "0.2.0",
 	"private": true,
 	"author": "Sergey Antonov",
 	"license": "GPL-3.0-only",
@@ -14,28 +14,20 @@
 	},
 	"homepage": "https://github.com/AntonovSergey2211/xobj#readme",
 	"scripts": {
-		"build": "yarn tsc && yarn rollup -c",
-		"serve": "yarn http-server ./dist/iife -o",
+		"build": "node scripts/build.js",
+		"serve": "yarn http-server ./dist -o",
 		"start": "yarn build && yarn serve",
-		"lint": "yarn eslint --fix ./src/*.ts ./src/**/*.ts",
+		"lint": "yarn eslint --fix ./src/*.js",
 		"clean": "rimraf dist"
 	},
 	"dependencies": {
 		"@xobj/core": "0.2.0"
 	},
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "^5.6.0",
-		"@typescript-eslint/parser": "^5.6.0",
 		"eslint": "^8.4.1",
 		"eslint-config-airbnb-base": "^15.0.0",
 		"eslint-plugin-import": "^2.25.3",
 		"http-server": "^14.1.0",
-		"rimraf": "^3.0.2",
-		"rollup": "^2.70.1",
-		"rollup-plugin-bundle-size": "^1.0.3",
-		"rollup-plugin-copy": "^3.4.0",
-		"rollup-plugin-sourcemaps": "^0.6.3",
-		"rollup-plugin-terser": "^7.0.2",
-		"typescript": "^4.5.3"
+		"rimraf": "^3.0.2"
 	}
 }

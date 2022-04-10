@@ -1,20 +1,14 @@
-import { encode, decode } from '@xobj/core';
+// eslint-disable-next-line no-undef
+const { encode, decode } = xobjCore;
 
-function log(message: string) {
+function log(message) {
 	document.write(`<div>${message}</div>`);
 	// eslint-disable-next-line no-console
 	console.log(message);
 }
 
-interface User {
-	name: string,
-	age: number,
-	gender?: 'male' | 'female',
-	children?: User[],
-}
-
 // some kind of object
-const source: User = {
+const source = {
 	name: 'John Doe',
 	age: 33,
 	gender: 'male',
@@ -25,11 +19,11 @@ const source: User = {
 };
 
 // encode object to binary data
-const buffer: ArrayBuffer = encode(source);
+const buffer = encode(source);
 
 // decode binary data to object
-const target: User = decode(buffer);
+const target = decode(buffer);
 
 // use object
 log(`target.name: ${target.name}`);// John Doe
-log(`target.children[0].age: ${String(target!.children![0].age)}`);// 12
+log(`target.children[0].age: ${String(target.children[0].age)}`);// 12

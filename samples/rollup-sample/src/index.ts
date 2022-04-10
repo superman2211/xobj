@@ -32,4 +32,4 @@ const target: User = decode(buffer);
 
 // use object
 log(`target.name: ${target.name}`);// John Doe
-log(`target.children[0]: ${String(target!.children![0].age)}`);// 12
+log(`target.children[0].age: ${String(target!.children![0].age)}`);// 12
