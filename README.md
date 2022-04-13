@@ -12,6 +12,9 @@ Samples:
 - [browser-sample](samples/browser-sample) **xobj** sample for **browser**
 - [nodejs-sample](samples/nodejs-sample) **xobj** sample for **nodejs**
 
+## Status
+[![build & test](https://github.com/superman2211/xobj/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/superman2211/xobj/actions/workflows/node.js.yml)
+
 ## Development
 Install all dependencies
 ```shell
