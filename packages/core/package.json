@@ -2,13 +2,26 @@
 	"name": "@xobj/core",
 	"description": "Decoding and encoding JavaScript/TypeScript objects to binary format.",
 	"author": "Sergey Antonov",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"main": "dist/cjs/index.js",
 	"browser": "dist/iife/xobj-core.min.js",
 	"module": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",
 	"moduleResolution": "node",
 	"license": "GPL-3.0-only",
+	"keywords": [
+		"fast",
+		"encoding",
+		"json",
+		"binary",
+		"buffer",
+		"decoding",
+		"writer",
+		"reader",
+		"encoder",
+		"decoder",
+		"compact"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/AntonovSergey2211/xobj"
@@ -29,7 +42,7 @@
 		"CHANGELOG.md"
 	],
 	"dependencies": {
-		"@xobj/buffer": "0.2.1"
+		"@xobj/buffer": "0.2.2"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.16.7",

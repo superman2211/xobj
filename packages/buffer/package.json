@@ -2,13 +2,25 @@
 	"name": "@xobj/buffer",
 	"description": "Buffer for Browser and NodeJS. Writing and reading basic types to binary data.",
 	"author": "Sergey Antonov",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"main": "dist/cjs/index.js",
 	"browser": "dist/iife/xobj-buffer.min.js",
 	"module": "dist/esm/index.js",
 	"types": "dist/esm/index.d.ts",
 	"moduleResolution": "node",
 	"license": "GPL-3.0-only",
+	"keywords": [
+		"fast",
+		"encoding",
+		"json",
+		"binary",
+		"buffer",
+		"decoding",
+		"writer",
+		"reader",
+		"compact",
+		"varint"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/AntonovSergey2211/xobj"

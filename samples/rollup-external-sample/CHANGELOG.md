@@ -1,5 +1,12 @@
 # rollup-external-sample
 
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @xobj/core@0.2.3
+
 ## 0.2.3
 
 ### Patch Changes

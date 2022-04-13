@@ -1,5 +1,11 @@
 # @xobj/buffer
 
+## 0.2.2
+
+### Patch Changes
+
+- Add keywords, update readme.
+
 ## 0.2.1
 
 ### Patch Changes

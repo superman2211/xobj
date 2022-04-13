@@ -1,7 +1,7 @@
 {
 	"name": "nodejs-sample",
 	"description": "xobj sample for nodeJS",
-	"version": "0.2.2",
+	"version": "0.2.3",
 	"main": "index.js",
 	"private": true,
 	"author": "Sergey Antonov",
@@ -21,7 +21,7 @@
 		"clean": "rimraf dist"
 	},
 	"dependencies": {
-		"@xobj/core": "0.2.2"
+		"@xobj/core": "0.2.3"
 	},
 	"devDependencies": {
 		"rimraf": "^3.0.2",

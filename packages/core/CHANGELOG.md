@@ -1,5 +1,13 @@
 # @xobj/core
 
+## 0.2.3
+
+### Patch Changes
+
+- Add keywords, update readme.
+- Updated dependencies
+  - @xobj/buffer@0.2.2
+
 ## 0.2.2
 
 ### Patch Changes
