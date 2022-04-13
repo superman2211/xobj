@@ -2,7 +2,7 @@
 	"name": "@xobj/buffer",
 	"description": "Buffer for Browser and NodeJS. Writing and reading basic types to binary data.",
 	"author": "Sergey Antonov",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"main": "dist/cjs/index.js",
 	"browser": "dist/iife/xobj-buffer.min.js",
 	"module": "dist/esm/index.js",
@@ -24,6 +24,10 @@
 		"coverage": "jest --coverage",
 		"clean": "rimraf dist && rimraf coverage"
 	},
+	"files": [
+		"dist",
+		"CHANGELOG.md"
+	],
 	"devDependencies": {
 		"@babel/cli": "^7.16.7",
 		"@babel/core": "^7.16.7",

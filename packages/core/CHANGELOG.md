@@ -1,5 +1,13 @@
 # @xobj/core
 
+## 0.2.2
+
+### Patch Changes
+
+- Update publish settings
+- Updated dependencies
+  - @xobj/buffer@0.2.1
+
 ## 0.2.1
 
 ### Patch Changes
