@@ -1,19 +1,18 @@
 # @xobj
 
+[![Build](https://github.com/superman2211/xobj/actions/workflows/build.yml/badge.svg)](https://github.com/superman2211/xobj/actions/workflows/build.yml)
+
 This project makes it possible to use a compact universal binary data format for JavaScript objects.
 
 Packages:
-- [buffer](packages/buffer) Buffer for **Browser** and **NodeJS**. Writing and reading basic types to binary data.
-- [core](packages/core) Decoding and encoding **JavaScript** / **TypeScript** objects to binary format.
+- [buffer](packages/buffer) [![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/buffer) Buffer for **Browser** and **NodeJS**. Writing and reading basic types to binary data.
+- [core](packages/core) [![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/core) Decoding and encoding **JavaScript** / **TypeScript** objects to binary format.
 
 Samples:
 - [rollup-sample](samples/rollup-sample) **xobj** sample with **rollup** bundling
 - [rollup-external-sample](samples/rollup-external-sample) **xobj** external sample with **rollup** bundling 
 - [browser-sample](samples/browser-sample) **xobj** sample for **browser**
 - [nodejs-sample](samples/nodejs-sample) **xobj** sample for **nodejs**
-
-## Status
-[![build & test](https://github.com/superman2211/xobj/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/superman2211/xobj/actions/workflows/node.js.yml)
 
 ## Development
 Install all dependencies
