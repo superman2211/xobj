@@ -1,5 +1,16 @@
 # rollup-external-sample
 
+## 0.3.0
+
+### Minor Changes
+
+- b119893: Update tsconfig
+
+### Patch Changes
+
+- Updated dependencies [b119893]
+  - @xobj/core@0.3.0
+
 ## 0.2.4
 
 ### Patch Changes
