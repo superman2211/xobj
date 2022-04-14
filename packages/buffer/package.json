@@ -38,6 +38,7 @@
 	},
 	"files": [
 		"dist",
+		"src",
 		"CHANGELOG.md"
 	],
 	"devDependencies": {
