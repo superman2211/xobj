@@ -1,5 +1,11 @@
 # @xobj/buffer
 
+## 0.3.0
+
+### Minor Changes
+
+- b119893: Add sources to package
+
 ## 0.2.2
 
 ### Patch Changes

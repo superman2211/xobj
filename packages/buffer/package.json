@@ -2,7 +2,7 @@
 	"name": "@xobj/buffer",
 	"description": "Buffer for Browser and NodeJS. Writing and reading basic types to binary data.",
 	"author": "Sergey Antonov",
-	"version": "0.2.2",
+	"version": "0.3.0",
 	"main": "dist/cjs/index.js",
 	"browser": "dist/iife/xobj-buffer.min.js",
 	"module": "dist/esm/index.js",
@@ -38,6 +38,7 @@
 	},
 	"files": [
 		"dist",
+		"src",
 		"CHANGELOG.md"
 	],
 	"devDependencies": {
