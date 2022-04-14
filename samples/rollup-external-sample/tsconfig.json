@@ -1,6 +1,16 @@
 {
-	"extends": "../../tsconfig.json",
 	"compilerOptions": {
+	"module": "esnext",
+		"target": "esnext",
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"strict": true,
+		"alwaysStrict": true,
+		"removeComments": true,
+		"sourceMap": true,
+		"declaration": true,
+		"forceConsistentCasingInFileNames": true,
+		"lib": ["dom", "esnext"],
 		"outDir": "dist/esm"
 	},
 	"include": ["src/**/*"],
