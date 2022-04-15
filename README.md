@@ -5,14 +5,18 @@
 This project makes it possible to use a compact universal binary data format for JavaScript objects.
 
 Packages:
-- [buffer](packages/buffer) [![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/buffer) Buffer for **Browser** and **NodeJS**. Writing and reading basic types to binary data.
-- [core](packages/core) [![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/core) Decoding and encoding **JavaScript** / **TypeScript** objects to binary format.
+| Package | Status | Description |
+|---------|--------|-------------|
+| [buffer](packages/buffer) | [![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/buffer) | Buffer for **Browser** and **NodeJS**. Writing and reading basic types to binary data. |
+| [core](packages/core) | [![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/core) | Decoding and encoding **JavaScript** / **TypeScript** objects to binary format. |
 
 Samples:
-- [rollup-sample](samples/rollup-sample) **xobj** sample with **rollup** bundling
-- [rollup-external-sample](samples/rollup-external-sample) **xobj** external sample with **rollup** bundling 
-- [browser-sample](samples/browser-sample) **xobj** sample for **browser**
-- [nodejs-sample](samples/nodejs-sample) **xobj** sample for **nodejs**
+| Package | Description |
+|---------|-------------|
+| [rollup-sample](samples/rollup-sample) | Sample with **rollup** bundling |
+| [rollup-external-sample](samples/rollup-external-sample) | Sample with external **rollup** bundling |
+| [browser-sample](samples/browser-sample) | Sample for **browser** |
+| [nodejs-sample](samples/nodejs-sample) | Sample for **nodejs** |
 
 ## Development
 Install all dependencies
