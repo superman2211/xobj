@@ -1,6 +1,6 @@
 # @xobj
 
-[![Build](https://github.com/superman2211/xobj/actions/workflows/build.yml/badge.svg)](https://github.com/superman2211/xobj/actions/workflows/build.yml)
+[![Build](https://github.com/superman2211/xobj/workflows/build/badge.svg)](https://github.com/superman2211/xobj/actions/workflows/build.yml)
 
 This project makes it possible to use a compact universal binary data format for JavaScript objects.
 
