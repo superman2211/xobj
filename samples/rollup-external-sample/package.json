@@ -3,16 +3,16 @@
 	"description": "xobj sample with rollup external bundling",
 	"version": "0.3.1",
 	"private": true,
-	"author": "Sergey Antonov",
+	"author": "Clark Kent",
 	"license": "GPL-3.0-only",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/AntonovSergey2211/xobj"
+		"url": "git+https://github.com/superman2211/xobj"
 	},
 	"bugs": {
-		"url": "https://github.com/AntonovSergey2211/xobj/issues"
+		"url": "https://github.com/superman2211/xobj/issues"
 	},
-	"homepage": "https://github.com/AntonovSergey2211/xobj#readme",
+	"homepage": "https://github.com/superman2211/xobj#readme",
 	"scripts": {
 		"build": "yarn tsc && yarn rollup -c",
 		"serve": "yarn http-server ./dist/iife -o",

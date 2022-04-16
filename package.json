@@ -1,7 +1,7 @@
 {
   "name": "xobj",
   "description": "Decoding and encoding JavaScript/TypeScript objects to binary format.",
-  "author": "Sergey Antonov",
+  "author": "Clark Kent",
   "version": "0.0.0",
   "private": true,
   "scripts": {
