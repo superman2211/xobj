@@ -1,19 +1,19 @@
 {
 	"name": "nodejs-sample",
 	"description": "xobj sample for nodeJS",
-	"version": "0.2.5",
+	"version": "0.2.6",
 	"main": "index.js",
 	"private": true,
-	"author": "Sergey Antonov",
+	"author": "Clark Kent",
 	"license": "GPL-3.0-only",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/AntonovSergey2211/xobj"
+		"url": "git+https://github.com/superman2211/xobj"
 	},
 	"bugs": {
-		"url": "https://github.com/AntonovSergey2211/xobj/issues"
+		"url": "https://github.com/superman2211/xobj/issues"
 	},
-	"homepage": "https://github.com/AntonovSergey2211/xobj#readme",
+	"homepage": "https://github.com/superman2211/xobj#readme",
 	"scripts": {
 		"build": "node index.js",
 		"start": "yarn build",
@@ -21,7 +21,7 @@
 		"clean": "rimraf dist"
 	},
 	"dependencies": {
-		"@xobj/core": "0.4.0"
+		"@xobj/core": "0.4.1"
 	},
 	"devDependencies": {
 		"rimraf": "^3.0.2",

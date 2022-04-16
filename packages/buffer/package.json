@@ -1,8 +1,8 @@
 {
 	"name": "@xobj/buffer",
 	"description": "Buffer for Browser and NodeJS. Writing and reading basic types to binary data.",
-	"author": "Sergey Antonov",
-	"version": "0.4.0",
+	"author": "Clark Kent",
+	"version": "0.4.1",
 	"main": "dist/cjs/index.js",
 	"browser": "dist/iife/xobj-buffer.min.js",
 	"module": "dist/esm/index.js",
@@ -23,12 +23,12 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/AntonovSergey2211/xobj"
+		"url": "git+https://github.com/superman2211/xobj"
 	},
 	"bugs": {
-		"url": "https://github.com/AntonovSergey2211/xobj/issues"
+		"url": "https://github.com/superman2211/xobj/issues"
 	},
-	"homepage": "https://github.com/AntonovSergey2211/xobj#readme",
+	"homepage": "https://github.com/superman2211/xobj#readme",
 	"scripts": {
 		"build": "yarn tsc && yarn rollup -c",
 		"lint": "yarn eslint --fix ./src/*.ts ./src/**/*.ts",

@@ -141,7 +141,7 @@ console.log(target.points[0].x) // 1
 console.log(target.points[0].y) // 2
 ```
 
-You can see more examples in [tests](https://github.com/AntonovSergey2211/xobj/tree/master/packages/core/test).
+You can see more examples in [tests](https://github.com/superman2211/xobj/tree/master/packages/core/test).
 
 Check out integration [samples](https://github.com/superman2211/xobj/tree/master/samples).
 
