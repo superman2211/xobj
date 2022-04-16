@@ -2,7 +2,7 @@
 	"name": "@xobj/buffer",
 	"description": "Buffer for Browser and NodeJS. Writing and reading basic types to binary data.",
 	"author": "Clark Kent",
-	"version": "0.4.0",
+	"version": "0.4.1",
 	"main": "dist/cjs/index.js",
 	"browser": "dist/iife/xobj-buffer.min.js",
 	"module": "dist/esm/index.js",

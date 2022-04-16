@@ -1,5 +1,13 @@
 # browser-sample
 
+## 0.3.1
+
+### Patch Changes
+
+- Update package links
+- Updated dependencies
+  - @xobj/core@0.4.1
+
 ## 0.3.0
 
 ### Minor Changes
