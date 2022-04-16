@@ -1,6 +1,7 @@
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import { terser } from 'rollup-plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { getBabelOutputPlugin } from '@rollup/plugin-babel';
 
 export default [
 	{
@@ -14,6 +15,9 @@ export default [
 		external: ['@xobj/buffer'],
 		plugins: [
 			sourcemaps(),
+			getBabelOutputPlugin({
+				presets: ['@babel/preset-env'],
+			}),
 		],
 	},
 	{
@@ -28,6 +32,25 @@ export default [
 		plugins: [
 			nodeResolve(),
 			sourcemaps(),
+			terser(),
+		],
+	},
+	{
+		input: 'dist/esm/index.js',
+		output: {
+			file: 'dist/iife/xobj-core.es6.min.js',
+			name: 'xobjCore',
+			format: 'iife',
+			compact: true,
+			sourcemap: true,
+		},
+		plugins: [
+			nodeResolve(),
+			sourcemaps(),
+			getBabelOutputPlugin({
+				presets: ['@babel/preset-env'],
+				allowAllFormats: true,
+			}),
 			terser(),
 		],
 	},
