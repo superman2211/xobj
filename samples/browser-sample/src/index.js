@@ -1,5 +1,6 @@
-// eslint-disable-next-line no-undef
-const { encode, decode } = xobjCore;
+/* eslint-disable prefer-destructuring, no-undef */
+const encode = xobjCore.encode;
+const decode = xobjCore.decode;
 
 function log(message) {
 	document.write(`<div>${message}</div>`);
