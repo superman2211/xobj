@@ -43,5 +43,3 @@ Check code quality
 ```shell
 yarn lint
 ```
-
-
