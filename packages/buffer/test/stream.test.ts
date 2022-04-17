@@ -47,6 +47,7 @@ describe('stream', () => {
 	it('should write data in big endian', () => {
 		const writer = new BufferWriter(1024, false);
 		writer.writeInt32(78901);
+		expect(writer.littleEndian).toBe(false);
 
 		const { buffer } = writer;
 		const array = new Uint8Array(buffer);
@@ -57,11 +58,13 @@ describe('stream', () => {
 		expect(array[3]).toBe(53);
 		const reader = new BufferReader(buffer, false);
 		expect(reader.readInt32()).toBe(78901);
+		expect(reader.littleEndian).toBe(false);
 	});
 
 	it('should write data in little endian', () => {
 		const writer = new BufferWriter(1024, true);
 		writer.writeInt32(78901);
+		expect(writer.littleEndian).toBe(true);
 
 		const { buffer } = writer;
 		const array = new Uint8Array(buffer);
@@ -73,5 +76,6 @@ describe('stream', () => {
 
 		const reader = new BufferReader(buffer, true);
 		expect(reader.readInt32()).toBe(78901);
+		expect(reader.littleEndian).toBe(true);
 	});
 });
