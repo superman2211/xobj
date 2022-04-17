@@ -3,10 +3,7 @@
 
 name: release
 
-on:
-  release:
-    types: [created]
-    
+on: 
   workflow_dispatch:
 
 jobs:
@@ -22,6 +19,9 @@ jobs:
       - run: yarn build
       - run: yarn test
       - run: yarn lint
+      - run: git commit -m "Version packages" || echo "No changes to commit"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish-npm:
     needs: build
@@ -37,5 +37,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: yarn
       - run: yarn changeset publish
+      - run: git push --follow-tags
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
