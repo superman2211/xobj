@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -19,31 +22,6 @@ jobs:
       - run: yarn build
       - run: yarn test
       - run: yarn lint
-      
-      - name: Push changes
-        run: |
-          git config user.email "superflasher22@gmail.com"
-          git config user.name "Clark Kent"
-          git add -A
-          git commit -m "Version packages" || echo "No changes to commit"
-          git push --follow-tags
-          
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-      - run: yarn
       - run: yarn changeset publish
       
       - name: Push changes
