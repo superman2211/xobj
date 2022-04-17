@@ -18,25 +18,12 @@ jobs:
         with:
           node-version: 16
           registry-url: 'https://registry.npmjs.org'
-          
-      - run: yarn
-      - run: yarn changeset version
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: yarn build
-      - run: yarn test
-      - run: yarn lint
-      - run: yarn changeset publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       
-      - name: Push changes
-        run: |
-          git config user.email "superflasher22@gmail.com"
-          git config user.name "Clark Kent"
-          git add -A
-          git commit -m "Version packages" || echo "No changes to commit"
-          git push --follow-tags --force
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Create Release Pull Request
+        uses: changesets/action@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
