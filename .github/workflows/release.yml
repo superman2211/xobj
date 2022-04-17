@@ -18,7 +18,6 @@ jobs:
         with:
           node-version: 16
           registry-url: 'https://registry.npmjs.org'
-          persist-credentials: false
           
       - run: yarn
       - run: yarn changeset version
@@ -35,7 +34,7 @@ jobs:
           git config user.name "Clark Kent"
           git add -A
           git commit -m "Version packages" || echo "No changes to commit"
-          git push --follow-tags
+          git push --follow-tags --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
