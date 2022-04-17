@@ -25,6 +25,8 @@ jobs:
       - run: yarn test
       - run: yarn lint
       - run: yarn changeset publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       
       - name: Push changes
         run: |
@@ -35,5 +37,4 @@ jobs:
           git push --follow-tags
           
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
