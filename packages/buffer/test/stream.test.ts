@@ -75,7 +75,9 @@ describe('stream', () => {
 		expect(array[3]).toBe(0);
 
 		const reader = new BufferReader(buffer, true);
+		expect(reader.bytesAvailable).toBe(4);
 		expect(reader.readInt32()).toBe(78901);
+		expect(reader.bytesAvailable).toBe(0);
 		expect(reader.littleEndian).toBe(true);
 	});
 });
