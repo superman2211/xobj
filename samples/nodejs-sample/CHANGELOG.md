@@ -1,5 +1,11 @@
 # nodejs-sample
 
+## 0.2.7
+
+### Patch Changes
+
+- @xobj/core@0.4.2
+
 ## 0.2.6
 
 ### Patch Changes
