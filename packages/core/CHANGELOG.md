@@ -1,5 +1,12 @@
 # @xobj/core
 
+## 0.4.3
+
+### Patch Changes
+
+- Updated dependencies [6d08cf9]
+  - @xobj/buffer@0.4.3
+
 ## 0.4.2
 
 ### Patch Changes

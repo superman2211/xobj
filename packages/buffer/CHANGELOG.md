@@ -1,5 +1,11 @@
 # @xobj/buffer
 
+## 0.4.3
+
+### Patch Changes
+
+- 6d08cf9: Add tests
+
 ## 0.4.2
 
 ### Patch Changes
