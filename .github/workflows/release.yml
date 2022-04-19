@@ -9,9 +9,7 @@ jobs:
   release:
     name: release
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
+    permissions: write-all
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
