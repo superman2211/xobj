@@ -24,9 +24,9 @@ export class BufferWriter implements IBuffer {
 
 	set position(value: number) {
 		if (value < 0) {
-			value = 0;
+			throw 'out of range';
 		} else if (value > this._length) {
-			value = this._length;
+			throw 'out of range';
 		}
 
 		this._position = value;

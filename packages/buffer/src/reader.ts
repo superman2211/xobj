@@ -23,9 +23,9 @@ export class BufferReader implements IBuffer {
 
 	set position(value: number) {
 		if (value < 0) {
-			value = 0;
+			throw 'out of range';
 		} else if (value > this.length) {
-			value = this.length;
+			throw 'out of range';
 		}
 
 		this._position = value;
@@ -126,10 +126,8 @@ export class BufferReader implements IBuffer {
 		}
 
 		let value = '';
-		if (count) {
-			while (count--) {
-				value += String.fromCharCode(this.readUintVar());
-			}
+		while (count--) {
+			value += String.fromCharCode(this.readUintVar());
 		}
 		return value;
 	}
