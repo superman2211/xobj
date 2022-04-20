@@ -1,5 +1,11 @@
 # @xobj/buffer
 
+## 0.4.4
+
+### Patch Changes
+
+- 4a44cee: Add tests to 100% coverage
+
 ## 0.4.3
 
 ### Patch Changes
