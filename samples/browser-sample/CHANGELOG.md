@@ -1,5 +1,11 @@
 # browser-sample
 
+## 0.3.5
+
+### Patch Changes
+
+- Corrections
+
 ## 0.3.4
 
 ### Patch Changes
