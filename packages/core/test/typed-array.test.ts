@@ -4,6 +4,17 @@ import { encode } from '../src/encode';
 import { decode } from '../src/decode';
 
 describe('typed array', () => {
+	it('should write Uint8Array', () => {
+		const source = new Uint8Array([2, 3, 45, 33, 102]);
+
+		const buffer = encode(source);
+		expect(buffer.byteLength).toBe(8);
+
+		const target = decode(buffer);
+		expect(target).toEqual(source);
+		expect(target.byteLength).toBe(source.byteLength);
+	});
+
 	it('should write Uint16Array', () => {
 		const source = new Uint16Array([2, 3, 456, 3344, 10283]);
 
