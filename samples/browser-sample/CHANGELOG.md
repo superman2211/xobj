@@ -1,5 +1,12 @@
 # browser-sample
 
+## 0.3.6
+
+### Patch Changes
+
+- Updated dependencies [9fa568a]
+  - @xobj/core@0.4.5
+
 ## 0.3.5
 
 ### Patch Changes

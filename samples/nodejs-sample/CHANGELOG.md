@@ -1,5 +1,12 @@
 # nodejs-sample
 
+## 0.2.10
+
+### Patch Changes
+
+- Updated dependencies [9fa568a]
+  - @xobj/core@0.4.5
+
 ## 0.2.9
 
 ### Patch Changes
