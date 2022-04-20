@@ -21,8 +21,12 @@ describe('stream', () => {
 		expect(writer.position).toBe(3);
 		expect(writer.length).toBe(7);
 
-		const reader = new BufferReader(writer.buffer);
+		const { buffer } = writer;
+
+		const reader = new BufferReader(buffer);
 		expect(reader.length).toBe(7);
+		expect(reader.buffer).toBe(buffer);
+		expect(reader.buffer.byteLength).toBe(7);
 		expect(reader.readInt8()).toBe(123);
 		expect(reader.position).toBe(1);
 		expect(reader.readInt16()).toBe(-2048);
@@ -79,5 +83,49 @@ describe('stream', () => {
 		expect(reader.readInt32()).toBe(78901);
 		expect(reader.bytesAvailable).toBe(0);
 		expect(reader.littleEndian).toBe(true);
+	});
+
+	it('should change position', () => {
+		const writer = new BufferWriter(1024, false);
+		expect(writer.position).toBe(0);
+		writer.writeInt32(78901);
+		expect(writer.position).toBe(4);
+		writer.position = 2;
+		expect(writer.bytesAvailable).toBe(2);
+		expect(writer.position).toBe(2);
+
+		const { buffer } = writer;
+
+		const reader = new BufferReader(buffer, false);
+		expect(reader.position).toBe(0);
+		expect(reader.readInt32()).toBe(78901);
+		expect(reader.position).toBe(4);
+		reader.position = 3;
+		expect(reader.position).toBe(3);
+	});
+
+	it('should throw error when position out of range', () => {
+		const writer = new BufferWriter(1024, false);
+		writer.writeInt32(78901);
+
+		expect(() => {
+			writer.position = -1;
+		}).toThrow();
+
+		expect(() => {
+			writer.position = 10;
+		}).toThrow();
+
+		const { buffer } = writer;
+
+		const reader = new BufferReader(buffer, false);
+
+		expect(() => {
+			reader.position = -3;
+		}).toThrow();
+
+		expect(() => {
+			reader.position = 5;
+		}).toThrow();
 	});
 });
