@@ -4,7 +4,18 @@ import { encode } from '../src/encode';
 import { decode } from '../src/decode';
 
 describe('typed array', () => {
-	it('should write simple typed array', () => {
+	it('should write Uint16Array', () => {
+		const source = new Uint16Array([2, 3, 456, 3344, 10283]);
+
+		const buffer = encode(source);
+		expect(buffer.byteLength).toBe(13);
+
+		const target = decode(buffer);
+		expect(target).toEqual(source);
+		expect(target.byteLength).toBe(source.byteLength);
+	});
+
+	it('should write Uint32Array', () => {
 		const source = new Uint32Array([1, 43, 567, 6723344, 263723283]);
 
 		const buffer = encode(source);
