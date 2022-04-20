@@ -1,5 +1,11 @@
 # @xobj/core
 
+## 0.4.6
+
+### Patch Changes
+
+- 3a95eef: Add tests
+
 ## 0.4.5
 
 ### Patch Changes
