@@ -24,17 +24,18 @@ jobs:
       - run: yarn build
       - run: yarn test
       - run: yarn lint
-      - run: yarn changeset publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       
       - name: Push changes
         run: |
-          git config user.email "superflasher22@gmail.com"
-          git config user.name "Clark Kent"
-          git add -A
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add .
           git commit -m "Version packages" || echo "No changes to commit"
           git push --follow-tags --force
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: yarn changeset publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
