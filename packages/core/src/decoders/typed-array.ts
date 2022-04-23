@@ -1,31 +1,33 @@
-import { ValueType } from '../types';
+import { ValueType, TypedArrayType } from '../types';
 import { DecoderMethod, DecodeState } from '../decode';
 
 export function decodeTypedArray(state: DecodeState): any {
 	const { reader } = state;
 
-	const type = reader.readUint8() as ValueType;
+	const type = reader.readUint8() as TypedArrayType;
 
 	const buffer = reader.readBuffer();
 
 	switch (type) {
-		case ValueType.UINT8:
+		case TypedArrayType.UINT8_CLAMPED:
+			return new Uint8ClampedArray(buffer);
+		case TypedArrayType.UINT8:
 			return new Uint8Array(buffer);
-		case ValueType.UINT16:
+		case TypedArrayType.UINT16:
 			return new Uint16Array(buffer);
-		case ValueType.UINT32:
+		case TypedArrayType.UINT32:
 			return new Uint32Array(buffer);
-		case ValueType.INT8:
+		case TypedArrayType.INT8:
 			return new Int8Array(buffer);
-		case ValueType.INT16:
+		case TypedArrayType.INT16:
 			return new Int16Array(buffer);
-		case ValueType.INT32:
+		case TypedArrayType.INT32:
 			return new Int32Array(buffer);
-		case ValueType.FLOAT32:
+		case TypedArrayType.FLOAT32:
 			return new Float32Array(buffer);
-		case ValueType.FLOAT64:
+		case TypedArrayType.FLOAT64:
 			return new Float64Array(buffer);
-		case ValueType.ANY:
+		case TypedArrayType.DATA_VIEW:
 			return new DataView(buffer);
 		default:
 			throw `Unknown typed array type: ${type}`;

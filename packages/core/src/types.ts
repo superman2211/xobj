@@ -32,6 +32,20 @@ export const enum ValueType {
 	CUSTOM,
 }
 
+export const enum TypedArrayType {
+	UINT8_CLAMPED,
+	UINT8,
+	UINT16,
+	UINT32,
+	INT8,
+	INT16,
+	INT32,
+	INT_VAR,
+	FLOAT32,
+	FLOAT64,
+	DATA_VIEW,
+}
+
 export function isNumberType(type: ValueType): boolean {
 	switch (type) {
 		case ValueType.UINT8:
