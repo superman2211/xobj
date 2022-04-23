@@ -2,7 +2,7 @@
 	"name": "@xobj/core",
 	"description": "Decoding and encoding JavaScript/TypeScript objects to binary format.",
 	"author": "Clark Kent",
-	"version": "0.4.6",
+	"version": "0.4.7",
 	"main": "dist/cjs/index.js",
 	"browser": "dist/iife/xobj-core.min.js",
 	"module": "dist/esm/index.js",

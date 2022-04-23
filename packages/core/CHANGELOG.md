@@ -1,5 +1,11 @@
 # @xobj/core
 
+## 0.4.7
+
+### Patch Changes
+
+- cef37cb: Add typed array tests
+
 ## 0.4.6
 
 ### Patch Changes
