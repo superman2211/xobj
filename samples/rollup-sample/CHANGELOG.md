@@ -1,5 +1,12 @@
 # rollup-sample
 
+## 0.3.9
+
+### Patch Changes
+
+- Updated dependencies [b7f3653]
+  - @xobj/core@0.4.8
+
 ## 0.3.8
 
 ### Patch Changes

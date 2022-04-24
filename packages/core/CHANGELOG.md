@@ -1,5 +1,11 @@
 # @xobj/core
 
+## 0.4.8
+
+### Patch Changes
+
+- b7f3653: Add tests
+
 ## 0.4.7
 
 ### Patch Changes
