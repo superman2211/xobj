@@ -12,8 +12,8 @@
     "clean": "yarn wsrun -e -m clean",
     "checkup": "yarn clean && yarn build && yarn lint && yarn test && yarn coverage",
     "release": "yarn build && yarn changeset publish",
-    "version": "yarn changeset version && yarn update-lock"
-    "update-lock": "yarn && git add yarn.lock",
+    "version": "yarn changeset version && yarn update-lock",
+    "update-lock": "yarn && git add yarn.lock"
   },
   "workspaces": [
     "packages/*",
