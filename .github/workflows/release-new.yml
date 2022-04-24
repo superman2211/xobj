@@ -1,13 +1,15 @@
-name: release new
+name: release
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - master
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   release:
-    name: release new
+    name: release
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
