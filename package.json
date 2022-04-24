@@ -10,7 +10,9 @@
     "test": "yarn wsrun -e -m test",
     "coverage": "yarn wsrun -e -m coverage",
     "clean": "yarn wsrun -e -m clean",
-    "checkup": "yarn clean && yarn build && yarn lint && yarn test && yarn coverage"
+    "checkup": "yarn clean && yarn build && yarn lint && yarn test && yarn coverage",
+	"release": "changeset publish",
+    "version": "changeset version && yarn run update-lock"
   },
   "workspaces": [
     "packages/*",
