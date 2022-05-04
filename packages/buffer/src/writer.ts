@@ -1,6 +1,6 @@
-import { IBuffer } from './types';
+import { IBufferWriter } from './types';
 
-export class BufferWriter implements IBuffer {
+export class BufferWriter implements IBufferWriter {
 	private _data: DataView;
 	private _position: number;
 	private _length: number;
