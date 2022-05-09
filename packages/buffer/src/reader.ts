@@ -1,6 +1,6 @@
-import { IBuffer } from './types';
+import { IBufferReader } from './types';
 
-export class BufferReader implements IBuffer {
+export class BufferReader implements IBufferReader {
 	private _data: DataView;
 	private _position: number;
 	private _littleEndian: boolean;

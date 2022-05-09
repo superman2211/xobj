@@ -167,4 +167,27 @@ describe('custom', () => {
 		expect(target.unit).toBeInstanceOf(Unit);
 		expect(target.target).toBeInstanceOf(Point);
 	});
+
+	it('should throw when set incorrect decoders', () => {
+		expect(() => {
+			const buffer = encode({ test: 123 });
+
+			const decoders = new Map();
+			decode(buffer, { decoders });
+		}).toThrow();
+	});
+
+	it('should throw when set incorrect detectors', () => {
+		expect(() => {
+			const detectors = [];
+			encode({ test: 123 }, { detectors });
+		}).toThrow();
+	});
+
+	it('should throw when set incorrect encoders', () => {
+		expect(() => {
+			const encoders = new Map();
+			encode({ test: 123 }, { encoders });
+		}).toThrow();
+	});
 });

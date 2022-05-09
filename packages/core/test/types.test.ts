@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-import { isNumberType, ValueType } from '../src';
+import { isFloatType, isNumberType, ValueType } from '../src';
 
 describe('types', () => {
 	it('should check number type', () => {
@@ -19,5 +19,11 @@ describe('types', () => {
 
 		expect(isNumberType(ValueType.STRING)).toBeFalsy();
 		expect(isNumberType(ValueType.TRUE)).toBeFalsy();
+	});
+
+	it('should check float type', () => {
+		expect(isFloatType(ValueType.INT8)).toBeFalsy();
+		expect(isFloatType(ValueType.FLOAT32)).toBeTruthy();
+		expect(isFloatType(ValueType.FLOAT64)).toBeTruthy();
 	});
 });

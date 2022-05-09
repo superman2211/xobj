@@ -19,6 +19,7 @@ import { initBigIntEncoders } from './encoders/bigint';
 export interface EncodeOptions {
 	encoders?: Map<ValueType, EncoderMethod>;
 	detectors?: DetectorMethod[];
+	bufferSize?: number;
 }
 
 export interface EncodeState {
@@ -60,9 +61,11 @@ function detect(state: EncodeState, value: any): ValueType {
 }
 
 export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
-	const writer = new BufferWriter();
+	const bufferSize = options?.bufferSize ?? 1024;
 	const encoders = options?.encoders ?? DEFAULT_ENCODERS;
 	const detectors = options?.detectors ?? DEFAULT_DETECTORS;
+
+	const writer = new BufferWriter(bufferSize);
 
 	const state: EncodeState = {
 		writer,
