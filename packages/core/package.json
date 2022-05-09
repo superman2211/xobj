@@ -33,7 +33,7 @@
 	"scripts": {
 		"build": "yarn tsc && yarn rollup -c",
 		"lint": "yarn eslint --fix ./src/*.ts ./src/**/*.ts",
-		"test": "jest",
+		"test": "jest --verbose",
 		"coverage": "jest --coverage",
 		"clean": "rimraf dist && rimraf coverage"
 	},
