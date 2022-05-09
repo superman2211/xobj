@@ -1,0 +1,30 @@
+{
+	"name": "buffer-benchmark",
+	"description": "xobj buffer benchmark for nodeJS",
+	"version": "0.1.0",
+	"main": "index.js",
+	"private": true,
+	"author": "Clark Kent",
+	"license": "GPL-3.0-only",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/superman2211/xobj"
+	},
+	"bugs": {
+		"url": "https://github.com/superman2211/xobj/issues"
+	},
+	"homepage": "https://github.com/superman2211/xobj#readme",
+	"scripts": {
+		"build": "node index.js",
+		"start": "yarn build",
+		"lint": "yarn eslint --fix ./index.js"
+	},
+	"dependencies": {
+		"@xobj/buffer": "0.4.4"
+	},
+	"devDependencies": {
+		"eslint": "^8.4.1",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-plugin-import": "^2.25.3"
+	}
+}
