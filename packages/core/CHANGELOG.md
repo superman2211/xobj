@@ -1,5 +1,16 @@
 # @xobj/core
 
+## 0.5.0
+
+### Minor Changes
+
+- 1b63d52: Add tests, Add bufferSize to encoder
+
+### Patch Changes
+
+- Updated dependencies [1b63d52]
+  - @xobj/buffer@0.5.0
+
 ## 0.4.8
 
 ### Patch Changes
