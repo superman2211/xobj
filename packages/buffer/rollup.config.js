@@ -13,9 +13,6 @@ export default [
 		},
 		plugins: [
 			sourcemaps(),
-			getBabelOutputPlugin({
-				presets: ['@babel/preset-env'],
-			}),
 		],
 	},
 	{

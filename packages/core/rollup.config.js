@@ -15,9 +15,6 @@ export default [
 		external: ['@xobj/buffer'],
 		plugins: [
 			sourcemaps(),
-			getBabelOutputPlugin({
-				presets: ['@babel/preset-env'],
-			}),
 		],
 	},
 	{
