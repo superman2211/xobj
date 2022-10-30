@@ -17,10 +17,10 @@
   },
   "workspaces": [
     "packages/*",
-	"samples/*"
+    "samples/*"
   ],
   "devDependencies": {
-    "wsrun": "^5.2.4",
-	"@changesets/cli": "^2.21.1"
+    "@changesets/cli": "^2.21.1",
+    "wsrun": "^5.2.4"
   }
 }
