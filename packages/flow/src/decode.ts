@@ -44,8 +44,12 @@ function decodeValue(context: DecodeContext): any {
 	switch (type) {
 		case ValueType.INDEX:
 			const index = reader.readUintVar();
-			// console.log('decode index', index, cache[index]);
 			return cache[index];
+
+		case ValueType.LAST_INDEX:
+			const endIndex = reader.readUintVar();
+			const lastIndex = cache.length - endIndex;
+			return cache[lastIndex];
 
 		case ValueType.NULL:
 			return null;
@@ -215,10 +219,6 @@ export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
 	};
 
 	const value = decodeValue(context);
-
-	if (options?.debug) {
-		console.log('decode cache', context.cache);
-	}
 
 	return value;
 }

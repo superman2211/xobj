@@ -154,9 +154,16 @@ function encodeValue(value: any, context: EncodeContext) {
 	const { writer, cache } = context;
 
 	const index = cache.indexOf(value);
+	const lastIndex = cache.lastIndexOf(value);
 	if (index !== -1) {
-		writer.writeUintVar(ValueType.INDEX);
-		writer.writeUintVar(index);
+		const endIndex = cache.length - lastIndex;
+		if (endIndex < index) {
+			writer.writeUintVar(ValueType.LAST_INDEX);
+			writer.writeUintVar(endIndex);
+		} else {
+			writer.writeUintVar(ValueType.INDEX);
+			writer.writeUintVar(index);
+		}
 		return;
 	}
 
@@ -283,12 +290,6 @@ export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
 	};
 
 	encodeValue(value, context);
-
-	// console.log('size', writer.buffer.byteLength);
-
-	if (options?.debug) {
-		console.log('encode cache', context.cache);
-	}
 
 	return writer.buffer;
 }
