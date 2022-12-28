@@ -35,6 +35,10 @@ export class BufferReader implements IBufferReader {
 		return this._data.buffer;
 	}
 
+	get view(): DataView {
+		return this._data;
+	}
+
 	constructor(buffer: ArrayBuffer, littleEndian: boolean = false) {
 		this._data = new DataView(buffer);
 		this._position = 0;
@@ -44,6 +48,10 @@ export class BufferReader implements IBufferReader {
 	private movePosition(value: number) {
 		this._position += value;
 	}
+
+	// getUint8(): number {
+	// 	return this._data.getUint8(this._position);
+	// }
 
 	readUint8(): number {
 		const value = this._data.getUint8(this._position);

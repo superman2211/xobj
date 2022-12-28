@@ -22,15 +22,10 @@ function decodeArray(context: DecodeContext): any[] {
 
 	const array: any[] = [];
 
-	while (true) {
-		const type = reader.readUintVar();
-		if (type !== ValueType.END) {
-			reader.position--;
-			const item = decodeValue(context);
-			array.push(item);
-		} else {
-			break;
-		}
+	while (reader.readUintVar() !== ValueType.END) {
+		reader.position--;
+		const item = decodeValue(context);
+		array.push(item);
 	}
 
 	return array;
@@ -99,11 +94,7 @@ function decodeValue(context: DecodeContext): any {
 
 		case ValueType.OBJECT: {
 			const value: any = {};
-			while (true) {
-				const end = reader.readUintVar();
-				if (end === ValueType.END) {
-					break;
-				}
+			while (reader.readUintVar() !== ValueType.END) {
 				reader.position--;
 				const key = decodeValue(context);
 				value[key] = decodeValue(context);
