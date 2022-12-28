@@ -14,6 +14,7 @@ export const enum ValueType {
 	STRING,
 	ARRAY,
 	OBJECT,
+	END,
 	SYMBOL,
 	SET,
 	MAP,
@@ -31,5 +32,7 @@ export const enum ValueType {
 	DATA_VIEW,
 	DATE,
 	REG_EXP,
+	INDEX,
+	LAST_INDEX,
 	CUSTOM,
 }

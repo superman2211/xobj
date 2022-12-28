@@ -7,12 +7,14 @@ type CustomEncodeMethod = (value: any, context: EncodeContext) => void;
 
 export interface EncodeContext {
 	readonly writer: IBufferWriter,
+	readonly cache: any[];
 	readonly customDetect?: CustomDetectMethod,
 	readonly customEncode?: CustomEncodeMethod,
 }
 
 export interface EncodeOptions {
 	readonly bufferSize?: number;
+	readonly debug?: boolean;
 	readonly customDetect?: CustomDetectMethod;
 	readonly customEncode?: CustomEncodeMethod;
 }
@@ -43,7 +45,7 @@ function detectType(value: any, context: EncodeContext): ValueType {
 				return ValueType.NAN;
 			}
 
-			if (Number.isSafeInteger(value)) {
+			if (Number.isInteger(value)) {
 				return ValueType.INT;
 			}
 
@@ -140,18 +142,23 @@ function detectType(value: any, context: EncodeContext): ValueType {
 
 function encodeArray(array: any[], context: EncodeContext) {
 	const { writer } = context;
-
-	writer.writeUintVar(array.length);
-
 	for (const item of array) {
 		encodeValue(item, context);
 	}
+	writer.writeUintVar(ValueType.END);
 }
 
 function encodeValue(value: any, context: EncodeContext) {
 	const type = detectType(value, context);
 
-	const { writer } = context;
+	const { writer, cache } = context;
+
+	const index = cache.indexOf(value);
+	if (index !== -1) {
+		writer.writeUintVar(ValueType.INDEX);
+		writer.writeUintVar(index);
+		return;
+	}
 
 	writer.writeUintVar(type);
 
@@ -166,18 +173,22 @@ function encodeValue(value: any, context: EncodeContext) {
 			break;
 
 		case ValueType.INT:
+			cache.push(value);
 			writer.writeIntVar(value);
 			break;
 
 		case ValueType.FLOAT:
+			cache.push(value);
 			writer.writeFloat64(value);
 			break;
 
 		case ValueType.BIGINT:
+			cache.push(value);
 			writer.writeBigInt(value);
 			break;
 
 		case ValueType.STRING:
+			cache.push(value);
 			writer.writeString(value);
 			break;
 
@@ -187,11 +198,16 @@ function encodeValue(value: any, context: EncodeContext) {
 
 		case ValueType.OBJECT:
 			const keys = Object.keys(value);
-			writer.writeUintVar(keys.length);
 			for (const key of keys) {
-				writer.writeString(key);
+				const number = parseFloat(key);
+				if (Number.isInteger(number)) {
+					encodeValue(number, context);
+				} else {
+					encodeValue(key, context);
+				}
 				encodeValue(value[key], context);
 			}
+			writer.writeUintVar(ValueType.END);
 			break;
 
 		case ValueType.SYMBOL:
@@ -261,11 +277,18 @@ export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
 
 	const context: EncodeContext = {
 		writer,
+		cache: [],
 		customDetect: options?.customDetect,
 		customEncode: options?.customEncode,
 	};
 
 	encodeValue(value, context);
+
+	// console.log('size', writer.buffer.byteLength);
+
+	if (options?.debug) {
+		console.log('encode cache', context.cache);
+	}
 
 	return writer.buffer;
 }

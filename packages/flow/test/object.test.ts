@@ -13,6 +13,20 @@ describe('object', () => {
 		expect(target).toEqual(source);
 	});
 
+	it('should write object with number keys', () => {
+		const source = {
+			one: 11,
+			two: 22,
+			11: 'one',
+			22: 'two',
+		};
+
+		const buffer = encode(source);
+
+		const target = decode(buffer);
+		expect(target).toEqual(source);
+	});
+
 	it('should write simple object', () => {
 		const source = {
 			name: 'John Doe',

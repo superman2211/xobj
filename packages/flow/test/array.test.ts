@@ -120,6 +120,21 @@ describe('array', () => {
 		expect(target).toEqual(source);
 	});
 
+	it('should write array with objects', () => {
+		const source = [
+			{ x: 1111, y: 2222, name: 'one' },
+			{ x: 2222, y: 3333, name: 'two' },
+			{ x: 5555, y: 4444, name: 'two' },
+			{ x: 4444, y: 5555, name: 'one' },
+		];
+
+		const buffer = encode(source);
+
+		const target = decode(buffer);
+		expect(target.length).toBe(source.length);
+		expect(target).toEqual(source);
+	});
+
 	it('should write grouped array', () => {
 		const source = [
 			1, 2, 3, 4, 5, 6,
