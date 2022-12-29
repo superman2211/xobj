@@ -7,7 +7,8 @@ type CustomEncodeMethod = (value: any, context: EncodeContext) => void;
 
 export interface EncodeContext {
 	readonly writer: IBufferWriter,
-	readonly cache: any[];
+	readonly values: any[];
+	readonly links: any[];
 	readonly customDetect?: CustomDetectMethod,
 	readonly customEncode?: CustomEncodeMethod,
 }
@@ -148,22 +149,33 @@ function encodeArray(array: any[], context: EncodeContext) {
 	writer.writeUintVar(ValueType.END);
 }
 
+function tryWriteIndex(value: any, writer: IBufferWriter, values: any[], firstType: ValueType, lastType: ValueType): boolean {
+	const valueIndex = values.indexOf(value);
+	const valueLastIndex = values.lastIndexOf(value);
+	if (valueIndex !== -1) {
+		const valueEndIndex = values.length - valueLastIndex;
+		if (valueEndIndex < valueIndex) {
+			writer.writeUintVar(lastType);
+			writer.writeUintVar(valueEndIndex);
+		} else {
+			writer.writeUintVar(firstType);
+			writer.writeUintVar(valueIndex);
+		}
+		return true;
+	}
+	return false;
+}
+
 function encodeValue(value: any, context: EncodeContext) {
 	const type = detectType(value, context);
 
-	const { writer, cache } = context;
+	const { writer, values, links } = context;
 
-	const index = cache.indexOf(value);
-	const lastIndex = cache.lastIndexOf(value);
-	if (index !== -1) {
-		const endIndex = cache.length - lastIndex;
-		if (endIndex < index) {
-			writer.writeUintVar(ValueType.LAST_INDEX);
-			writer.writeUintVar(endIndex);
-		} else {
-			writer.writeUintVar(ValueType.INDEX);
-			writer.writeUintVar(index);
-		}
+	if (tryWriteIndex(value, writer, values, ValueType.VALUE_INDEX, ValueType.VALUE_LAST_INDEX)) {
+		return;
+	}
+
+	if (tryWriteIndex(value, writer, links, ValueType.LINK_INDEX, ValueType.LINK_LAST_INDEX)) {
 		return;
 	}
 
@@ -180,30 +192,32 @@ function encodeValue(value: any, context: EncodeContext) {
 			break;
 
 		case ValueType.INT:
-			cache.push(value);
+			values.push(value);
 			writer.writeIntVar(value);
 			break;
 
 		case ValueType.FLOAT:
-			cache.push(value);
+			values.push(value);
 			writer.writeFloat64(value);
 			break;
 
 		case ValueType.BIGINT:
-			cache.push(value);
+			values.push(value);
 			writer.writeBigInt(value);
 			break;
 
 		case ValueType.STRING:
-			cache.push(value);
+			values.push(value);
 			writer.writeString(value);
 			break;
 
 		case ValueType.ARRAY:
+			links.push(value);
 			encodeArray(value, context);
 			break;
 
 		case ValueType.OBJECT:
+			links.push(value);
 			const keys = Object.keys(value);
 			for (const key of keys) {
 				const number = parseFloat(key);
@@ -218,21 +232,24 @@ function encodeValue(value: any, context: EncodeContext) {
 			break;
 
 		case ValueType.SYMBOL:
-			console.warn('TODO');
+			links.push(value);
 			break;
 
 		case ValueType.SET:
+			links.push(value);
 			const set: Set<any> = value;
 			encodeArray([...set.values()], context);
 			break;
 
 		case ValueType.MAP:
+			links.push(value);
 			const map: Map<any, any> = value;
 			encodeArray([...map.keys()], context);
 			encodeArray([...map.values()], context);
 			break;
 
 		case ValueType.ARRAY_BUFFER:
+			links.push(value);
 			writer.writeBuffer(value);
 			break;
 
@@ -247,15 +264,18 @@ function encodeValue(value: any, context: EncodeContext) {
 		case ValueType.FLOAT32_ARRAY:
 		case ValueType.FLOAT64_ARRAY:
 		case ValueType.DATA_VIEW:
+			links.push(value);
 			const buffer: ArrayBuffer = value.buffer.slice(value.byteOffset, value.byteLength);
 			writer.writeBuffer(buffer);
 			break;
 
 		case ValueType.DATE:
+			links.push(value);
 			writer.writeFloat64(value.getTime());
 			break;
 
 		case ValueType.REG_EXP:
+			links.push(value);
 			const regexp: RegExp = value;
 
 			const data = regexp.toString();
@@ -268,6 +288,7 @@ function encodeValue(value: any, context: EncodeContext) {
 			break;
 
 		case ValueType.CUSTOM:
+			links.push(value);
 			context.customEncode?.(value, context);
 			break;
 
@@ -284,7 +305,8 @@ export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
 
 	const context: EncodeContext = {
 		writer,
-		cache: [],
+		values: [],
+		links: [],
 		customDetect: options?.customDetect,
 		customEncode: options?.customEncode,
 	};

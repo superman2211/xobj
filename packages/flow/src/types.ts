@@ -32,7 +32,9 @@ export const enum ValueType {
 	DATA_VIEW,
 	DATE,
 	REG_EXP,
-	INDEX,
-	LAST_INDEX,
+	VALUE_INDEX,
+	VALUE_LAST_INDEX,
+	LINK_INDEX,
+	LINK_LAST_INDEX,
 	CUSTOM,
 }
