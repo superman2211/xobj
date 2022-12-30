@@ -14,6 +14,7 @@ export const enum ValueType {
 	STRING,
 	ARRAY,
 	OBJECT,
+	FUNCTION,
 	END,
 	SYMBOL,
 	SET,

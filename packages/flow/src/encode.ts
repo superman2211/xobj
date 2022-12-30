@@ -31,7 +31,7 @@ function detectType(value: any, context: EncodeContext): ValueType {
 			return value ? ValueType.TRUE : ValueType.FALSE;
 
 		case 'function':
-			return ValueType.UNKNOWN;
+			return ValueType.FUNCTION;
 
 		case 'number':
 			if (value === Number.POSITIVE_INFINITY) {
@@ -231,6 +231,12 @@ function encodeValue(value: any, context: EncodeContext) {
 			writer.writeUintVar(ValueType.END);
 			break;
 
+		case ValueType.FUNCTION:
+			links.push(value);
+			const code: string = value.toString();
+			encodeValue(code, context);
+			break;
+
 		case ValueType.SYMBOL:
 			links.push(value);
 			break;
@@ -293,8 +299,7 @@ function encodeValue(value: any, context: EncodeContext) {
 			break;
 
 		default:
-			console.warn(`Unexpected value type: ${type}`);
-			break;
+			throw `Unexpected value type: ${type}`;
 	}
 }
 

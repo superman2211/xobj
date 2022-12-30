@@ -123,6 +123,16 @@ function decodeValue(context: DecodeContext): any {
 			links.push(symbol);
 			return symbol;
 
+		case ValueType.FUNCTION:
+			let code = decodeValue(context);
+			if (code.indexOf('function') === -1) {
+				code = `function ${code}`;
+			}
+			// eslint-disable-next-line no-eval
+			const func = eval(`(${code})`);
+			links.push(func);
+			return func;
+
 		case ValueType.SET: {
 			const set = new Set();
 			links.push(set);
@@ -232,8 +242,7 @@ function decodeValue(context: DecodeContext): any {
 		}
 
 		default:
-			console.warn(`Unexpected value type: ${type}`);
-			return undefined;
+			throw `Unexpected value type: ${type}`;
 	}
 }
 
