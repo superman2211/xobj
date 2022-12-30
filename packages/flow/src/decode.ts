@@ -35,6 +35,7 @@ function decodeValue(context: DecodeContext): any {
 
 	const type: ValueType = reader.readUintVar();
 
+	/* istanbul ignore next */
 	switch (type) {
 		case ValueType.VALUE_INDEX: {
 			const index = reader.readUintVar();
@@ -242,6 +243,7 @@ function decodeValue(context: DecodeContext): any {
 		}
 
 		default:
+			/* istanbul ignore next */
 			throw `Unexpected value type: ${type}`;
 	}
 }

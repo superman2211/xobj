@@ -23,6 +23,7 @@ export interface EncodeOptions {
 function detectType(value: any, context: EncodeContext): ValueType {
 	const type = typeof value;
 
+	/* istanbul ignore next */
 	switch (type) {
 		case 'bigint':
 			return ValueType.BIGINT;
@@ -137,6 +138,7 @@ function detectType(value: any, context: EncodeContext): ValueType {
 			return ValueType.UNDEFINED;
 
 		default:
+			/* istanbul ignore next */
 			return ValueType.UNKNOWN;
 	}
 }
@@ -181,6 +183,7 @@ function encodeValue(value: any, context: EncodeContext) {
 
 	writer.writeUintVar(type);
 
+	/* istanbul ignore next */
 	switch (type) {
 		case ValueType.NULL:
 		case ValueType.UNDEFINED:
@@ -299,6 +302,7 @@ function encodeValue(value: any, context: EncodeContext) {
 			break;
 
 		default:
+			/* istanbul ignore next */
 			throw `Unexpected value type: ${type}`;
 	}
 }
