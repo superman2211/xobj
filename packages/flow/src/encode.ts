@@ -1,146 +1,23 @@
 /* eslint-disable no-use-before-define */
 import { BufferWriter, IBufferWriter } from '@xobj/buffer';
+import { detect, DetectMethod, DETECTORS } from './detectors';
 import { ValueType } from './types';
 
-type CustomDetectMethod = (value: any) => boolean;
-type CustomEncodeMethod = (value: any, context: EncodeContext) => void;
+type EncodeMethod = (value: any, context: EncodeContext) => void;
 
 export interface EncodeContext {
 	readonly writer: IBufferWriter,
 	readonly values: any[];
 	readonly links: any[];
-	readonly customDetect?: CustomDetectMethod,
-	readonly customEncode?: CustomEncodeMethod,
+	readonly detectors: DetectMethod[];
+	readonly customEncode?: EncodeMethod,
 }
 
 export interface EncodeOptions {
 	readonly bufferSize?: number;
 	readonly debug?: boolean;
-	readonly customDetect?: CustomDetectMethod;
-	readonly customEncode?: CustomEncodeMethod;
-}
-
-function detectType(value: any, context: EncodeContext): ValueType {
-	const type = typeof value;
-
-	/* istanbul ignore next */
-	switch (type) {
-		case 'bigint':
-			return ValueType.BIGINT;
-
-		case 'boolean':
-			return value ? ValueType.TRUE : ValueType.FALSE;
-
-		case 'function':
-			return ValueType.FUNCTION;
-
-		case 'number':
-			if (value === Number.POSITIVE_INFINITY) {
-				return ValueType.POSITIVE_INFINITY;
-			}
-
-			if (value === Number.NEGATIVE_INFINITY) {
-				return ValueType.NEGATIVE_INFINITY;
-			}
-
-			if (Number.isNaN(value)) {
-				return ValueType.NAN;
-			}
-
-			if (Number.isInteger(value)) {
-				return ValueType.INT;
-			}
-
-			return ValueType.FLOAT;
-
-		case 'object':
-			if (value === null) {
-				return ValueType.NULL;
-			}
-
-			if (Array.isArray(value)) {
-				return ValueType.ARRAY;
-			}
-
-			if (value instanceof RegExp) {
-				return ValueType.REG_EXP;
-			}
-
-			if (value instanceof Date) {
-				return ValueType.DATE;
-			}
-
-			if (value instanceof Set) {
-				return ValueType.SET;
-			}
-
-			if (value instanceof Map) {
-				return ValueType.MAP;
-			}
-
-			if (value instanceof ArrayBuffer) {
-				return ValueType.ARRAY_BUFFER;
-			}
-
-			if (value instanceof Uint8ClampedArray) {
-				return ValueType.UINT8_CLAMPED_ARRAY;
-			}
-
-			if (value instanceof Uint8Array) {
-				return ValueType.UINT8_ARRAY;
-			}
-
-			if (value instanceof Uint16Array) {
-				return ValueType.UINT16_ARRAY;
-			}
-
-			if (value instanceof Uint32Array) {
-				return ValueType.UINT32_ARRAY;
-			}
-
-			if (value instanceof Int8Array) {
-				return ValueType.INT8_ARRAY;
-			}
-
-			if (value instanceof Int16Array) {
-				return ValueType.INT16_ARRAY;
-			}
-
-			if (value instanceof Int32Array) {
-				return ValueType.INT32_ARRAY;
-			}
-
-			if (value instanceof Float32Array) {
-				return ValueType.FLOAT32_ARRAY;
-			}
-
-			if (value instanceof Float64Array) {
-				return ValueType.FLOAT64_ARRAY;
-			}
-
-			if (value instanceof DataView) {
-				return ValueType.DATA_VIEW;
-			}
-
-			if (context.customDetect?.(value)) {
-				return ValueType.CUSTOM;
-			}
-
-			return ValueType.OBJECT;
-
-		case 'string':
-			return ValueType.STRING;
-
-		case 'symbol':
-			return ValueType.SYMBOL;
-
-		case 'undefined':
-			return ValueType.UNDEFINED;
-
-		default:
-			/* istanbul ignore next */
-			return ValueType.UNKNOWN;
-	}
+	readonly customDetect?: DetectMethod;
+	readonly customEncode?: EncodeMethod;
 }
 
 function encodeArray(array: any[], context: EncodeContext) {
@@ -169,7 +46,7 @@ function tryWriteIndex(value: any, writer: IBufferWriter, values: any[], firstTy
 }
 
 function encodeValue(value: any, context: EncodeContext) {
-	const type = detectType(value, context);
+	const type = detect(value, context);
 
 	const { writer, values, links } = context;
 
@@ -312,11 +189,17 @@ export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
 
 	const writer = new BufferWriter(bufferSize);
 
+	const detectors = DETECTORS.slice();
+
+	if (options?.customDetect) {
+		detectors.unshift(options.customDetect);
+	}
+
 	const context: EncodeContext = {
 		writer,
 		values: [],
 		links: [],
-		customDetect: options?.customDetect,
+		detectors,
 		customEncode: options?.customEncode,
 	};
 

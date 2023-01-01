@@ -4,6 +4,7 @@
 
 import { decode, DecodeContext } from '../src/decode';
 import { encode, EncodeContext } from '../src/encode';
+import { ValueType } from '../src/types';
 
 enum CustomType {
 	POINT = 0,
@@ -41,8 +42,8 @@ describe('custom', () => {
 
 		// encode
 
-		function customDetect(value: any): boolean {
-			return value instanceof Point;
+		function customDetect(value: any): ValueType {
+			return value instanceof Point ? ValueType.CUSTOM : ValueType.UNKNOWN;
 		}
 
 		function customEncode(value: any, context: EncodeContext) {
@@ -93,8 +94,8 @@ describe('custom', () => {
 
 		// custom
 
-		function customDetect(value: any): boolean {
-			return value instanceof Point || value instanceof Unit;
+		function customDetect(value: any): ValueType {
+			return (value instanceof Point || value instanceof Unit) ? ValueType.CUSTOM : ValueType.UNKNOWN;
 		}
 
 		function customEncode(value: any, context: EncodeContext) {
