@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { BufferWriter, IBufferWriter } from '@xobj/buffer';
-import { detect, DetectMethod, DETECTORS } from './detectors';
+import { detect, DetectMethod, DETECTORS } from './detectors/index';
 import { ValueType } from './types';
 
 type EncodeMethod = (value: any, context: EncodeContext) => void;
@@ -50,11 +50,11 @@ function encodeValue(value: any, context: EncodeContext) {
 
 	const { writer, values, links } = context;
 
-	if (tryWriteIndex(value, writer, values, ValueType.VALUE_INDEX, ValueType.VALUE_LAST_INDEX)) {
+	if (tryWriteIndex(value, writer, values, ValueType.VALUE_INDEX, ValueType.VALUE_INDEX_LAST)) {
 		return;
 	}
 
-	if (tryWriteIndex(value, writer, links, ValueType.LINK_INDEX, ValueType.LINK_LAST_INDEX)) {
+	if (tryWriteIndex(value, writer, links, ValueType.LINK_INDEX, ValueType.LINK_INDEX_LAST)) {
 		return;
 	}
 
@@ -114,7 +114,7 @@ function encodeValue(value: any, context: EncodeContext) {
 		case ValueType.FUNCTION:
 			links.push(value);
 			const code: string = value.toString();
-			encodeValue(code, context);
+			writer.writeString(code);
 			break;
 
 		case ValueType.SYMBOL:
