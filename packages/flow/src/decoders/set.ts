@@ -7,7 +7,7 @@ export function decodeSet(context: DecodeContext): Set<any> {
 	links.push(set);
 
 	const array: any[] = [];
-	decodeArrayObject(context, array);
+	decodeArrayObject(array, context);
 
 	for (const item of array) {
 		set.add(item);

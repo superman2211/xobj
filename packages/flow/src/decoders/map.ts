@@ -7,10 +7,10 @@ export function decodeMap(context: DecodeContext): Map<any, any> {
 	links.push(map);
 
 	const mapKeys: any[] = [];
-	decodeArrayObject(context, mapKeys);
+	decodeArrayObject(mapKeys, context);
 
 	const mapValues: any[] = [];
-	decodeArrayObject(context, mapValues);
+	decodeArrayObject(mapValues, context);
 
 	for (let i = 0; i < mapKeys.length; i++) {
 		map.set(mapKeys[i], mapValues[i]);

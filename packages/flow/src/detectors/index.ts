@@ -38,7 +38,7 @@ export const DETECTORS = [
 	detectObject,
 ];
 
-export function detect(value: any, context: EncodeContext): ValueType {
+export function detectValue(value: any, context: EncodeContext): ValueType {
 	for (const detectMethod of context.detectors) {
 		const type = detectMethod(value);
 		if (type !== ValueType.UNKNOWN) {
