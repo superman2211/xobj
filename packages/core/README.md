@@ -11,6 +11,7 @@ Available basic types:
 - `String`
 - `Object`
 - `Array`
+- `Function` (anonymous)
 - `Map`
 - `Set`
 - `ArrayBuffer`
@@ -74,6 +75,8 @@ console.log(target!.children![0].age);// 12
 
 Custom types usage:
 ```typescript
+import { encode, decode, EncodeContext, DecodeContext, ValueType } from '@xobj/core';
+
 class Point {
 	constructor(public x: number, public y: number) {
 	}
@@ -92,15 +95,15 @@ const source = {
 
 // encode
 
-function customDetector(state: EncodeState, value: any): ValueType {
+function customDetect(value: any): ValueType {
 	if (value instanceof Point) {
 		return ValueType.CUSTOM;
 	}
 	return ValueType.UNKNOWN;
 }
 
-function customEncoder(state: EncodeState, value: any) {
-	const { writer } = state;
+function customEncode(value: any, context: EncodeContext) {
+	const { writer } = context;
 
 	if (value instanceof Point) {
 		writer.writeUint8(CustomType.POINT);
@@ -111,15 +114,12 @@ function customEncoder(state: EncodeState, value: any) {
 	}
 }
 
-const encoders = new Map([[ValueType.CUSTOM, customEncoder], ...DEFAULT_ENCODERS]);
-const detectors = [customDetector, ...DEFAULT_DETECTORS];
-
-const buffer = encode(source, { encoders, detectors });
+const buffer = encode(source, { customDetect, customEncode });
 
 // decode
 
-function customDecoder(state: DecodeState): any {
-	const { reader } = state;
+function customDecode(context: DecodeContext): any {
+	const { reader } = context;
 	const type = reader.readUint8() as CustomType;
 	switch (type) {
 		case CustomType.POINT:
@@ -132,13 +132,29 @@ function customDecoder(state: DecodeState): any {
 	}
 }
 
-const decoders = new Map([[ValueType.CUSTOM, customDecoder], ...DEFAULT_DECODERS]);
-
-const target = decode(buffer, { decoders });
+const target = decode(buffer, { customDecode });
 
 // use object
 console.log(target.points[0].x) // 1
 console.log(target.points[0].y) // 2
+```
+
+Encode options
+```typescript
+encode(value, {
+	bufferSize, // buffer starter size
+	customDetect, // function for custom type detection
+	customEncode, // function for custom type encoding
+	floatType, // encoding float type : 'double' | 'single' | number (default is 'double')
+}
+});
+```
+Decode options
+```typescript
+decode(value, {
+	customDecode, // function for custom type decoding
+}
+});
 ```
 
 You can see more examples in [tests](https://github.com/superman2211/xobj/tree/master/packages/core/test).
