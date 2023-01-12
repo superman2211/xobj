@@ -1,35 +1,19 @@
+import { encodeValue } from './index';
 import { ValueType } from '../types';
-import { DetectorMethod, EncoderMethod, EncodeState } from '../encode';
+import { EncodeContext } from '../encode';
 
-export function detectObject(state: EncodeState, value: any): ValueType {
-	if (typeof value === 'object') {
-		return ValueType.OBJECT;
-	}
-
-	return ValueType.UNKNOWN;
-}
-
-export function encodeObject(state: EncodeState, value: any) {
-	const { writer, encoders } = state;
-
+export function encodeObject(value: any, context: EncodeContext): void {
+	const { writer, links } = context;
+	links.push(value);
 	const keys = Object.keys(value);
-
-	writer.writeUintVar(keys.length);
-
-	const encoder = encoders.get(ValueType.ANY);
-
-	if (!encoder) {
-		throw `Encoder method not found for object type: ${ValueType.ANY} in object encoding`;
-	}
-
 	for (const key of keys) {
-		writer.writeString(key);
-		encoder(state, value[key]);
+		const number = parseFloat(key);
+		if (Number.isInteger(number)) {
+			encodeValue(number, context);
+		} else {
+			encodeValue(key, context);
+		}
+		encodeValue(value[key], context);
 	}
-}
-
-export function initObjectEncoders(encoders: Map<ValueType, EncoderMethod>, detectors: DetectorMethod[]) {
-	encoders.set(ValueType.OBJECT, encodeObject);
-
-	detectors.push(detectObject);
+	writer.writeUintVar(ValueType.END);
 }

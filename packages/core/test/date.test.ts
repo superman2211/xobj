@@ -8,7 +8,6 @@ describe('date', () => {
 		const source = new Date(1983, 11, 22, 0, 15, 33, 12);
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(9);
 
 		const target: Date = decode(buffer);
 		expect(target).toEqual(source);

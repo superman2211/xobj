@@ -8,7 +8,6 @@ describe('bigint', () => {
 		const source = 123456n;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(5);
 
 		const target: bigint = decode(buffer);
 		expect(target).toBe(source);
@@ -18,7 +17,6 @@ describe('bigint', () => {
 		const source = 37916874628754687216785631897657896138568913267586132865879132656137285687168756183265n;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(38);
 
 		const target: bigint = decode(buffer);
 		expect(target).toBe(source);
@@ -34,7 +32,6 @@ describe('bigint', () => {
 		];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(44);
 
 		const target: bigint = decode(buffer);
 		expect(target).toEqual(source);

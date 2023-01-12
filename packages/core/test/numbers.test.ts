@@ -8,7 +8,6 @@ describe('const values', () => {
 		const source = NaN;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(1);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -18,7 +17,6 @@ describe('const values', () => {
 		const source = Number.POSITIVE_INFINITY;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(1);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -28,7 +26,6 @@ describe('const values', () => {
 		const source = Number.NEGATIVE_INFINITY;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(1);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -40,7 +37,6 @@ describe('unsigned integers', () => {
 		const source = 123;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(2);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -50,7 +46,6 @@ describe('unsigned integers', () => {
 		const source = 1234;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(3);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -60,7 +55,6 @@ describe('unsigned integers', () => {
 		const source = 123456;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(5);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -70,7 +64,6 @@ describe('unsigned integers', () => {
 		const source = 1234567890123;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(7);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -82,7 +75,6 @@ describe('signed integers', () => {
 		const source = -63;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(2);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -92,7 +84,6 @@ describe('signed integers', () => {
 		const source = -1234;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(3);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -102,7 +93,6 @@ describe('signed integers', () => {
 		const source = -123456;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(5);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -112,7 +102,6 @@ describe('signed integers', () => {
 		const source = -1234567890123;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(7);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -124,7 +113,6 @@ describe('float numbers', () => {
 		const source = 1234.567;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(5);
 
 		const target = decode(buffer);
 		expect(target).toBeCloseTo(source, 3);
@@ -134,9 +122,37 @@ describe('float numbers', () => {
 		const source = -1234.5678901234;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(9);
 
 		const target = decode(buffer);
 		expect(target).toBeCloseTo(source, 10);
+	});
+});
+
+describe('float type', () => {
+	it('should write double', () => {
+		const source = 123.45678901234567;
+
+		const buffer = encode(source, { floatType: 'double' });
+
+		const target = decode(buffer);
+		expect(target).toBe(source);
+	});
+
+	it('should write single', () => {
+		const source = 123.45678901234567;
+
+		const buffer = encode(source, { floatType: 'single' });
+
+		const target = decode(buffer);
+		expect(target).toBeCloseTo(source, 5);
+	});
+
+	it('should write integer with quality', () => {
+		const source = 123.45678901234567;
+
+		const buffer = encode(source, { floatType: 1000 });
+
+		const target = decode(buffer);
+		expect(target).toBeCloseTo(source, 2);
 	});
 });

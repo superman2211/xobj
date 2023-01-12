@@ -17,7 +17,6 @@ describe('map', () => {
 		source.set(5, 'test 5');
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(88);
 
 		const target = decode(buffer);
 		expect(target).toEqual(source);

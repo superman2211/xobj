@@ -8,96 +8,45 @@ export const enum ValueType {
 	TRUE,
 	POSITIVE_INFINITY,
 	NEGATIVE_INFINITY,
-	UINT8,
-	UINT16,
-	UINT32,
-	UINT_VAR,
-	INT8,
-	INT16,
-	INT32,
-	INT_VAR,
-	FLOAT32,
-	FLOAT64,
+	INT,
+	FLOAT,
 	BIGINT,
 	STRING,
 	ARRAY,
 	OBJECT,
-	STRUCT,
+	FUNCTION,
+	END,
+	SYMBOL,
 	SET,
 	MAP,
 	ARRAY_BUFFER,
-	TYPED_ARRAY,
+	UINT8_CLAMPED_ARRAY,
+	UINT8_ARRAY,
+	UINT16_ARRAY,
+	UINT32_ARRAY,
+	INT8_ARRAY,
+	INT16_ARRAY,
+	INT32_ARRAY,
+	INT_VAR_ARRAY,
+	FLOAT32_ARRAY,
+	FLOAT64_ARRAY,
+	DATA_VIEW,
 	DATE,
 	REG_EXP,
+	VALUE_INDEX,
+	VALUE_INDEX_LAST,
+	LINK_INDEX,
+	LINK_INDEX_LAST,
 	CUSTOM,
 }
 
-export const enum TypedArrayType {
-	UINT8_CLAMPED,
-	UINT8,
-	UINT16,
-	UINT32,
-	INT8,
-	INT16,
-	INT32,
-	INT_VAR,
-	FLOAT32,
-	FLOAT64,
-	DATA_VIEW,
-}
-
-export function isNumberType(type: ValueType): boolean {
-	switch (type) {
-		case ValueType.UINT8:
-		case ValueType.UINT16:
-		case ValueType.UINT32:
-		case ValueType.UINT_VAR:
-		case ValueType.INT8:
-		case ValueType.INT16:
-		case ValueType.INT32:
-		case ValueType.INT_VAR:
-		case ValueType.FLOAT32:
-		case ValueType.FLOAT64:
-			return true;
-		default:
-			return false;
-	}
-}
-
-export function isIntegerType(type: ValueType): boolean {
-	switch (type) {
-		case ValueType.UINT8:
-		case ValueType.UINT16:
-		case ValueType.UINT32:
-		case ValueType.UINT_VAR:
-		case ValueType.INT8:
-		case ValueType.INT16:
-		case ValueType.INT32:
-		case ValueType.INT_VAR:
-			return true;
-		default:
-			return false;
-	}
-}
-
-export function isFloatType(type: ValueType): boolean {
-	switch (type) {
-		case ValueType.FLOAT32:
-		case ValueType.FLOAT64:
-			return true;
-		default:
-			return false;
-	}
-}
-
 export function isBooleanType(type: ValueType): boolean {
-	switch (type) {
-		case ValueType.TRUE:
-		case ValueType.FALSE:
-			return true;
-		default:
-			return false;
-	}
+	return type === ValueType.TRUE || type === ValueType.FALSE;
 }
 
-export type StructInfo = Map<string, ValueType>;
+export type FloatType = 'single' | 'double' | number;
+
+export type Header = {
+	version: number,
+	floatType: FloatType,
+}

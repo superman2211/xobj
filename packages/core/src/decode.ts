@@ -1,64 +1,46 @@
 /* eslint-disable no-use-before-define */
 import { BufferReader } from '@xobj/buffer';
-import { ValueType } from './types';
-import { initEmptyDecoders } from './decoders/empty';
-import { initNumberDecoders } from './decoders/number';
-import { initStringDecoders } from './decoders/string';
-import { initArrayDecoders } from './decoders/array';
-import { initBooleanDecoders } from './decoders/boolean';
-import { initObjectDecoders } from './decoders/object';
-import { initAnyDecoders } from './decoders/any';
-import { initSetDecoders } from './decoders/set';
-import { initMapDecoders } from './decoders/map';
-import { initArrayBufferDecoders } from './decoders/array-buffer';
-import { initTypedArrayDecoders } from './decoders/typed-array';
-import { initDateDecoders } from './decoders/date';
-import { initRegExpDecoders } from './decoders/reg-exp';
-import { initBigIntDecoders } from './decoders/bigint';
+import { decodeHeader } from './decoders/header';
+import { DecodeMethod, DECODERS, decodeValue } from './decoders/index';
+import { FloatType, ValueType } from './types';
+import { VERSION } from './version';
+
+export interface DecodeContext {
+	readonly reader: BufferReader;
+	readonly values: any[];
+	readonly links: any[];
+	readonly decoders: Map<ValueType, DecodeMethod>;
+	readonly version: number;
+	readonly floatType: FloatType;
+}
 
 export interface DecodeOptions {
-	decoders?: Map<ValueType, DecoderMethod>;
+	readonly customDecode?: DecodeMethod;
 }
-
-export interface DecodeState {
-	reader: BufferReader;
-	decoders: Map<ValueType, DecoderMethod>;
-}
-
-export type DecoderMethod = (state: DecodeState) => any;
-
-export const DEFAULT_DECODERS = new Map<ValueType, DecoderMethod>();
-
-initAnyDecoders(DEFAULT_DECODERS);
-initEmptyDecoders(DEFAULT_DECODERS);
-initBooleanDecoders(DEFAULT_DECODERS);
-initNumberDecoders(DEFAULT_DECODERS);
-initBigIntDecoders(DEFAULT_DECODERS);
-initStringDecoders(DEFAULT_DECODERS);
-initArrayDecoders(DEFAULT_DECODERS);
-initSetDecoders(DEFAULT_DECODERS);
-initMapDecoders(DEFAULT_DECODERS);
-initArrayBufferDecoders(DEFAULT_DECODERS);
-initTypedArrayDecoders(DEFAULT_DECODERS);
-initDateDecoders(DEFAULT_DECODERS);
-initRegExpDecoders(DEFAULT_DECODERS);
-initObjectDecoders(DEFAULT_DECODERS);
 
 export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
 	const reader = new BufferReader(buffer);
-	const decoders = options?.decoders ?? DEFAULT_DECODERS;
 
-	const state: DecodeState = {
-		reader,
-		decoders,
-	};
+	const decoders = new Map(DECODERS);
 
-	const decoder = decoders.get(ValueType.ANY);
-
-	if (!decoder) {
-		throw `Decoder method not found for object type: ${ValueType.ANY}`;
+	if (options?.customDecode) {
+		decoders.set(ValueType.CUSTOM, options.customDecode);
 	}
 
-	const value = decoder(state);
-	return value;
+	const context: DecodeContext = {
+		reader,
+		values: [],
+		links: [],
+		decoders,
+		version: 0,
+		floatType: 'double',
+	};
+
+	decodeHeader(context);
+
+	if (context.version !== VERSION) {
+		throw `Unexpected version: ${context.version}, required version: ${VERSION}`;
+	}
+
+	return decodeValue(context);
 }

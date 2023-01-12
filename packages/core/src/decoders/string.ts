@@ -1,6 +1,8 @@
-import { ValueType } from '../types';
-import { DecoderMethod, DecodeState } from '../decode';
+import { DecodeContext } from '../decode';
 
-export function initStringDecoders(decoders: Map<ValueType, DecoderMethod>) {
-	decoders.set(ValueType.STRING, (state: DecodeState) => state.reader.readString());
+export function decodeString(context: DecodeContext): string {
+	const { reader, values } = context;
+	const string = reader.readString();
+	values.push(string);
+	return string;
 }

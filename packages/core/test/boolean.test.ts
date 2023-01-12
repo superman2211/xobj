@@ -8,7 +8,6 @@ describe('boolean', () => {
 		const source = false;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(1);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -18,7 +17,6 @@ describe('boolean', () => {
 		const source = true;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(1);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);

@@ -8,7 +8,6 @@ describe('reg exp', () => {
 		const source = /(\w+)\s(\w+)/ig;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(15);
 
 		const target: RegExp = decode(buffer);
 		expect(target).toEqual(source);

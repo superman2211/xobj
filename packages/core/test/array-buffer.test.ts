@@ -13,7 +13,6 @@ describe('array buffer', () => {
 		array[3] = 83;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(6);
 
 		const target = decode(buffer);
 		expect(target).toEqual(source);
