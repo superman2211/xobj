@@ -84,7 +84,9 @@ export function decodeValue(context: DecodeContext): any {
 
 	const decodeMethod = decoders.get(type);
 
+	/* istanbul ignore next */
 	if (!decodeMethod) {
+		/* istanbul ignore next */
 		throw `Decoder method not found for type: ${type}`;
 	}
 

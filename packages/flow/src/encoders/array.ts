@@ -63,7 +63,9 @@ export function encodeArrayGroups(value: any[], context: EncodeContext): void {
 		} else {
 			const encodeMethod = encoders.get(group.type);
 
+			/* istanbul ignore next */
 			if (!encodeMethod) {
+				/* istanbul ignore next */
 				throw `Encoder method not found for object type: ${group.type} in array encoding`;
 			}
 

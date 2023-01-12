@@ -75,7 +75,9 @@ export function encodeValue(value: any, context: EncodeContext) {
 
 	const encodeMethod = encoders.get(type);
 
+	/* istanbul ignore next */
 	if (!encodeMethod) {
+		/* istanbul ignore next */
 		throw `Encoder method not found for type: ${type}`;
 	}
 
