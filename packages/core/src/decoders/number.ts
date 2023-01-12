@@ -20,8 +20,24 @@ export function decodeInt(context: DecodeContext): number {
 }
 
 export function decodeFloat(context: DecodeContext): number {
-	const { reader, values } = context;
-	const float = reader.readFloat64();
-	values.push(float);
-	return float;
+	const { reader, values, floatType } = context;
+
+	let value = 0;
+
+	switch (floatType) {
+		case 'double':
+			value = reader.readFloat64();
+			break;
+
+		case 'single':
+			value = reader.readFloat32();
+			break;
+
+		default:
+			value = reader.readUintVar() / floatType;
+			break;
+	}
+
+	values.push(value);
+	return value;
 }

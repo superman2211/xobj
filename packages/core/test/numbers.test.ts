@@ -127,3 +127,32 @@ describe('float numbers', () => {
 		expect(target).toBeCloseTo(source, 10);
 	});
 });
+
+describe('float type', () => {
+	it('should write double', () => {
+		const source = 123.45678901234567;
+
+		const buffer = encode(source, { floatType: 'double' });
+
+		const target = decode(buffer);
+		expect(target).toBe(source);
+	});
+
+	it('should write single', () => {
+		const source = 123.45678901234567;
+
+		const buffer = encode(source, { floatType: 'single' });
+
+		const target = decode(buffer);
+		expect(target).toBeCloseTo(source, 5);
+	});
+
+	it('should write integer with quality', () => {
+		const source = 123.45678901234567;
+
+		const buffer = encode(source, { floatType: 1000 });
+
+		const target = decode(buffer);
+		expect(target).toBeCloseTo(source, 2);
+	});
+});

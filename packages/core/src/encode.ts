@@ -2,7 +2,8 @@
 import { BufferWriter, IBufferWriter } from '@xobj/buffer';
 import { DetectMethod, DETECTORS } from './detectors/index';
 import { EncodeMethod, ENCODERS, encodeValue } from './encoders/index';
-import { ValueType } from './types';
+import { encodeHeader } from './encoders/header';
+import { FloatType, ValueType } from './types';
 
 export interface EncodeContext {
 	readonly writer: IBufferWriter,
@@ -10,13 +11,14 @@ export interface EncodeContext {
 	readonly links: any[];
 	readonly detectors: DetectMethod[];
 	readonly encoders: Map<ValueType, EncodeMethod>,
+	readonly floatType: FloatType;
 }
 
 export interface EncodeOptions {
 	readonly bufferSize?: number;
-	readonly debug?: boolean;
 	readonly customDetect?: DetectMethod;
 	readonly customEncode?: EncodeMethod;
+	readonly floatType?: FloatType;
 }
 
 export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
@@ -34,13 +36,18 @@ export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
 		encoders.set(ValueType.CUSTOM, options?.customEncode);
 	}
 
+	const floatType = options?.floatType ?? 'double';
+
 	const context: EncodeContext = {
 		writer,
 		values: [],
 		links: [],
 		detectors,
 		encoders,
+		floatType,
 	};
+
+	encodeHeader(context);
 
 	encodeValue(value, context);
 

@@ -1,13 +1,16 @@
 /* eslint-disable no-use-before-define */
 import { BufferReader } from '@xobj/buffer';
+import { decodeHeader } from './decoders/header';
 import { DecodeMethod, DECODERS, decodeValue } from './decoders/index';
-import { ValueType } from './types';
+import { FloatType, ValueType } from './types';
 
 export interface DecodeContext {
 	readonly reader: BufferReader;
 	readonly values: any[];
 	readonly links: any[];
 	readonly decoders: Map<ValueType, DecodeMethod>;
+	readonly version: number;
+	readonly floatType: FloatType;
 }
 
 export interface DecodeOptions {
@@ -29,7 +32,11 @@ export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
 		values: [],
 		links: [],
 		decoders,
+		version: 0,
+		floatType: 'double',
 	};
+
+	decodeHeader(context);
 
 	return decodeValue(context);
 }
