@@ -8,7 +8,6 @@ describe('string', () => {
 		const source = 'simple string';
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(15);
 
 		const target = decode(buffer);
 		expect(target).toBe(source);

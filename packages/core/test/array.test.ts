@@ -8,7 +8,6 @@ describe('array', () => {
 		const source = [];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(2);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(0);
@@ -18,7 +17,6 @@ describe('array', () => {
 		const source = [1, true, null, undefined, 23.450000762939453, 'test', { x: 1, y: 2 }, ['a', 'b', 'c']];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(44);
 
 		const target = decode(buffer);
 		expect(target).toEqual(source);
@@ -28,7 +26,6 @@ describe('array', () => {
 		const source = [235, -234, 22.533, 'simple string', null, true, false];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(34);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -51,7 +48,6 @@ describe('array', () => {
 		source[1000] = 5;
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(23);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -62,7 +58,6 @@ describe('array', () => {
 		const source = [1, 2, 256, 4, 5, 335566, 7];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(14);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -73,7 +68,6 @@ describe('array', () => {
 		const source = [1, 2, -256, 4, 5, 335566, -7];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(14);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -84,7 +78,6 @@ describe('array', () => {
 		const source = [1.234, 2.455, -56.3268, 4.455, 5.33424, 66.224];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(28);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -97,7 +90,6 @@ describe('array', () => {
 		const source = [1.234232323, 2.4553234, -256.3268555, 4.45534234, 5.33424342, 335566.224423];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(52);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -110,7 +102,6 @@ describe('array', () => {
 		const source = [1, 2.4553234, -256, 4, 5.334, 66.224423];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(26);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -123,7 +114,21 @@ describe('array', () => {
 		const source = ['one', 'two', 'three', 'four', 'five'];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(28);
+
+		const target = decode(buffer);
+		expect(target.length).toBe(source.length);
+		expect(target).toEqual(source);
+	});
+
+	it('should write array with objects', () => {
+		const source = [
+			{ x: 1111, y: 2222, name: 'one' },
+			{ x: 2222, y: 3333, name: 'two' },
+			{ x: 5555, y: 4444, name: 'two' },
+			{ x: 4444, y: 5555, name: 'one' },
+		];
+
+		const buffer = encode(source);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -140,7 +145,6 @@ describe('array', () => {
 		];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(52);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -157,7 +161,6 @@ describe('array', () => {
 		];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(46);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);

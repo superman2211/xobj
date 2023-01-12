@@ -1,7 +1,7 @@
-import { ValueType } from '../types';
-import { DecoderMethod } from '../decode';
+export function decodeTrue(): boolean {
+	return true;
+}
 
-export function initBooleanDecoders(decoders: Map<ValueType, DecoderMethod>) {
-	decoders.set(ValueType.FALSE, () => false);
-	decoders.set(ValueType.TRUE, () => true);
+export function decodeFalse(): boolean {
+	return false;
 }

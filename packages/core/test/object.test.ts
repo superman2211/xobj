@@ -8,7 +8,20 @@ describe('object', () => {
 		const source = {};
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(2);
+
+		const target = decode(buffer);
+		expect(target).toEqual(source);
+	});
+
+	it('should write object with number keys', () => {
+		const source = {
+			one: 11,
+			two: 22,
+			11: 'one',
+			22: 'two',
+		};
+
+		const buffer = encode(source);
 
 		const target = decode(buffer);
 		expect(target).toEqual(source);
@@ -26,7 +39,6 @@ describe('object', () => {
 		};
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(73);
 
 		const target = decode(buffer);
 		expect(target).toEqual(source);

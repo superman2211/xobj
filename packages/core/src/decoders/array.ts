@@ -1,52 +1,46 @@
-import { ValueType, isBooleanType } from '../types';
-import { DecodeState, DecoderMethod } from '../decode';
-import { decodeStruct, decodeStructInfo } from './struct';
+import { DecodeContext } from '../decode';
+import { isBooleanType, ValueType } from '../types';
 
-export function decodeArray(state: DecodeState): Array<any> {
-	const { reader, decoders } = state;
-
-	const value = [];
-
-	let groups = reader.readUintVar();
+export function decodeArrayGroups(array: any[], context: DecodeContext): void {
+	const { reader, decoders } = context;
 
 	let i = 0;
 
-	while (groups--) {
-		const type = reader.readUint8() as ValueType;
-		let count = reader.readUintVar();
+	while (reader.readUintVar() !== ValueType.END) {
+		reader.position--;
+
+		const type: ValueType = reader.readUintVar();
+		let length = reader.readUintVar();
 
 		if (isBooleanType(type)) {
-			const bitset = reader.readBitset(count);
+			const bitset = reader.readBitset(length);
 			let j = 0;
-			while (j < count) {
-				value[i++] = bitset[j++];
-			}
-		} else if (type === ValueType.STRUCT) {
-			const struct = decodeStructInfo(state);
-
-			while (count--) {
-				const item = decodeStruct(state, struct);
-				value[i++] = item;
+			while (j < length) {
+				array[i++] = bitset[j++];
 			}
 		} else if (type === ValueType.UNDEFINED) {
-			i += count;
+			i += length;
 		} else {
-			const decoder = decoders.get(type);
+			const decodeMethod = decoders.get(type);
 
-			if (!decoder) {
+			/* istanbul ignore next */
+			if (!decodeMethod) {
+				/* istanbul ignore next */
 				throw `Decoder method not found for object type: ${type} in array decoding`;
 			}
 
-			while (count--) {
-				const item = decoder(state);
-				value[i++] = item;
+			while (length--) {
+				const item = decodeMethod(context);
+				array[i++] = item;
 			}
 		}
 	}
-
-	return value;
 }
 
-export function initArrayDecoders(decoders: Map<ValueType, DecoderMethod>) {
-	decoders.set(ValueType.ARRAY, decodeArray);
+export function decodeArray(context: DecodeContext): Array<any> {
+	const { links } = context;
+	const array: any[] = [];
+	links.push(array);
+	decodeArrayGroups(array, context);
+	return array;
 }

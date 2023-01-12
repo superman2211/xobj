@@ -1,12 +1,16 @@
-import { ValueType } from '../types';
-import { DecoderMethod, DecodeState } from '../decode';
-import { decodeArray } from './array';
+import { DecodeContext } from '../decode';
+import { decodeArrayGroups } from './array';
 
-export function decodeSet(state: DecodeState): any {
-	const array = decodeArray(state);
-	return new Set(array);
-}
+export function decodeSet(context: DecodeContext): Set<any> {
+	const { links } = context;
+	const set = new Set();
+	links.push(set);
 
-export function initSetDecoders(decoders: Map<ValueType, DecoderMethod>) {
-	decoders.set(ValueType.SET, decodeSet);
+	const array: any[] = [];
+	decodeArrayGroups(array, context);
+
+	for (const item of array) {
+		set.add(item);
+	}
+	return set;
 }

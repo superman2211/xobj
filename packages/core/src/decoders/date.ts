@@ -1,11 +1,8 @@
-import { ValueType } from '../types';
-import { DecoderMethod, DecodeState } from '../decode';
+import { DecodeContext } from '../decode';
 
-export function decodeDate(state: DecodeState): any {
-	const { reader } = state;
-	return new Date(reader.readFloat64());
-}
-
-export function initDateDecoders(decoders: Map<ValueType, DecoderMethod>) {
-	decoders.set(ValueType.DATE, decodeDate);
+export function decodeDate(context: DecodeContext): Date {
+	const { reader, links } = context;
+	const date = new Date(reader.readFloat64());
+	links.push(date);
+	return date;
 }

@@ -1,6 +1,8 @@
-import { ValueType } from '../types';
-import { DecoderMethod, DecodeState } from '../decode';
+import { DecodeContext } from '../decode';
 
-export function initBigIntDecoders(decoders: Map<ValueType, DecoderMethod>) {
-	decoders.set(ValueType.BIGINT, (state: DecodeState) => state.reader.readBigInt());
+export function decodeBigint(context: DecodeContext): bigint {
+	const { reader, values } = context;
+	const bigint = reader.readBigInt();
+	values.push(bigint);
+	return bigint;
 }

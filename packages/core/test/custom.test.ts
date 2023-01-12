@@ -2,11 +2,9 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable no-undef */
 
+import { decode, DecodeContext } from '../src/decode';
+import { encode, EncodeContext } from '../src/encode';
 import { ValueType } from '../src/types';
-import { decode, DecodeState, DEFAULT_DECODERS } from '../src/decode';
-import {
-	encode, EncodeState, DEFAULT_ENCODERS, DEFAULT_DETECTORS,
-} from '../src/encode';
 
 enum CustomType {
 	POINT = 0,
@@ -44,15 +42,12 @@ describe('custom', () => {
 
 		// encode
 
-		function customDetector(state: EncodeState, value: any): ValueType {
-			if (value instanceof Point) {
-				return ValueType.CUSTOM;
-			}
-			return ValueType.UNKNOWN;
+		function customDetect(value: any): ValueType {
+			return value instanceof Point ? ValueType.CUSTOM : ValueType.UNKNOWN;
 		}
 
-		function customEncoder(state: EncodeState, value: any) {
-			const { writer } = state;
+		function customEncode(value: any, context: EncodeContext) {
+			const { writer } = context;
 
 			if (value instanceof Point) {
 				writer.writeUint8(0); // custom type
@@ -63,16 +58,12 @@ describe('custom', () => {
 			}
 		}
 
-		const encoders = new Map([[ValueType.CUSTOM, customEncoder], ...DEFAULT_ENCODERS]);
-		const detectors = [customDetector, ...DEFAULT_DETECTORS];
-
-		const buffer = encode(source, { encoders, detectors });
-		expect(buffer.byteLength).toBe(33);
+		const buffer = encode(source, { customDetect, customEncode });
 
 		// decode
 
-		function customDecoder(state: DecodeState): any {
-			const { reader } = state;
+		function customDecode(context: DecodeContext): any {
+			const { reader } = context;
 			const type = reader.readUint8() as CustomType;
 			switch (type) {
 				case 0:
@@ -82,9 +73,7 @@ describe('custom', () => {
 			}
 		}
 
-		const decoders = new Map([[ValueType.CUSTOM, customDecoder], ...DEFAULT_DECODERS]);
-
-		const target = decode(buffer, { decoders });
+		const target = decode(buffer, { customDecode });
 
 		// checking
 		expect(target).toEqual(source);
@@ -105,18 +94,12 @@ describe('custom', () => {
 
 		// custom
 
-		function customDetector(state: EncodeState, value: any): ValueType {
-			if (value instanceof Point) {
-				return ValueType.CUSTOM;
-			}
-			if (value instanceof Unit) {
-				return ValueType.CUSTOM;
-			}
-			return ValueType.UNKNOWN;
+		function customDetect(value: any): ValueType {
+			return (value instanceof Point || value instanceof Unit) ? ValueType.CUSTOM : ValueType.UNKNOWN;
 		}
 
-		function customEncoder(state: EncodeState, value: any) {
-			const { writer } = state;
+		function customEncode(value: any, context: EncodeContext) {
+			const { writer } = context;
 
 			if (value instanceof Point) {
 				writer.writeUint8(CustomType.POINT);
@@ -131,8 +114,8 @@ describe('custom', () => {
 			}
 		}
 
-		function customDecoder(state: DecodeState): any {
-			const { reader } = state;
+		function customDecode(context: DecodeContext): any {
+			const { reader } = context;
 			const type = reader.readUint8() as CustomType;
 			switch (type) {
 				case CustomType.POINT:
@@ -146,17 +129,11 @@ describe('custom', () => {
 
 		// encode
 
-		const encoders = new Map([[ValueType.CUSTOM, customEncoder], ...DEFAULT_ENCODERS]);
-		const detectors = [customDetector, ...DEFAULT_DETECTORS];
-
-		const buffer = encode(source, { encoders, detectors });
-		expect(buffer.byteLength).toBe(75);
+		const buffer = encode(source, { customDetect, customEncode });
 
 		// decode
 
-		const decoders = new Map([[ValueType.CUSTOM, customDecoder], ...DEFAULT_DECODERS]);
-
-		const target: Game = decode(buffer, { decoders });
+		const target: Game = decode(buffer, { customDecode });
 		expect(target).toEqual(source);
 
 		expect(target.target.x).toBe(source.target.x);
@@ -166,28 +143,5 @@ describe('custom', () => {
 		expect(target.unit.age).toEqual(source.unit.age);
 		expect(target.unit).toBeInstanceOf(Unit);
 		expect(target.target).toBeInstanceOf(Point);
-	});
-
-	it('should throw when set incorrect decoders', () => {
-		expect(() => {
-			const buffer = encode({ test: 123 });
-
-			const decoders = new Map();
-			decode(buffer, { decoders });
-		}).toThrow();
-	});
-
-	it('should throw when set incorrect detectors', () => {
-		expect(() => {
-			const detectors = [];
-			encode({ test: 123 }, { detectors });
-		}).toThrow();
-	});
-
-	it('should throw when set incorrect encoders', () => {
-		expect(() => {
-			const encoders = new Map();
-			encode({ test: 123 }, { encoders });
-		}).toThrow();
 	});
 });

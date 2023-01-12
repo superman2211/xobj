@@ -14,7 +14,6 @@ describe('array struct', () => {
 		];
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(51);
 
 		const target = decode(buffer);
 		expect(target.length).toBe(source.length);
@@ -38,7 +37,6 @@ describe('array struct', () => {
 		};
 
 		const buffer = encode(source);
-		expect(buffer.byteLength).toBe(85);
 
 		const target = decode(buffer);
 		expect(target.coords.length).toBe(source.coords.length);

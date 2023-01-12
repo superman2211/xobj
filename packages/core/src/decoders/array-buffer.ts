@@ -1,12 +1,8 @@
-import { ValueType } from '../types';
-import { DecoderMethod, DecodeState } from '../decode';
+import { DecodeContext } from '../decode';
 
-export function decodeArrayBuffer(state: DecodeState): any {
-	const { reader } = state;
-	const value = reader.readBuffer();
-	return value;
-}
-
-export function initArrayBufferDecoders(decoders: Map<ValueType, DecoderMethod>) {
-	decoders.set(ValueType.ARRAY_BUFFER, decodeArrayBuffer);
+export function decodeArrayBuffer(context: DecodeContext): ArrayBuffer {
+	const { reader, links } = context;
+	const buffer = reader.readBuffer();
+	links.push(buffer);
+	return buffer;
 }
