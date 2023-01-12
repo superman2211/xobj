@@ -1,5 +1,16 @@
 # @xobj/core
 
+## 1.0.0
+
+### Major Changes
+
+- bf62437: Add new flow encoding algorithm
+
+### Patch Changes
+
+- Updated dependencies [bf62437]
+  - @xobj/buffer@1.0.0
+
 ## 0.5.0
 
 ### Minor Changes
