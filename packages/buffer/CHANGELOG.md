@@ -1,5 +1,11 @@
 # @xobj/buffer
 
+## 1.0.0
+
+### Major Changes
+
+- bf62437: Add new flow encoding algorithm
+
 ## 0.5.0
 
 ### Minor Changes
