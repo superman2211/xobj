@@ -39,6 +39,8 @@ import { decodeValueIndex, decodeValueIndexLast } from './value';
 export type DecodeMethod = (context: DecodeContext) => any;
 
 export const DECODERS = new Map<ValueType, DecodeMethod>([
+	// eslint-disable-next-line no-use-before-define
+	[ValueType.ANY, decodeValue],
 	[ValueType.VALUE_INDEX, decodeValueIndex],
 	[ValueType.VALUE_INDEX_LAST, decodeValueIndexLast],
 	[ValueType.LINK_INDEX, decodeLinkIndex],

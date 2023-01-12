@@ -7,7 +7,7 @@ import { encodeBigint } from './bigint';
 import { encodeFalse, encodeTrue } from './boolean';
 import { encodeDate } from './date';
 import { encodeFunction } from './function';
-import { encodeLinkIndex } from './link';
+import { encodeLinkIndex, encodeLinkIndexLast } from './link';
 import { encodeMap } from './map';
 import { encodeNull } from './null';
 import {
@@ -24,11 +24,17 @@ import { encodeString } from './string';
 import { encodeSymbol } from './symbol';
 import { encodeTypedArray } from './typed-array';
 import { encodeUndefined } from './undefined';
-import { encodeValueIndex } from './value';
+import { encodeValueIndex, encodeValueIndexLast } from './value';
 
 export type EncodeMethod = (value: any, context: EncodeContext) => void;
 
 export const ENCODERS = new Map<ValueType, EncodeMethod>([
+	// eslint-disable-next-line no-use-before-define
+	[ValueType.ANY, encodeValue],
+	[ValueType.VALUE_INDEX, encodeValueIndex],
+	[ValueType.VALUE_INDEX_LAST, encodeValueIndexLast],
+	[ValueType.LINK_INDEX, encodeLinkIndex],
+	[ValueType.LINK_INDEX_LAST, encodeLinkIndexLast],
 	[ValueType.NULL, encodeNull],
 	[ValueType.UNDEFINED, encodeUndefined],
 	[ValueType.TRUE, encodeTrue],
@@ -64,16 +70,7 @@ export const ENCODERS = new Map<ValueType, EncodeMethod>([
 export function encodeValue(value: any, context: EncodeContext) {
 	const { writer, encoders } = context;
 
-	if (encodeValueIndex(value, context)) {
-		return;
-	}
-
-	if (encodeLinkIndex(value, context)) {
-		return;
-	}
-
 	const type = detectValue(value, context);
-
 	writer.writeUintVar(type);
 
 	const encodeMethod = encoders.get(type);

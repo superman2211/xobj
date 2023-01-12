@@ -39,3 +39,7 @@ export const enum ValueType {
 	LINK_INDEX_LAST,
 	CUSTOM,
 }
+
+export function isBooleanType(type: ValueType): boolean {
+	return type === ValueType.TRUE || type === ValueType.FALSE;
+}

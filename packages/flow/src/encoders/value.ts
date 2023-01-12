@@ -1,20 +1,14 @@
 import { EncodeContext } from '../encode';
-import { ValueType } from '../types';
 
-export function encodeValueIndex(value: any, context: EncodeContext): boolean {
+export function encodeValueIndex(value: any, context: EncodeContext): void {
 	const { writer, values } = context;
-	const valueIndex = values.indexOf(value);
-	const valueLastIndex = values.lastIndexOf(value);
-	if (valueIndex !== -1) {
-		const valueEndIndex = values.length - valueLastIndex;
-		if (valueEndIndex < valueIndex) {
-			writer.writeUintVar(ValueType.VALUE_INDEX_LAST);
-			writer.writeUintVar(valueEndIndex);
-		} else {
-			writer.writeUintVar(ValueType.VALUE_INDEX);
-			writer.writeUintVar(valueIndex);
-		}
-		return true;
-	}
-	return false;
+	const index = values.indexOf(value);
+	writer.writeUintVar(index);
+}
+
+export function encodeValueIndexLast(value: any, context: EncodeContext): void {
+	const { writer, values } = context;
+	const lastIndex = values.lastIndexOf(value);
+	const endIndex = values.length - lastIndex;
+	writer.writeUintVar(endIndex);
 }

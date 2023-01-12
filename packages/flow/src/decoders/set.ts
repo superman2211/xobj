@@ -1,5 +1,5 @@
 import { DecodeContext } from '../decode';
-import { decodeArrayObject } from './array';
+import { decodeArrayGroups } from './array';
 
 export function decodeSet(context: DecodeContext): Set<any> {
 	const { links } = context;
@@ -7,7 +7,7 @@ export function decodeSet(context: DecodeContext): Set<any> {
 	links.push(set);
 
 	const array: any[] = [];
-	decodeArrayObject(array, context);
+	decodeArrayGroups(array, context);
 
 	for (const item of array) {
 		set.add(item);

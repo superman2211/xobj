@@ -16,10 +16,14 @@ import { detectTypedArray } from './typed-array';
 import { detectUndefined } from './undefined';
 import { ValueType } from '../types';
 import { EncodeContext } from '../encode';
+import { detectLinkIndex } from './link';
+import { detectValueIndex } from './value';
 
-export type DetectMethod = (value: any) => ValueType;
+export type DetectMethod = (value: any, context: EncodeContext) => ValueType;
 
 export const DETECTORS = [
+	detectValueIndex,
+	detectLinkIndex,
 	detectUndefined,
 	detectNull,
 	detectBoolean,
@@ -40,7 +44,7 @@ export const DETECTORS = [
 
 export function detectValue(value: any, context: EncodeContext): ValueType {
 	for (const detectMethod of context.detectors) {
-		const type = detectMethod(value);
+		const type = detectMethod(value, context);
 		if (type !== ValueType.UNKNOWN) {
 			return type;
 		}
