@@ -3,6 +3,7 @@ import { BufferReader } from '@xobj/buffer';
 import { decodeHeader } from './decoders/header';
 import { DecodeMethod, DECODERS, decodeValue } from './decoders/index';
 import { FloatType, ValueType } from './types';
+import { VERSION } from './version';
 
 export interface DecodeContext {
 	readonly reader: BufferReader;
@@ -14,7 +15,6 @@ export interface DecodeContext {
 }
 
 export interface DecodeOptions {
-	readonly debug?: boolean;
 	readonly customDecode?: DecodeMethod;
 }
 
@@ -37,6 +37,10 @@ export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
 	};
 
 	decodeHeader(context);
+
+	if (context.version !== VERSION) {
+		throw `Unexpected version: ${context.version}, required version: ${VERSION}`;
+	}
 
 	return decodeValue(context);
 }
