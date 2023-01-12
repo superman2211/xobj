@@ -9,6 +9,7 @@ Available basic types:
 - `BigInt`
 - `Boolean`
 - `String`
+- `Symbol`
 - `Object`
 - `Array`
 - `Function` (anonymous)
