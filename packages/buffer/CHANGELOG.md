@@ -1,5 +1,11 @@
 # @xobj/buffer
 
+## 1.0.2
+
+### Patch Changes
+
+- e2e5a1c: Improve coverage
+
 ## 1.0.1
 
 ### Patch Changes
