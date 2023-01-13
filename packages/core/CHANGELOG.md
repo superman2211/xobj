@@ -1,5 +1,13 @@
 # @xobj/core
 
+## 1.0.2
+
+### Patch Changes
+
+- e2e5a1c: Improve coverage
+- Updated dependencies [e2e5a1c]
+  - @xobj/buffer@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
