@@ -10,6 +10,10 @@ Packages:
 | [@xobj/buffer](packages/buffer) | [![npm](https://badge.fury.io/js/@xobj%2Fbuffer.svg)](https://badge.fury.io/js/@xobj%2Fbuffer) | [![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/buffer) | Buffer for **Browser** and **NodeJS**. Writing and reading basic types to binary data. |
 | [@xobj/core](packages/core) | [![npm](https://badge.fury.io/js/@xobj%2Fcore.svg)](https://badge.fury.io/js/@xobj%2Fcore) | [![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/core) | Decoding and encoding **JavaScript** / **TypeScript** / **JSON** objects to binary format. |
 
+[Buffer documentation](packages/buffer)
+
+[Object encoding documentation](packages/core)
+
 Samples:
 | Package | Description |
 |---------|-------------|

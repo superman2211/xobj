@@ -147,14 +147,36 @@ encode(value, {
 	customDetect, // function for custom type detection
 	customEncode, // function for custom type encoding
 	floatType, // encoding float type : 'double' | 'single' | number (default is 'double')
-}
 });
 ```
+The `floatType` parameter allows you to select the encoding type for floating point numbers.
+
+Encoding all float numbers into `float64` format (8 bytes)
+```typescript
+encode(value); // by default float type is 'double'
+```
+Encoding all float numbers into `float32` format (4 bytes)
+```typescript
+encode(value, { floatType: 'single' });
+```
+Encoding all float numbers into `intVar` format (1-9+ bytes).
+In this case `floatType` is number (**divider** / **multiplier**). For decoding it is used as **multiplier**, and for decoding it is used as **divider**. For example:
+```typescript
+const buffer = encode({ x: 123.456, y: -3456.789 }, { floatType: 100 });
+// 'x' and 'y' will be transformed to 'integer' and encoded as 'intVar' 
+// floor(123.456 * 100) => 12345 => write 2 bytes
+// floor(-3456.789 * 100) => -345678 => write 3 bytes
+
+const value = decode(buffer);
+// 'x' and 'y' will be decoded as 'intVar' and transformed to 'float' 
+// read 2 bytes => 12345 / 100 => 123.45
+// read 3 bytes => -345678 / 100 => -3456.78
+```
+
 Decode options
 ```typescript
 decode(value, {
 	customDecode, // function for custom type decoding
-}
 });
 ```
 
