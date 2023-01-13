@@ -1,6 +1,6 @@
 # @xobj/core
 
-![Coverage](./coverage/badges.svg)
+[![Coverage](./coverage/badges.svg)](https://superman2211.github.io/xobj/packages/core/coverage/lcov-report/)
 
 Decoding and encoding **JavaScript** / **TypeScript** objects to compact binary format.
 
