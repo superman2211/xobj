@@ -1,5 +1,13 @@
 # @xobj/core
 
+## 1.0.3
+
+### Patch Changes
+
+- 8ee8f86: Add badges and coverage report
+- Updated dependencies [8ee8f86]
+  - @xobj/buffer@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes

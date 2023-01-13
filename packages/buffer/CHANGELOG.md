@@ -1,5 +1,11 @@
 # @xobj/buffer
 
+## 1.0.3
+
+### Patch Changes
+
+- 8ee8f86: Add badges and coverage report
+
 ## 1.0.2
 
 ### Patch Changes
