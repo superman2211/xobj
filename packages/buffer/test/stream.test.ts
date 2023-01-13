@@ -8,6 +8,14 @@ describe('stream', () => {
 		expect(writer.length).toBe(0);
 	});
 
+	it('should get data view', () => {
+		const writer = new BufferWriter();
+		writer.writeInt8(128);
+
+		const reader = new BufferReader(writer.buffer);
+		expect(reader.view.buffer).toEqual(writer.buffer);
+	});
+
 	it('should get correct length and position', () => {
 		const writer = new BufferWriter();
 		writer.writeInt8(123);
