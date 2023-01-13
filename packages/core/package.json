@@ -34,7 +34,8 @@
 		"build": "yarn tsc && yarn rollup -c",
 		"lint": "yarn eslint --fix ./src/*.ts ./src/**/*.ts",
 		"test": "jest --verbose",
-		"coverage": "jest --coverage",
+		"coverage": "jest --coverage --coverageReporters='json-summary'",
+		"make-badges": "coverage-badges",
 		"clean": "rimraf dist && rimraf coverage"
 	},
 	"files": [

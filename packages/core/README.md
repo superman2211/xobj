@@ -1,5 +1,7 @@
 # @xobj/core
 
+![Coverage](./coverage/badges.svg)
+
 Decoding and encoding **JavaScript** / **TypeScript** objects to compact binary format.
 
 Available basic types:
