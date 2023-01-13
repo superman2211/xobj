@@ -1,6 +1,8 @@
 # @xobj/core
 
-[![Coverage](./coverage/badges.svg)](https://superman2211.github.io/xobj/packages/core/coverage/lcov-report/)
+[![npm](https://badge.fury.io/js/@xobj%2Fcore.svg)](https://badge.fury.io/js/@xobj%2Fcore) | 
+[![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/core) |
+[![Coverage](https://superman2211.github.io/xobj/packages/core/coverage/badges.svg)](https://superman2211.github.io/xobj/packages/core/coverage/lcov-report/)
 
 Decoding and encoding **JavaScript** / **TypeScript** objects to compact binary format.
 

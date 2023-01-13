@@ -1,5 +1,9 @@
 # @xobj/buffer
 
+[![npm](https://badge.fury.io/js/@xobj%2Fbuffer.svg)](https://badge.fury.io/js/@xobj%2Fbuffer) |
+[![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/buffer) |
+[![Coverage](https://superman2211.github.io/xobj/packages/buffer/coverage/badges.svg)](https://superman2211.github.io/xobj/packages/buffer/coverage/lcov-report/)
+
 Buffer for **Browser** and **NodeJS**. Writing and reading basic types to binary data.
 
 ## Install
