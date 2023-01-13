@@ -164,13 +164,13 @@ In this case `floatType` is number (**divider** / **multiplier**). For decoding 
 ```typescript
 const buffer = encode({ x: 123.456, y: -3456.789 }, { floatType: 100 });
 // 'x' and 'y' will be transformed to 'integer' and encoded as 'intVar' 
-// floor(123.456 * 100) => 12345 (2 bytes)
-// floor(-3456.789 * 100) => -345678 (3 bytes)
+// floor(123.456 * 100) => 12345 => write 2 bytes
+// floor(-3456.789 * 100) => -345678 => write 3 bytes
 
 const value = decode(buffer);
 // 'x' and 'y' will be decoded as 'intVar' and transformed to 'float' 
-// 12345 / 100 => 123.45
-// -345678 / 100 => -3456.78
+// read 2 bytes => 12345 / 100 => 123.45
+// read 3 bytes => -345678 / 100 => -3456.78
 ```
 
 Decode options
