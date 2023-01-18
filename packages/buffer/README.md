@@ -1,5 +1,6 @@
 # @xobj/buffer
 
+[![Build](https://github.com/superman2211/xobj/workflows/build/badge.svg)](https://github.com/superman2211/xobj/actions/workflows/build.yml)
 [![npm](https://badge.fury.io/js/@xobj%2Fbuffer.svg)](https://badge.fury.io/js/@xobj%2Fbuffer) 
 [![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/buffer) 
 [![Coverage](https://superman2211.github.io/xobj/packages/buffer/coverage/badges.svg)](https://superman2211.github.io/xobj/packages/buffer/coverage/lcov-report/)

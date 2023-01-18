@@ -1,5 +1,6 @@
 # @xobj/core
 
+[![Build](https://github.com/superman2211/xobj/workflows/build/badge.svg)](https://github.com/superman2211/xobj/actions/workflows/build.yml)
 [![npm](https://badge.fury.io/js/@xobj%2Fcore.svg)](https://badge.fury.io/js/@xobj%2Fcore) 
 [![Downloads](https://img.shields.io/npm/dw/auph)](https://www.npmjs.com/package/@xobj/core) 
 [![Coverage](https://superman2211.github.io/xobj/packages/core/coverage/badges.svg)](https://superman2211.github.io/xobj/packages/core/coverage/lcov-report/)
@@ -9,18 +10,18 @@ Decoding and encoding **JavaScript** / **TypeScript** objects to compact binary 
 Available basic types:
 - `null`
 - `undefined`
-- `Number`
-- `BigInt`
+- `Number` [using number quality](https://github.com/superman2211/xobj/blob/master/packages/core/test/numbers.test.ts#L131)
+- `BigInt` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/bigint.test.ts)
 - `Boolean`
 - `String`
-- `Symbol`
+- `Symbol` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/symbol.test.ts)
 - `Object`
 - `Array`
-- `Function` (anonymous)
+- `Function` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/function.test.ts)
 - `Map`
 - `Set`
 - `ArrayBuffer`
-- `TypedArray`:
+- `TypedArray`: [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/function.test.ts)
 	- `Uint8ClampedArray`
 	- `Uint8Array`
 	- `Uint16Array`
@@ -35,6 +36,8 @@ Available basic types:
 - `Date`
 
 For all basic types used optimization for data minification.
+
+You can see more examples in [tests](https://github.com/superman2211/xobj/tree/master/packages/core/test).
 
 Also you can use custom types.
 
