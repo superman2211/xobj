@@ -1,5 +1,13 @@
 # @xobj/core
 
+## 1.0.4
+
+### Patch Changes
+
+- 01999e7: Remove sources from npm package
+- Updated dependencies [01999e7]
+  - @xobj/buffer@1.0.4
+
 ## 1.0.3
 
 ### Patch Changes
