@@ -21,7 +21,7 @@ Available basic types:
 - `Map`
 - `Set`
 - `ArrayBuffer`
-- `TypedArray`: [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/function.test.ts)
+- `TypedArray`:
 	- `Uint8ClampedArray`
 	- `Uint8Array`
 	- `Uint16Array`
