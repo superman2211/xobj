@@ -1,7 +1,7 @@
 {
 	"name": "browser-sample",
 	"description": "xobj browser sample",
-	"version": "0.3.15",
+	"version": "0.3.16",
 	"private": true,
 	"author": "Clark Kent",
 	"license": "GPL-3.0-only",
@@ -21,7 +21,7 @@
 		"clean": "rimraf dist"
 	},
 	"dependencies": {
-		"@xobj/core": "1.0.4"
+		"@xobj/core": "1.0.5"
 	},
 	"devDependencies": {
 		"eslint": "^8.4.1",
