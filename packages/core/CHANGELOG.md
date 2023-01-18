@@ -1,5 +1,11 @@
 # @xobj/core
 
+## 1.0.6
+
+### Patch Changes
+
+- 3c8de90: Update docs
+
 ## 1.0.5
 
 ### Patch Changes

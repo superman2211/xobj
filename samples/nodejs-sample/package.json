@@ -1,7 +1,7 @@
 {
 	"name": "nodejs-sample",
 	"description": "xobj sample for nodeJS",
-	"version": "0.2.20",
+	"version": "0.2.21",
 	"main": "index.js",
 	"private": true,
 	"author": "Clark Kent",
@@ -21,7 +21,7 @@
 		"clean": "rimraf dist"
 	},
 	"dependencies": {
-		"@xobj/core": "1.0.5"
+		"@xobj/core": "1.0.6"
 	},
 	"devDependencies": {
 		"rimraf": "^3.0.2",
