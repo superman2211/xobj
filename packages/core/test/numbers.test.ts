@@ -132,7 +132,7 @@ describe('float type', () => {
 	it('should write double', () => {
 		const source = 123.45678901234567;
 
-		const buffer = encode(source, { floatType: 'double' });
+		const buffer = encode(source, { floatQuality: 'double' });
 
 		const target = decode(buffer);
 		expect(target).toBe(source);
@@ -141,7 +141,7 @@ describe('float type', () => {
 	it('should write single', () => {
 		const source = 123.45678901234567;
 
-		const buffer = encode(source, { floatType: 'single' });
+		const buffer = encode(source, { floatQuality: 'single' });
 
 		const target = decode(buffer);
 		expect(target).toBeCloseTo(source, 5);
@@ -150,7 +150,7 @@ describe('float type', () => {
 	it('should write integer with quality', () => {
 		const source = 123.45678901234567;
 
-		const buffer = encode(source, { floatType: 1000 });
+		const buffer = encode(source, { floatQuality: 1000 });
 
 		const target = decode(buffer);
 		expect(target).toBeCloseTo(source, 2);

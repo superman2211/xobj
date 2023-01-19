@@ -16,11 +16,11 @@ export function encodeInt(value: number, context: EncodeContext): void {
 }
 
 export function encodeFloat(value: number, context: EncodeContext): void {
-	const { writer, values, floatType } = context;
+	const { writer, values, floatQuality } = context;
 
 	values.push(value);
 
-	switch (floatType) {
+	switch (floatQuality) {
 		case 'double':
 			writer.writeFloat64(value);
 			break;
@@ -30,7 +30,7 @@ export function encodeFloat(value: number, context: EncodeContext): void {
 			break;
 
 		default:
-			writer.writeIntVar(Math.floor(value * floatType));
+			writer.writeIntVar(Math.floor(value * floatQuality));
 			break;
 	}
 }

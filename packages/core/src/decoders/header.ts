@@ -1,12 +1,12 @@
 import { DecodeContext } from '../decode';
-import { FloatType } from '../types';
+import { FloatQuality } from '../types';
 
-function decodeFloatType(context: DecodeContext): FloatType {
+function decodeFloatQuality(context: DecodeContext): FloatQuality {
 	const { reader } = context;
 
-	const type = reader.readUint8();
+	const quality = reader.readUint8();
 
-	switch (type) {
+	switch (quality) {
 		case 0:
 			return 'double';
 
@@ -17,7 +17,7 @@ function decodeFloatType(context: DecodeContext): FloatType {
 			return reader.readUintVar();
 
 		default:
-			throw `Unexpected float type: ${type}`;
+			throw `Unexpected float quality: ${quality}`;
 	}
 }
 
@@ -25,7 +25,7 @@ export function decodeHeader(context: DecodeContext) {
 	const { reader } = context;
 
 	const version = reader.readUintVar();
-	const floatType = decodeFloatType(context);
+	const floatQuality = decodeFloatQuality(context);
 
-	Object.assign(context, { version, floatType });
+	Object.assign(context, { version, floatQuality });
 }

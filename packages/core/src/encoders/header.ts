@@ -1,9 +1,9 @@
 import { EncodeContext } from '../encode';
 import { VERSION } from '../version';
 
-function encodeFloatType(context: EncodeContext) {
-	const { writer, floatType } = context;
-	switch (floatType) {
+function encodeFloatQuality(context: EncodeContext) {
+	const { writer, floatQuality } = context;
+	switch (floatQuality) {
 		case 'double':
 			writer.writeUint8(0);
 			break;
@@ -14,7 +14,7 @@ function encodeFloatType(context: EncodeContext) {
 
 		default:
 			writer.writeUint8(2);
-			writer.writeIntVar(floatType);
+			writer.writeIntVar(floatQuality);
 			break;
 	}
 }
@@ -22,5 +22,5 @@ function encodeFloatType(context: EncodeContext) {
 export function encodeHeader(context: EncodeContext) {
 	const { writer } = context;
 	writer.writeUintVar(VERSION);
-	encodeFloatType(context);
+	encodeFloatQuality(context);
 }
