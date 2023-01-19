@@ -20,11 +20,11 @@ export function decodeInt(context: DecodeContext): number {
 }
 
 export function decodeFloat(context: DecodeContext): number {
-	const { reader, values, floatType } = context;
+	const { reader, values, floatQuality } = context;
 
 	let value = 0;
 
-	switch (floatType) {
+	switch (floatQuality) {
 		case 'double':
 			value = reader.readFloat64();
 			break;
@@ -34,7 +34,7 @@ export function decodeFloat(context: DecodeContext): number {
 			break;
 
 		default:
-			value = reader.readUintVar() / floatType;
+			value = reader.readUintVar() / floatQuality;
 			break;
 	}
 

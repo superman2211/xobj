@@ -2,7 +2,7 @@
 import { BufferReader } from '@xobj/buffer';
 import { decodeHeader } from './decoders/header';
 import { DecodeMethod, DECODERS, decodeValue } from './decoders/index';
-import { FloatType, ValueType } from './types';
+import { FloatQuality, ValueType } from './types';
 import { VERSION } from './version';
 
 export interface DecodeContext {
@@ -11,7 +11,7 @@ export interface DecodeContext {
 	readonly links: any[];
 	readonly decoders: Map<ValueType, DecodeMethod>;
 	readonly version: number;
-	readonly floatType: FloatType;
+	readonly floatQuality: FloatQuality;
 }
 
 export interface DecodeOptions {
@@ -33,7 +33,7 @@ export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
 		links: [],
 		decoders,
 		version: 0,
-		floatType: 'double',
+		floatQuality: 'double',
 	};
 
 	decodeHeader(context);

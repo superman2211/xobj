@@ -208,11 +208,11 @@ BRH:2
 end_of_record
 TN:
 SF:src/decoders/header.ts
-FN:4,decodeFloatType
+FN:4,decodeFloatQuality
 FN:24,decodeHeader
 FNF:2
 FNH:2
-FNDA:66,decodeFloatType
+FNDA:66,decodeFloatQuality
 FNDA:66,decodeHeader
 DA:5,66
 DA:7,66
@@ -1056,11 +1056,11 @@ BRH:0
 end_of_record
 TN:
 SF:src/encoders/header.ts
-FN:4,encodeFloatType
+FN:4,encodeFloatQuality
 FN:22,encodeHeader
 FNF:2
 FNH:2
-FNDA:66,encodeFloatType
+FNDA:66,encodeFloatQuality
 FNDA:66,encodeHeader
 DA:5,66
 DA:6,66

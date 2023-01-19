@@ -25,7 +25,7 @@ describe('header', () => {
 		const buffer = encode(source);
 
 		const view = new DataView(buffer);
-		view.setUint8(1, 5); // set incorrect floatType
+		view.setUint8(1, 5); // set incorrect floatQuality
 
 		const act = () => {
 			decode(buffer);

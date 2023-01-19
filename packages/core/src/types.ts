@@ -44,9 +44,9 @@ export function isBooleanType(type: ValueType): boolean {
 	return type === ValueType.TRUE || type === ValueType.FALSE;
 }
 
-export type FloatType = 'single' | 'double' | number;
+export type FloatQuality = 'single' | 'double' | number;
 
 export type Header = {
 	version: number,
-	floatType: FloatType,
+	floatQuality: FloatQuality,
 }
