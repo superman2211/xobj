@@ -1,5 +1,11 @@
 # @xobj/buffer
 
+## 1.0.6
+
+### Patch Changes
+
+- eca5446: Update docs and coverage
+
 ## 1.0.5
 
 ### Patch Changes

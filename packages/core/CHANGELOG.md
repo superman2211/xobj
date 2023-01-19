@@ -1,5 +1,17 @@
 # @xobj/core
 
+## 1.1.0
+
+### Minor Changes
+
+- eca5446: Rename option `floatType` to `floatQuality`
+
+### Patch Changes
+
+- eca5446: Update docs and coverage
+- Updated dependencies [eca5446]
+  - @xobj/buffer@1.0.6
+
 ## 1.0.6
 
 ### Patch Changes
