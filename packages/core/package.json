@@ -35,7 +35,7 @@
 		"lint": "yarn eslint --fix ./src/*.ts ./src/**/*.ts",
 		"test": "jest --verbose",
 		"coverage": "rimraf coverage && jest --coverage --coverageReporters='text' --coverageReporters='json-summary' --coverageReporters='lcov' && coverage-badges",
-		"clean": "rimraf dist"
+		"clean": "rimraf dist && rimraf coverage"
 	},
 	"files": [
 		"dist",
