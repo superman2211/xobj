@@ -10,7 +10,7 @@ Decoding and encoding **JavaScript** / **TypeScript** objects to compact binary 
 Available basic types:
 - `null`
 - `undefined`
-- `Number` [using number quality](https://github.com/superman2211/xobj/blob/master/packages/core/test/numbers.test.ts#L131)
+- `Number` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/numbers.test.ts)
 - `BigInt` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/bigint.test.ts)
 - `Boolean`
 - `String`
@@ -146,6 +146,7 @@ const target = decode(buffer, { customDecode });
 console.log(target.points[0].x) // 1
 console.log(target.points[0].y) // 2
 ```
+See more about [BufferWriter and BufferReader](https://github.com/superman2211/xobj/tree/master/packages/buffer)
 
 Encode options
 ```typescript
@@ -153,31 +154,31 @@ encode(value, {
 	bufferSize, // buffer starter size
 	customDetect, // function for custom type detection
 	customEncode, // function for custom type encoding
-	floatType, // encoding float type : 'double' | 'single' | number (default is 'double')
+	floatQuality, // encoding float quality : 'double' | 'single' | number (default is 'double')
 });
 ```
-The `floatType` parameter allows you to select the encoding type for floating point numbers.
+The `floatQuality` parameter allows you to select the encoding type for floating point numbers.
 
 Encoding all float numbers into `float64` format (8 bytes)
 ```typescript
-encode(value); // by default float type is 'double'
+encode(value); // by default float quality is 'double'
 ```
 Encoding all float numbers into `float32` format (4 bytes)
 ```typescript
-encode(value, { floatType: 'single' });
+encode(value, { floatQuality: 'single' });
 ```
 Encoding all float numbers into `intVar` format (1-9+ bytes).
-In this case `floatType` is number (**divider** / **multiplier**). For decoding it is used as **multiplier**, and for decoding it is used as **divider**. For example:
+In this case `floatQuality` is number (**divider** / **multiplier**). For decoding it is used as **multiplier**, and for decoding it is used as **divider**. For example:
 ```typescript
-const buffer = encode({ x: 123.456, y: -3456.789 }, { floatType: 100 });
+const buffer = encode({ x: 123.456, y: -3456.789 }, { floatQuality: 100 });
 // 'x' and 'y' will be transformed to 'integer' and encoded as 'intVar' 
-// floor(123.456 * 100) => 12345 => write 2 bytes
-// floor(-3456.789 * 100) => -345678 => write 3 bytes
+// floor(123.456 * 100) => 12345 => write intVar to 2 bytes
+// floor(-3456.789 * 100) => -345678 => write intVar to 3 bytes
 
 const value = decode(buffer);
 // 'x' and 'y' will be decoded as 'intVar' and transformed to 'float' 
-// read 2 bytes => 12345 / 100 => 123.45
-// read 3 bytes => -345678 / 100 => -3456.78
+// read intVar from 2 bytes => 12345 / 100 => 123.45
+// read intVar from 3 bytes => -345678 / 100 => -3456.78
 ```
 
 Decode options
