@@ -1,7 +1,7 @@
 {
 	"name": "rollup-sample",
 	"description": "xobj sample with rollup bundling",
-	"version": "0.3.17",
+	"version": "0.3.18",
 	"private": true,
 	"author": "Clark Kent",
 	"license": "GPL-3.0-only",
@@ -21,7 +21,7 @@
 		"clean": "rimraf dist"
 	},
 	"dependencies": {
-		"@xobj/core": "1.0.6"
+		"@xobj/core": "1.1.0"
 	},
 	"devDependencies": {
 		"@rollup/plugin-html": "^0.2.4",
