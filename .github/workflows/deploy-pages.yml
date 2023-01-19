@@ -31,17 +31,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'npm'
-          
-      - name: Build
-      - run: yarn
-      - run: yarn build
-      - run: yarn coverage
-      
       - name: Setup Pages
         uses: actions/configure-pages@v2
         
