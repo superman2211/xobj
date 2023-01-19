@@ -18,7 +18,8 @@
 		"serve": "yarn http-server ./dist/iife -o",
 		"start": "yarn build && yarn serve",
 		"lint": "yarn eslint --fix ./src/*.ts ./src/**/*.ts",
-		"clean": "rimraf dist"
+		"clean": "rimraf dist",
+		"clean-pages": "rimraf node_modules"
 	},
 	"dependencies": {
 		"@xobj/core": "1.1.0"
