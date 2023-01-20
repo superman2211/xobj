@@ -18,7 +18,8 @@
 		"build": "node index.js",
 		"start": "yarn build",
 		"lint": "yarn eslint --fix ./index.js",
-		"clean": "rimraf dist"
+		"clean": "rimraf dist",
+		"clean-pages": "rimraf node_modules"
 	},
 	"dependencies": {
 		"@xobj/core": "1.1.0"
