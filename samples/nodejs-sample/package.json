@@ -25,7 +25,7 @@
 		"@xobj/core": "1.1.1"
 	},
 	"devDependencies": {
-		"rimraf": "^3.0.2",
+		"rimraf": "^4.1.1",
 		"eslint": "^8.4.1",
 		"eslint-config-airbnb-base": "^15.0.0",
 		"eslint-plugin-import": "^2.25.3"
