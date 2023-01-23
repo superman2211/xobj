@@ -1,5 +1,13 @@
 # @xobj/core
 
+## 1.1.2
+
+### Patch Changes
+
+- 6578c57: Upgrade dependencies
+- Updated dependencies [6578c57]
+  - @xobj/buffer@1.0.7
+
 ## 1.1.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @xobj/buffer
 
+## 1.0.7
+
+### Patch Changes
+
+- 6578c57: Upgrade dependencies
+
 ## 1.0.6
 
 ### Patch Changes
