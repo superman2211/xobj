@@ -37,6 +37,8 @@ Available basic types:
 
 For all basic types used optimization for data minification.
 
+Recursive objects links are also supported.
+
 You can see more examples in [tests](https://github.com/superman2211/xobj/tree/master/packages/core/test).
 
 Also you can use custom types.
