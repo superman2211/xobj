@@ -1,5 +1,11 @@
 # @xobj/core
 
+## 1.2.0
+
+### Minor Changes
+
+- dd3afa5: Add property symbols
+
 ## 1.1.2
 
 ### Patch Changes
