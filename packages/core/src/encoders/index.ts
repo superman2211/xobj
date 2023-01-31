@@ -68,7 +68,9 @@ export const ENCODERS = new Map<ValueType, EncodeMethod>([
 ]);
 
 export function encodeValue(value: any, context: EncodeContext) {
-	const { writer, encoders } = context;
+	const { writer, encoders, replacer } = context;
+
+	value = replacer(value);
 
 	const type = detectValue(value, context);
 	writer.writeUintVar(type);

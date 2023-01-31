@@ -4,6 +4,7 @@ import { DetectMethod, DETECTORS } from './detectors/index';
 import { EncodeMethod, ENCODERS, encodeValue } from './encoders/index';
 import { encodeHeader } from './encoders/header';
 import { FloatQuality, ValueType } from './types';
+import { getReplacer, ReplacerMethod, ReplacerType } from './replacer';
 
 export interface EncodeContext {
 	readonly writer: IBufferWriter,
@@ -12,6 +13,7 @@ export interface EncodeContext {
 	readonly detectors: DetectMethod[];
 	readonly encoders: Map<ValueType, EncodeMethod>,
 	readonly floatQuality: FloatQuality;
+	readonly replacer: ReplacerMethod;
 }
 
 export interface EncodeOptions {
@@ -19,6 +21,7 @@ export interface EncodeOptions {
 	readonly customDetect?: DetectMethod;
 	readonly customEncode?: EncodeMethod;
 	readonly floatQuality?: FloatQuality;
+	readonly replacer?: ReplacerType;
 }
 
 export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
@@ -38,6 +41,8 @@ export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
 
 	const floatQuality = options?.floatQuality ?? 'double';
 
+	const replacer = getReplacer(options?.replacer);
+
 	const context: EncodeContext = {
 		writer,
 		values: [],
@@ -45,6 +50,7 @@ export function encode(value: any, options?: EncodeOptions): ArrayBuffer {
 		detectors,
 		encoders,
 		floatQuality,
+		replacer,
 	};
 
 	encodeHeader(context);

@@ -41,7 +41,7 @@ Recursive objects links are also supported.
 
 You can see more examples in [tests](https://github.com/superman2211/xobj/tree/master/packages/core/test).
 
-Also you can use custom types.
+Also you can use [custom types](https://github.com/superman2211/xobj/blob/master/packages/core/test/custom.test.ts) and [replacers](https://github.com/superman2211/xobj/blob/master/packages/core/test/replacer.test.ts).
 
 ## Install
 ```shell

@@ -78,7 +78,7 @@ export const DECODERS = new Map<ValueType, DecodeMethod>([
 ]);
 
 export function decodeValue(context: DecodeContext): any {
-	const { reader, decoders } = context;
+	const { reader, decoders, replacer } = context;
 
 	const type: ValueType = reader.readUintVar();
 
@@ -88,5 +88,6 @@ export function decodeValue(context: DecodeContext): any {
 		throw `Decoder method not found for type: ${type}`;
 	}
 
-	return decodeMethod(context);
+	const value = decodeMethod(context);
+	return replacer(value);
 }
