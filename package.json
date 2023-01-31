@@ -11,6 +11,7 @@
     "coverage": "yarn wsrun -e -m coverage",
     "clean": "yarn wsrun -e -m clean",
     "clean-pages": "yarn wsrun -e -m clean-pages && rimraf node_modules",
+    "start": "yarn wsrun -e -m start",
     "checkup": "yarn clean && yarn build && yarn lint && yarn coverage",
     "release": "yarn build && yarn changeset publish",
     "version": "yarn changeset version && yarn update-lock",

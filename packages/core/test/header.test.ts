@@ -2,6 +2,7 @@
 
 import { encode } from '../src/encode';
 import { decode } from '../src/decode';
+import { VERSION } from '../src/version';
 
 describe('header', () => {
 	it('should throw when incorrect version', () => {
@@ -9,14 +10,16 @@ describe('header', () => {
 
 		const buffer = encode(source);
 
+		const incorrectVersion = 22;
+
 		const view = new DataView(buffer);
-		view.setUint8(0, 3); // set incorrect version
+		view.setUint8(0, incorrectVersion); // set incorrect version
 
 		const act = () => {
 			decode(buffer);
 		};
 
-		expect(act).toThrow();
+		expect(act).toThrow(`Unexpected version: ${incorrectVersion}, required version: ${VERSION}`);
 	});
 
 	it('should throw when incorrect float type', () => {
