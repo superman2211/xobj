@@ -2,6 +2,7 @@
 import { BufferReader } from '@xobj/buffer';
 import { decodeHeader } from './decoders/header';
 import { DecodeMethod, DECODERS, decodeValue } from './decoders/index';
+import { getReplacer, ReplacerMethod, ReplacerType } from './replacer';
 import { FloatQuality, ValueType } from './types';
 import { VERSION } from './version';
 
@@ -12,10 +13,12 @@ export interface DecodeContext {
 	readonly decoders: Map<ValueType, DecodeMethod>;
 	readonly version: number;
 	readonly floatQuality: FloatQuality;
+	readonly replacer: ReplacerMethod;
 }
 
 export interface DecodeOptions {
 	readonly customDecode?: DecodeMethod;
+	readonly replacer?: ReplacerType;
 }
 
 export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
@@ -27,6 +30,8 @@ export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
 		decoders.set(ValueType.CUSTOM, options.customDecode);
 	}
 
+	const replacer = getReplacer(options?.replacer);
+
 	const context: DecodeContext = {
 		reader,
 		values: [],
@@ -34,6 +39,7 @@ export function decode(buffer: ArrayBuffer, options?: DecodeOptions): any {
 		decoders,
 		version: 0,
 		floatQuality: 'double',
+		replacer,
 	};
 
 	decodeHeader(context);

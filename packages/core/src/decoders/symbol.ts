@@ -2,8 +2,7 @@ import { DecodeContext } from '../decode';
 
 export function decodeSymbol(context: DecodeContext): symbol {
 	const { links } = context;
-	// eslint-disable-next-line symbol-description
-	const symbol = Symbol();
+	const symbol = Symbol(0);
 	links.push(symbol);
 	return symbol;
 }
