@@ -168,4 +168,21 @@ describe('array', () => {
 			expect(target[i]).toBeCloseTo(source[i], 5);
 		}
 	});
+
+	it('should throw an error when decoder for array group not found', () => {
+		const source = [1, 2, 3];
+
+		const buffer = encode(source);
+
+		const incorrectType = 55;
+
+		const view = new DataView(buffer);
+		view.setUint8(3, incorrectType); // set incorrect value type
+
+		const act = () => {
+			decode(buffer);
+		};
+
+		expect(act).toThrow(`Decoder method not found for object type: ${incorrectType} in array decoding`);
+	});
 });

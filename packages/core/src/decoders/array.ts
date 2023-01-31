@@ -23,9 +23,7 @@ export function decodeArrayGroups(array: any[], context: DecodeContext): void {
 		} else {
 			const decodeMethod = decoders.get(type);
 
-			/* istanbul ignore next */
 			if (!decodeMethod) {
-				/* istanbul ignore next */
 				throw `Decoder method not found for object type: ${type} in array decoding`;
 			}
 
