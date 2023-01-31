@@ -1,5 +1,12 @@
 # rollup-sample
 
+## 0.3.22
+
+### Patch Changes
+
+- Updated dependencies [beeadbc]
+  - @xobj/core@1.3.0
+
 ## 0.3.21
 
 ### Patch Changes

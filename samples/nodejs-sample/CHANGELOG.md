@@ -1,5 +1,12 @@
 # nodejs-sample
 
+## 0.2.26
+
+### Patch Changes
+
+- Updated dependencies [beeadbc]
+  - @xobj/core@1.3.0
+
 ## 0.2.25
 
 ### Patch Changes
