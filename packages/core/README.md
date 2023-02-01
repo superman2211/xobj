@@ -13,7 +13,7 @@ Available basic types:
 - `Number` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/numbers.test.ts)
 - `BigInt` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/bigint.test.ts)
 - `Boolean` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/boolean.test.ts)
-- `String` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/string.test.ts)
+- `String` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/strings.test.ts)
 - `Symbol` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/symbol.test.ts) [via replacer](https://github.com/superman2211/xobj/blob/master/packages/core/test/replacer.test.ts)
 - `Object` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/object.test.ts)
 - `Array` [examples](https://github.com/superman2211/xobj/blob/master/packages/core/test/array.test.ts)
@@ -37,7 +37,7 @@ Available basic types:
 
 For all basic types used optimization for data minification.
 
-Recursive objects links are also supported.
+Recursive objects [links](https://github.com/superman2211/xobj/blob/master/packages/core/test/link.test.ts) are also supported.
 
 You can see more examples in [tests](https://github.com/superman2211/xobj/tree/master/packages/core/test).
 
