@@ -1,5 +1,13 @@
 # @xobj/core
 
+## 1.3.2
+
+### Patch Changes
+
+- 676df1d: Upgrade packages
+- Updated dependencies [676df1d]
+  - @xobj/buffer@1.0.8
+
 ## 1.3.1
 
 ### Patch Changes

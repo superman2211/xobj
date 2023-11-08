@@ -1,5 +1,11 @@
 # @xobj/buffer
 
+## 1.0.8
+
+### Patch Changes
+
+- 676df1d: Upgrade packages
+
 ## 1.0.7
 
 ### Patch Changes
