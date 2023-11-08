@@ -1,5 +1,13 @@
 # nodejs-sample
 
+## 0.2.28
+
+### Patch Changes
+
+- 676df1d: Upgrade packages
+- Updated dependencies [676df1d]
+  - @xobj/core@1.3.2
+
 ## 0.2.27
 
 ### Patch Changes

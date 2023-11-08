@@ -1,5 +1,13 @@
 # rollup-external-sample
 
+## 0.3.24
+
+### Patch Changes
+
+- 676df1d: Upgrade packages
+- Updated dependencies [676df1d]
+  - @xobj/core@1.3.2
+
 ## 0.3.23
 
 ### Patch Changes
